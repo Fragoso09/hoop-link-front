@@ -11,7 +11,6 @@ import { PrimeNGConfig } from 'primeng/api';
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  title = 'hoop-link-front';
 
   constructor(private primengConfig: PrimeNGConfig) {}
 
