@@ -1,1 +1,27 @@
 /* You can add global styles to this file, and also import other style files */
+@font-face {
+  font-family: 'Bebas Neue';
+  src: url('assets/fonts/Bebas_Neue/BebasNeue-Regular.ttf') format('ttf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Roboto Mono';
+  src: url('assets/fonts/Space_Mono/SpaceMono-Bold.ttf') format('ttf')
+    url('assets/fonts/Space_Mono/SpaceMono-BoldItalic.ttf') format('ttf'),
+    url('assets/fonts/Space_Mono/SpaceMono-Italic.ttf') format('ttf'),
+    url('assets/fonts/Space_Mono/SpaceMono-Regular.ttf') format('ttf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Aplica Bebas Neue a todo el cuerpo */
+body {
+  font-family: 'Bebas Neue', sans-serif;
+}
+
+/* Aplica Monospace solo a los títulos (h1, h2, h3, etc.) */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Roboto Mono', monospace;
+}
