@@ -16,12 +16,21 @@
   font-style: normal;
 }
 
+html, body { height: 100%; }
 /* Aplica Bebas Neue a todo el cuerpo */
 body {
-  font-family: 'Bebas Neue', sans-serif;
+  font-family: 'Roboto Mono', monospace;
+  margin: 0;
+  padding: 0;
 }
 
 /* Aplica Monospace solo a los títulos (h1, h2, h3, etc.) */
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Roboto Mono', monospace;
+  font-family: 'Bebas Neue', sans-serif;
+}
+
+.components-font {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: larger;
+  font: bold;
 }
