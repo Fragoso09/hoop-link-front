@@ -3,6 +3,11 @@
   min-height: 100dvh;
   grid-template-rows: auto 1fr auto;
 }
- .colroazul {
-  color: aqua ;
- }
+
+.move-left {
+  left: 100px;
+}
+
+.tamanio-slogan {
+  font-size: 3.75rem;
+}

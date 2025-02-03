@@ -10,5 +10,5 @@ import { ImageModule } from 'primeng/image';
   styleUrl: './footer.component.scss'
 })
 export class FooterComponent {
-
+  public anio:number = new Date().getFullYear();
 }

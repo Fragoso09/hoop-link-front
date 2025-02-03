@@ -1,22 +1,36 @@
 <header>
-  <div class="grid m-0 p-0 ml-5 mr-5">
-    <div class="col-12 md:col-6 lg:col-4">
+  <div class="grid m-0 p-0 lg:ml-5 lg:mr-5">
+
+    <div class="col-3 md:col-6 lg:col-4 flex justify-content-center lg:justify-content-start">
       <p-image
           src="assets/images/logos/HOOPArtboard 51@8x.png"
           alt="Image"
-          width="350"/>
+          [width]="widthImg"/>
     </div>
-    <div class="col-12 md:col-6 lg:col-6 flex justify-content-center align-items-center justify-content-between">
-      <h3>Jugadores</h3>
-      <h3>Escuelas</h3>
-      <h3>Eventos</h3>
-      <h3>Patrocinadores</h3>
-      <h3>Empresas</h3>
+    <!-- lg:flex-wrap lg:justify-content-center lg:align-items-center lg:justify-content-between -->
+    <div class="col-9 md:col-6 lg:col-8 lg:flex">
+      <div class="card flex align-items-center justify-content-center">
+        <p-menubar [model]="items" [style]="{'background-color': 'white', 'border-color': 'white'}">
+          <ng-template #end>
+            <p-button rounded class="flex align-items-center justify-content-center" [style]="{'background-color': '#f47621', 'border-color': '#f47621'}" >
+              <span class="components-font">Inicio Sesion</span>
+            </p-button>
+          </ng-template>
+        </p-menubar>
+      </div>
+      <!-- <h3 class="flex align-items-center justify-content-center">Jugadores</h3>
+      <h3 class="flex align-items-center justify-content-center">Escuelas</h3>
+      <h3 class="flex align-items-center justify-content-center">Eventos</h3>
+      <h3 class="flex align-items-center justify-content-center">Patrocinadores</h3>
+      <h3 class="flex align-items-center justify-content-center">Empresas</h3>
+      <p-button rounded class="flex align-items-center justify-content-center" [style]="{'background-color': '#f47621', 'border-color': '#f47621'}" >
+        <span class="components-font">Inicio Sesion</span>
+      </p-button> -->
     </div>
-    <div class="col-12 md:col-6 lg:col-2 flex justify-content-center align-items-center">
-      <p-button rounded  >
+    <!-- <div class="col-12 md:col-6 lg:col-2 flex justify-content-center align-items-center">
+      <p-button rounded [style]="{'background-color': '#f47621', 'border-color': '#f47621'}" >
         <span class="components-font">Inicio Sesion</span>
       </p-button>
-    </div>
+    </div> -->
   </div>
 </header>

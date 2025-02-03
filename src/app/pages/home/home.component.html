@@ -1,37 +1,38 @@
 <div class="container">
   <app-header></app-header>
   <main>
-    <div class="grid m-0 p-0 ml-5 mr-5">
-      <div class="col-12 md:col-6 lg:col-8">
+    <div class="grid m-0 p-0 lg:ml-5 lg:mr-5">
+      <div class="col-12 md:col-6 lg:col-7 flex align-items-start justify-content-start">
         <div class="flex flex-column">
           <div class="flex align-items-center justify-content-center">
-            <h1 class="text-7xl">CONECTANDO JUGADORES<br>CON BUSCADORES DE TALENTO</h1>
+            <h1 class="text-left tamanio-slogan">CONECTANDO JUGADORES CON BUSCADORES DE TALENTO</h1>
           </div>
           <br>
-          <div class="flex align-items-center justify-content-center">
-            <p-button rounded styleClass="fadeinleft animation-duration-2000 animation-iteration-infinite">
+          <!-- , 'transition-duration': '3s, 1','transform': 'translateX(150px)' -->
+          <div class="flex align-items-center justify-content-left">
+            <p-button rounded styleClass="fadeinleft animation-duration-2000" [style]="{'background-color': '#f47621', 'border-color': '#f47621', 'left': '155px'}">
               <span class="components-font">UNIRSE AHORA</span>
             </p-button>
           </div>
           <br>
-          <div class="flex align-items-center justify-content-center">
-            <p>
+          <div class="flex align-items-center justify-content-left">
+            <p class="text-center">
               Al hacer clic en unirse ahora o iniciar sesión <br>aceptas las <a href="#">Condiciones de uso</a>,
               la <a href="#">Política de Privacidad</a><br> y la <a href="#">Política de Cookies</a> de HoopLink.
             </p>
           </div>
-          <div class="flex align-items-center justify-content-center">
-            <h1>¿TIENES LO NECESARIO?</h1>
+          <div class="flex align-items-center justify-content-left">
+            <h2 class="relative move-left">¿TIENES LO NECESARIO?</h2>
           </div>
           <br>
+        </div>
       </div>
-      </div>
-      <div class="col-12 md:col-6 lg:col-4 flex align-items-left justify-content-left m-0 p-0">
+      <div class="col-12 md:col-6 lg:col-5 flex align-items-left justify-content-start m-0 p-0">
         <div class="vertical-align-top">
           <p-image
               src="assets/images/inicio/inicio-redonda-baja-calidad.png"
               alt="Image"
-              width="450"/>
+              [width]="widthImg"/>
         </div>
       </div>
     </div>
