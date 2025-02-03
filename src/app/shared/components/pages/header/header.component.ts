@@ -10,11 +10,12 @@ import { InputTextModule } from 'primeng/inputtext';
 import { CommonModule } from '@angular/common';
 import { redibujaImg } from '../../../../core/utils/ui/responsive.util';
 import { IResizeImg } from '../../../../core/interfaces/ui.interface';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [ImageModule, ButtonModule, Menubar, BadgeModule, AvatarModule, InputTextModule, CommonModule],
+  imports: [ImageModule, ButtonModule, Menubar, BadgeModule, AvatarModule, InputTextModule, CommonModule, RouterModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
@@ -27,6 +28,8 @@ export class HeaderComponent implements OnInit {
     valSuperior:250,
     valInferior:350,
   };
+
+  constructor(private router: Router) { }
 
   ngOnInit() {
     this.widthImg = redibujaImg(this._imgWidht, 1);
@@ -58,5 +61,9 @@ export class HeaderComponent implements OnInit {
   @HostListener('window:resize', ['$event'])
   onResize() {
     this.widthImg = redibujaImg(this._imgWidht, 1);
+  }
+
+  public redirectHome():void {
+    this.router.navigateByUrl('/portal')
   }
 }

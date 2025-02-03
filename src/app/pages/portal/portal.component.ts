@@ -6,16 +6,17 @@ import { ImageModule } from 'primeng/image';
 import { ButtonModule } from 'primeng/button';
 import { IResizeImg } from '../../core/interfaces/ui.interface';
 import { redibujaImg } from '../../core/utils/ui/responsive.util';
+import { RouterModule } from '@angular/router';
 
 
 @Component({
-  selector: 'app-home',
+  selector: 'app-portal',
   standalone: true,
-  imports: [HeaderComponent, FooterComponent, ImageModule, ButtonModule],
-  templateUrl: './home.component.html',
-  styleUrl: './home.component.scss'
+  imports: [HeaderComponent, FooterComponent, ImageModule, ButtonModule, RouterModule],
+  templateUrl: './portal.component.html',
+  styleUrl: './portal.component.scss'
 })
-export class HomeComponent implements OnInit {
+export class PortalComponent implements OnInit {
   public widthImg:string = "600";
   private _imgWidht:IResizeImg = {
       limSuperior:600,

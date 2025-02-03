@@ -38,7 +38,7 @@ export const appConfig: ApplicationConfig = {
       withViewTransitions({
         skipInitialTransition: true,
         onViewTransitionCreated(transitionInfo) {
-          console.log(transitionInfo);
+          // console.log(transitionInfo);
         },
       }),
     ),

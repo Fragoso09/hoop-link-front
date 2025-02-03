@@ -5,7 +5,9 @@
       <p-image
           src="assets/images/logos/HOOPArtboard 51@8x.png"
           alt="Image"
-          [width]="widthImg"/>
+          [width]="widthImg"
+          (click)="redirectHome()"
+          [style]="{'cursor': 'pointer'}"/>
     </div>
     <!-- lg:flex-wrap lg:justify-content-center lg:align-items-center lg:justify-content-between -->
     <div class="col-9 md:col-6 lg:col-8 lg:flex">
@@ -18,19 +20,6 @@
           </ng-template>
         </p-menubar>
       </div>
-      <!-- <h3 class="flex align-items-center justify-content-center">Jugadores</h3>
-      <h3 class="flex align-items-center justify-content-center">Escuelas</h3>
-      <h3 class="flex align-items-center justify-content-center">Eventos</h3>
-      <h3 class="flex align-items-center justify-content-center">Patrocinadores</h3>
-      <h3 class="flex align-items-center justify-content-center">Empresas</h3>
-      <p-button rounded class="flex align-items-center justify-content-center" [style]="{'background-color': '#f47621', 'border-color': '#f47621'}" >
-        <span class="components-font">Inicio Sesion</span>
-      </p-button> -->
     </div>
-    <!-- <div class="col-12 md:col-6 lg:col-2 flex justify-content-center align-items-center">
-      <p-button rounded [style]="{'background-color': '#f47621', 'border-color': '#f47621'}" >
-        <span class="components-font">Inicio Sesion</span>
-      </p-button>
-    </div> -->
   </div>
 </header>
