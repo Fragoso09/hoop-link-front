@@ -3,6 +3,7 @@ import { PortalComponent } from './pages/portal/portal.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { AcercaDeComponent } from './pages/legal/acerca-de/acerca-de.component';
 import { LegalComponent } from './pages/legal/legal.component';
+import { PoliticaPrivacidadComponent } from './pages/legal/politica-privacidad/politica-privacidad.component';
 
 export const routes: Routes = [
   {
@@ -19,6 +20,11 @@ export const routes: Routes = [
         path: 'acerca-de',
         title: 'Acerca de | HoopLink',
         loadComponent: () => import('./pages/legal/acerca-de/acerca-de.component').then(c => AcercaDeComponent),
+      },
+      {
+        path: 'politica-privacidad',
+        title: 'Política de Privacidad | HoopLink',
+        loadComponent: () => import('./pages/legal/politica-privacidad/politica-privacidad.component').then(c => PoliticaPrivacidadComponent),
       },
     ]
   },

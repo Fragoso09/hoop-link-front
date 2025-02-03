@@ -13,6 +13,14 @@ import { CommunicationService } from '../../../../core/services/ui/communication
 })
 export class FooterComponent {
   public anio:number = new Date().getFullYear();
+  public sections = [
+    { route: '/legal/acerca-de', title: 'Acerca de' },
+    { route: '/legal/condiciones-uso', title: 'Condiciones de uso' },
+    { route: '/legal/politica-privacidad', title: 'Política de privacidad' },
+    { route: '/legal/politica-cookies', title: 'Política de cookies' },
+    { route: '/legal/politica-copyright', title: 'Política de copyright' },
+    { route: '/legal/politica-marca', title: 'Política de marca' },
+  ];
 
   constructor(
     private activatedRoute: ActivatedRoute, private router: Router,

@@ -10,12 +10,9 @@
       <label for="anio-label" class="enlace-color">© {{anio}}</label>
     </div>
     <div class="col-7 md:col-6 lg:col-10 lg:flex justify-content-center align-items-center justify-content-between">
-      <a routerLink="/legal/acerca-de" class="flex enlace-color no-underline">Acerca de</a>
-      <a href="#" class="flex enlace-color no-underline">Condiciones de uso</a>
-      <a href="#" class="flex enlace-color no-underline">Política de privacidad</a>
-      <a href="#" class="flex enlace-color no-underline">Política de cookies</a>
-      <a href="#" class="flex enlace-color no-underline">Política de copyright</a>
-      <a href="#" class="flex enlace-color no-underline">Política de marca</a>
+     @for (section of sections; track $index) {
+      <a [routerLink]="section.route" class="flex enlace-color no-underline">{{section.title}}</a>
+     }
     </div>
   </div>
 </footer>
