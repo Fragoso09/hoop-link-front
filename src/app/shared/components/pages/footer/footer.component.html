@@ -1,0 +1,18 @@
+<footer>
+  <div class="grid m-0 p-0 lg:ml-5 lg:mr-5">
+    <div class="col-5 md:col-6 lg:col-2 flex align-items-center lg:justify-content-start">
+      <p-image
+          src="assets/images/logos/HOOPArtboard 49@8x.png"
+          alt="Image"
+          width="50px"
+          (click)="redirectHome()"
+          [style]="{'cursor': 'pointer'}"/>&nbsp;&nbsp;&nbsp;
+      <label for="anio-label" class="enlace-color">© {{anio}}</label>
+    </div>
+    <div class="col-7 md:col-6 lg:col-10 lg:flex justify-content-center align-items-center justify-content-between">
+     @for (section of sections; track $index) {
+      <a [routerLink]="section.route" class="flex enlace-color no-underline">{{section.title}}</a>
+     }
+    </div>
+  </div>
+</footer>
