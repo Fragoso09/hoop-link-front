@@ -3,7 +3,7 @@ import { Component, HostListener, OnInit } from '@angular/core';
 import { ImageModule } from 'primeng/image';
 import { RouterModule, ActivatedRoute, Router } from '@angular/router';
 import { IResizeImg } from '../../../../core/interfaces/ui.interface';
-import { redibujaImg } from '../../../../core/utils/ui/responsive.util';
+import { redibujaImg } from '../../../../core/utils/index';
 
 @Component({
   selector: 'app-header-legal',

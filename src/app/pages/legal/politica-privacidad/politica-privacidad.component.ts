@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 
+import { removeClass } from '../../../core/utils/ui/design.util';
+
 @Component({
   selector: 'app-politica-privacidad',
   standalone: true,
@@ -22,7 +24,7 @@ export class PoliticaPrivacidadComponent {
 
   public moveToSection(id:string, event: Event) {
     event.preventDefault();
-    this.removeClass();
+    removeClass('sectionClick');
     const element = document.getElementById(id);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -30,12 +32,5 @@ export class PoliticaPrivacidadComponent {
     }
   }
 
-  private removeClass() {
-    const pasados = document.getElementsByClassName('sectionClick');
-    if (pasados.length > 0) {
-      for (let index = 0; index < pasados.length; index++) {
-        pasados[index].classList.remove('sectionClick');
-      }
-    }
-  }
+
 }

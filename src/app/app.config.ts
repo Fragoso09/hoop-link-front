@@ -1,5 +1,5 @@
 import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
-import { provideRouter, withViewTransitions } from '@angular/router';
+import { provideRouter, withInMemoryScrolling, withViewTransitions } from '@angular/router';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { providePrimeNG } from 'primeng/config';
 
@@ -35,6 +35,9 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(
       routes,
+      withInMemoryScrolling({
+				scrollPositionRestoration: "enabled", // Restaurar el scroll al inicio
+			}),
       withViewTransitions({
         skipInitialTransition: true,
         onViewTransitionCreated(transitionInfo) {

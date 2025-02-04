@@ -5,7 +5,7 @@ import { FooterComponent } from "../../shared/components/pages/footer/footer.com
 import { ImageModule } from 'primeng/image';
 import { ButtonModule } from 'primeng/button';
 import { IResizeImg } from '../../core/interfaces/ui.interface';
-import { redibujaImg } from '../../core/utils/ui/responsive.util';
+import { redibujaImg } from '../../core/utils/index';
 import { RouterModule } from '@angular/router';
 
 
