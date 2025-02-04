@@ -7,6 +7,7 @@ import { PoliticaPrivacidadComponent } from './pages/legal/politica-privacidad/p
 import { PoliticaCookiesComponent } from './pages/legal/politica-cookies/politica-cookies.component';
 import { CondicionesUsoComponent } from './pages/legal/condiciones-uso/condiciones-uso.component';
 import { PoliticaMarcaComponent } from './pages/legal/politica-marca/politica-marca.component';
+import { PoliticaCopyrightComponent } from './pages/legal/politica-copyright/politica-copyright.component';
 
 export const routes: Routes = [
   {
@@ -26,7 +27,7 @@ export const routes: Routes = [
       },
       {
         path: 'condiciones-uso',
-        title: 'Condiciones de uso | HoopLink',
+        title: 'Condiciones de Uso | HoopLink',
         loadComponent: () => import('./pages/legal/condiciones-uso/condiciones-uso.component').then(c => CondicionesUsoComponent),
       },
       {
@@ -38,6 +39,11 @@ export const routes: Routes = [
         path: 'politica-cookies',
         title: 'Política de Cookies | HoopLink',
         loadComponent: () => import('./pages/legal/politica-cookies/politica-cookies.component').then(c => PoliticaCookiesComponent),
+      },
+      {
+        path: 'politica-copyright',
+        title: 'Política de Copyright | HoopLink',
+        loadComponent: () => import('./pages/legal/politica-copyright/politica-copyright.component').then(c => PoliticaCopyrightComponent),
       },
       {
         path: 'politica-marca',

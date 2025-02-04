@@ -9,7 +9,7 @@ import { removeClass } from '../../../core/utils';
   styleUrl: './politica-marca.component.scss'
 })
 export class PoliticaMarcaComponent {
-public sections = [
+  public sections = [
     { id: 'pol1', title: 'Misión y Valores de la Marca' },
     { id: 'pol2', title: 'Logo y Su Uso Correcto' },
     { id: 'pol3', title: 'Paleta de Colores' },
