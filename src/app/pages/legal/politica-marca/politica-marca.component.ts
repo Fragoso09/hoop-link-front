@@ -1,10 +1,13 @@
 import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { removeClass } from '../../../core/utils';
+
+import { ColorPicker } from 'primeng/colorpicker';
 
 @Component({
   selector: 'app-politica-marca',
   standalone: true,
-  imports: [],
+  imports: [ColorPicker, FormsModule],
   templateUrl: './politica-marca.component.html',
   styleUrl: './politica-marca.component.scss'
 })
@@ -19,6 +22,13 @@ export class PoliticaMarcaComponent {
     { id: 'pol7', title: 'Aplicaciones de la Marca' },
     { id: 'pol8', title: 'Contacto y Autorizaciones' },
   ];
+
+  public naranjaIntenso = '#f14e23';
+  public naranja = '#f47621';
+  public azulProdunfo = '#0c2251';
+  public azulMarino = '#003e61';
+  public azulVerde = '#004e6d';
+  public azulClaro = '#deebf9';
 
   public moveToSection(id:string, event: Event) {
     event.preventDefault();

@@ -33,8 +33,4 @@ export class HeaderLegalComponent implements OnInit {
     this.widthImg = redibujaImg(this._imgWidht, 1);
   }
 
-  public redirectHome():void {
-    this.router.navigateByUrl('/portal')
-  }
-
 }
