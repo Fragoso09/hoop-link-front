@@ -2,12 +2,13 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 
 import { ImageModule } from 'primeng/image';
+import { DividerModule } from 'primeng/divider';
 import { CommunicationService } from '../../../../core/services/ui/communication.service';
 
 @Component({
   selector: 'app-footer',
   standalone: true,
-  imports: [ImageModule, RouterModule],
+  imports: [ImageModule, RouterModule, DividerModule],
   templateUrl: './footer.component.html',
   styleUrl: './footer.component.scss'
 })
