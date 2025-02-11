@@ -6,13 +6,17 @@ import { ImageModule } from 'primeng/image';
 import { ButtonModule } from 'primeng/button';
 import { IResizeImg } from '../../core/interfaces/ui.interface';
 import { redibujaImg } from '../../core/utils/index';
+import { InputGroup } from 'primeng/inputgroup';
+import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
+import { CardModule } from 'primeng/card';
+import { InputTextModule } from 'primeng/inputtext';
 import { RouterModule } from '@angular/router';
 
 
 @Component({
   selector: 'app-portal',
   standalone: true,
-  imports: [HeaderComponent, FooterComponent, ImageModule, ButtonModule, RouterModule],
+  imports: [HeaderComponent, FooterComponent, ImageModule, ButtonModule, RouterModule, InputGroup, InputGroupAddonModule, CardModule, InputTextModule],
   templateUrl: './portal.component.html',
   styleUrl: './portal.component.scss'
 })

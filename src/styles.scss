@@ -1,10 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
-@font-face {
-  font-family: 'Bebas Neue';
-  src: url('assets/fonts/Bebas_Neue/BebasNeue-Regular.ttf') format('ttf');
-  font-weight: normal;
-  font-style: normal;
-}
+// @font-face {
+//   font-family: 'Bebas Neue';
+//   src: url('assets/fonts/Bebas_Neue/BebasNeue-Regular.ttf') format('ttf');
+//   font-weight: normal;
+//   font-style: normal;
+// }
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
 
 @font-face {
   font-family: 'Roboto Mono';
@@ -26,14 +27,18 @@ body {
 
 /* Aplica Monospace solo a los títulos (h1, h2, h3, etc.) */
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Bebas Neue', sans-serif;
+  font-family: 'Bebas Neue', serif;
 }
 
 /* Estilos para primeng */
 .components-font {
-  font-family: 'Bebas Neue', sans-serif;
+  font-family: 'Bebas Neue', serif;
   font-size: larger;
   font: bold;
+}
+
+.components-placeholder {
+  font-family: 'Roboto Mono', monospace;
 }
 /* end Estilos para primeng */
 
