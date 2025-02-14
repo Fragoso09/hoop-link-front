@@ -6,7 +6,7 @@
           alt="Image"
           width="100px"
           (click)="redirectHome()"
-          [style]="{'cursor': 'pointer'}"/>
+          [style]="{'cursor': isLegal ? '' : 'pointer'}"/>
     </div>
     <div class="col-7 md:col-6 lg:col-10">
       <div class="grid">
@@ -21,7 +21,7 @@
           <br>
           <label for="servicio-cliente-label" class="enlace-color components-font text-3xl">Servicio al Cliente</label><br><br>
           <label for="correo-label" class="enlace-color">Correo electrónico:</label><br>
-          <label class="enlace-color">hooplink2&#64;gmail.com</label>
+          <a href="mailto:hooplink2&#64;gmail.com" class="enlace-color">hooplink2&#64;gmail.com</a>
           <br>
           <label for="horario-atencion-label" class="enlace-color">Horario de atención:</label><br>
           <label class="enlace-color">Lunes a Sábado de 8:00 a.m. a 6:00 p.m.</label><br>

@@ -23,14 +23,20 @@ export class FooterComponent {
     { route: '/legal/politica-marca', title: 'Política de marca' },
   ];
 
+  public isLegal: boolean = false;
+
   constructor(
     private activatedRoute: ActivatedRoute, private router: Router,
     private communicationService:CommunicationService,
   ) {
-
+    if (this.router.url.split('/')[1] === 'legal') {
+      this.isLegal = true;
+    }
   }
 
   public redirectHome():void {
-    this.router.navigateByUrl('/portal')
+    if (!this.isLegal) {
+      this.router.navigateByUrl('/portal')
+    }
   }
 }

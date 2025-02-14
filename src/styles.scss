@@ -28,6 +28,7 @@ body {
 /* Aplica Monospace solo a los títulos (h1, h2, h3, etc.) */
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Bebas Neue', serif;
+  color: #334155;
 }
 
 /* Estilos para primeng */
@@ -40,6 +41,10 @@ h1, h2, h3, h4, h5, h6 {
 .components-placeholder {
   font-family: 'Roboto Mono', monospace;
 }
+
+.components-font-title-card {
+  font-family: 'Bebas Neue', serif;
+}
 /* end Estilos para primeng */
 
 /* Estilos para poder tener el fotter hasta abajo en donde se ocupe */
@@ -49,3 +54,9 @@ h1, h2, h3, h4, h5, h6 {
   grid-template-rows: auto 1fr auto;
 }
 /* end Estilos para poder tener el fotter hasta abajo en donde se ocupe */
+
+/* Estilos para svg */
+.color-svg {
+  color: #334155;
+}
+/* end Estilos para svg */
