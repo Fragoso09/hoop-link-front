@@ -6,6 +6,7 @@
 //   font-style: normal;
 // }
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
 
 @font-face {
   font-family: 'Roboto Mono';
@@ -20,7 +21,8 @@
 html, body { height: 100%; }
 /* Aplica Bebas Neue a todo el cuerpo */
 body {
-  font-family: 'Roboto Mono', monospace;
+  // font-family: 'Roboto Mono', monospace;
+  font-family: "Raleway", serif;
   margin: 0;
   padding: 0;
 }
@@ -39,7 +41,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .components-placeholder {
-  font-family: 'Roboto Mono', monospace;
+  // font-family: 'Roboto Mono', monospace;
+  font-family: "Raleway", serif;
 }
 
 .components-font-title-card {
@@ -60,3 +63,9 @@ h1, h2, h3, h4, h5, h6 {
   color: #334155;
 }
 /* end Estilos para svg */
+
+/* Estilos para letras */
+.tamanio-letra {
+  font-size: 20px;
+}
+/* end Estilos para letras */
