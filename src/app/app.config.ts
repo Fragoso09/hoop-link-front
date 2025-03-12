@@ -10,6 +10,8 @@ import { provideHttpClient } from '@angular/common/http';
 
 import Lara from "@primeng/themes/lara";
 import { definePreset } from "@primeng/themes";
+
+import { es } from "primelocale/es.json";
 // import { MyPreset } from '../assets/presets/my-preset';
 
 const MyPreset = definePreset(Lara, {
@@ -55,7 +57,8 @@ export const appConfig: ApplicationConfig = {
               darkModeSelector: false
             }
         },
-        ripple: true
-    })
+        ripple: true,
+        translation: es,
+    }),
   ]
 };

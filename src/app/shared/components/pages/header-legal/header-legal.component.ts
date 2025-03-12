@@ -2,7 +2,7 @@ import { Component, HostListener, OnInit } from '@angular/core';
 
 import { ImageModule } from 'primeng/image';
 import { RouterModule, ActivatedRoute, Router } from '@angular/router';
-import { IResizeImg } from '../../../../core/interfaces/ui.interface';
+import { IResizeImg } from '../../../../core/interfaces/ui/ui.interface';
 import { redibujaImg } from '../../../../core/utils/index';
 
 @Component({

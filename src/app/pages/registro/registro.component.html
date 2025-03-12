@@ -1,0 +1,68 @@
+<div class="container-page">
+  <app-header></app-header>
+  <main>
+    <div class="grid m-0 p-0 lg:ml-5 lg:mr-5 ">
+      <div class="col-12 mt-4 mb-4">
+        <div class="flex justify-content-center align-items-center">
+          <p-card [className]="'shadow-8'" [style]="{ width: '25rem', overflow: 'hidden' }">
+              <ng-template pTemplate="title">
+                <h1 class="flex justify-content-center align-items-center">Ingresa tus Datos</h1>
+              </ng-template>
+              <ng-template pTemplate="content">
+                <div class="grid">
+                  <div class="col-12">
+                    <p-floatlabel variant="on">
+                      <input pInputText id="on_label" [(ngModel)]="value3" autocomplete="off" fluid="true" />
+                      <label for="on_label">Nombre</label>
+                    </p-floatlabel>
+                  </div>
+                  <div class="col-12">
+                    <p-floatlabel variant="on">
+                      <input pInputText id="on_label" [(ngModel)]="value3" autocomplete="off" fluid="true" />
+                      <label for="on_label">Apellido Paterno</label>
+                    </p-floatlabel>
+                  </div>
+                  <div class="col-12">
+                    <p-floatlabel variant="on">
+                      <input pInputText id="on_label" [(ngModel)]="value3" autocomplete="off" fluid="true" />
+                      <label for="on_label">Apellido Materno</label>
+                    </p-floatlabel>
+                  </div>
+                  <div class="col-12">
+                      <p-floatlabel variant="on">
+                        <p-datepicker [(ngModel)]="value3" inputId="on_label" showIcon iconDisplay="input" fluid="true" appendTo="body" />
+                        <label for="on_label">Fecha de Nacimiento</label>
+                    </p-floatlabel>
+                  </div>
+                  <div class="col-12">
+                    <p-floatlabel variant="on">
+                      <input pInputText id="on_label" [(ngModel)]="value3" autocomplete="off" fluid="true" />
+                      <label for="on_label">Lugar de Residencia</label>
+                    </p-floatlabel>
+                  </div>
+                  <div class="col-12">
+                    <p-floatlabel variant="on">
+                      <input pInputText id="on_label" [(ngModel)]="value3" autocomplete="off" fluid="true" />
+                      <label for="on_label">Correo</label>
+                    </p-floatlabel>
+                  </div>
+                  <div class="col-12">
+                    <p-floatlabel variant="on">
+                      <p-inputmask mask="999-999-9999" [style]="{ width: '100%' }" [(ngModel)]="value3" placeholder="999-999-9999" variant="filled" />
+                    </p-floatlabel>
+                  </div>
+                </div>
+              </ng-template>
+              <ng-template pTemplate="footer">
+                  <div class="flex gap-4 mt-1">
+                      <p-button label="Cancelar" severity="secondary" class="w-full" [outlined]="true" styleClass="w-full" />
+                      <p-button label="Guardar" class="w-full" styleClass="w-full" />
+                  </div>
+              </ng-template>
+          </p-card>
+        </div>
+      </div>
+    </div>
+  </main>
+  <app-footer></app-footer>
+</div>

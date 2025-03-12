@@ -1,4 +1,4 @@
-import { IResizeImg } from "../../interfaces/ui.interface";
+import { IResizeImg } from "../../interfaces/ui/ui.interface";
 
 export function redibujaImg(resize: IResizeImg, location: number): string {
   const { limSuperior, limMedio, limInferior, valSuperior, valMedio, valInferior  } = resize;

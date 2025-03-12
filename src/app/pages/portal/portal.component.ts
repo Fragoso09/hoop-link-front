@@ -1,5 +1,5 @@
 import { Component, HostListener, OnInit  } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 import { HeaderComponent } from '../../shared/components/pages/header/header.component';
 import { FooterComponent } from "../../shared/components/pages/footer/footer.component";
@@ -15,7 +15,7 @@ import { SpeedDial } from 'primeng/speeddial';
 import { ToastModule } from 'primeng/toast';
 
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
-import { IResizeImg } from '../../core/interfaces/ui.interface';
+import { IResizeImg } from '../../core/interfaces/ui/ui.interface';
 import { redibujaImg } from '../../core/utils/index';
 import { TipoSvg } from '../../shared/enums';
 
@@ -23,7 +23,7 @@ import { TipoSvg } from '../../shared/enums';
 @Component({
   selector: 'app-portal',
   standalone: true,
-  imports: [HeaderComponent, FooterComponent, ImageModule, ButtonModule, RouterModule, InputGroup, InputGroupAddonModule, CardModule, InputTextModule, IconsSvgComponent, SpeedDial, ToastModule],
+  imports: [RouterModule, HeaderComponent, FooterComponent, ImageModule, ButtonModule, RouterModule, InputGroup, InputGroupAddonModule, CardModule, InputTextModule, IconsSvgComponent, ToastModule],
   templateUrl: './portal.component.html',
   styleUrl: './portal.component.scss',
   providers: [MessageService]
@@ -45,42 +45,15 @@ export class PortalComponent implements OnInit {
 //#endregion
 
 //#region Constructor
-  constructor(private messageService: MessageService) { }
+  constructor(
+    private messageService: MessageService,
+    private router: Router
+  ) { }
 //#endregion
 
 //#region Metodos Ng
   ngOnInit(): void {
     this.widthImg = redibujaImg(this._imgWidht, 2);
-
-    this.items = [
-      {
-          icon: 'pi pi-pencil',
-          command: () => {
-              this.messageService.add({ severity: 'info', summary: 'Add', detail: 'Data Added' });
-          }
-      },
-      {
-          icon: 'pi pi-refresh',
-          command: () => {
-              this.messageService.add({ severity: 'success', summary: 'Update', detail: 'Data Updated' });
-          }
-      },
-      {
-          icon: 'pi pi-trash',
-          command: () => {
-              this.messageService.add({ severity: 'error', summary: 'Delete', detail: 'Data Deleted' });
-          }
-      },
-      {
-          icon: 'pi pi-upload',
-          routerLink: ['/fileupload']
-      },
-      {
-          icon: 'pi pi-external-link',
-          target: '_blank',
-          url: 'http://angular.io'
-      }
-    ];
   }
 //#endregion
 
@@ -88,6 +61,12 @@ export class PortalComponent implements OnInit {
   @HostListener('window:resize', ['$event'])
   onResize() {
     this.widthImg = redibujaImg(this._imgWidht, 2);
+  }
+//#endregion
+
+//#region Metodos
+  onClickUnirse() {
+    this.router.navigateByUrl('/registro')
   }
 //#endregion
 
