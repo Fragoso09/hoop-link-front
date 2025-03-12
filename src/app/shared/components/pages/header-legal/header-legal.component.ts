@@ -2,7 +2,7 @@ import { Component, HostListener, OnInit } from '@angular/core';
 
 import { ImageModule } from 'primeng/image';
 import { RouterModule, ActivatedRoute, Router } from '@angular/router';
-import { IResizeImg } from '../../../../core/interfaces/ui.interface';
+import { IResizeImg } from '../../../../core/interfaces/ui/ui.interface';
 import { redibujaImg } from '../../../../core/utils/index';
 
 @Component({
@@ -31,10 +31,6 @@ export class HeaderLegalComponent implements OnInit {
   @HostListener('window:resize', ['$event'])
   onResize() {
     this.widthImg = redibujaImg(this._imgWidht, 1);
-  }
-
-  public redirectHome():void {
-    this.router.navigateByUrl('/portal')
   }
 
 }

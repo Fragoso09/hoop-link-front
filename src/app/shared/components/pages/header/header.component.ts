@@ -9,7 +9,7 @@ import { AvatarModule } from 'primeng/avatar';
 import { InputTextModule } from 'primeng/inputtext';
 import { CommonModule } from '@angular/common';
 import { redibujaImg } from '../../../../core/utils/index';
-import { IResizeImg } from '../../../../core/interfaces/ui.interface';
+import { IResizeImg } from '../../../../core/interfaces/ui/ui.interface';
 import { Router, RouterModule } from '@angular/router';
 
 @Component({
