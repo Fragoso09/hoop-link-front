@@ -1,0 +1,9 @@
+<p-blockUI #blockUI [blocked]="blockedDocument">
+  <ng-template pTemplate="content" let-node>
+    <div class="centered-container">
+      <div class="centered-content">
+        <div class="loader" [attr.data-content]="mensaje" ></div>
+      </div>
+    </div>
+  </ng-template>
+</p-blockUI>

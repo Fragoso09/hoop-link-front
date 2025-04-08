@@ -15,7 +15,7 @@
           <label for="nosotros-label" class="enlace-color components-font text-3xl">Nosotros</label><br><br>
           @for (section of sections; track $index) {
             <a [routerLink]="section.route" target="_blank" class="flex enlace-color no-underline">{{section.title}}</a>
-           }
+          }
         </div>
         <div class="col-12 lg:col-4">
           <br>
