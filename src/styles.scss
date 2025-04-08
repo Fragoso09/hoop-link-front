@@ -68,4 +68,22 @@ h1, h2, h3, h4, h5, h6 {
 .tamanio-letra {
   font-size: 20px;
 }
+
+.campoErrorTexto {
+  color: #dc2626;
+}
 /* end Estilos para letras */
+
+/* Estilos para validaciones */
+input.ng-valid {
+  border: 1px solid green; /* Resalta el borde con color verde si es válido */
+}
+/* end Estilos para validaciones */
+
+/* Box Shadow */
+.shadow-9 {
+  box-shadow: 0px 18px 92px 16px rgba(0, 0, 0, 0.12),
+            0px 48px 76px 6px rgba(0, 0, 0, 0.14),
+            0px 22px 30px rgba(0, 0, 0, 0.2);
+}
+/* End Box Shadow */

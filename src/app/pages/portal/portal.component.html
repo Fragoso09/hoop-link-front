@@ -217,25 +217,37 @@
       </div>
     </div>
     <div class="grid m-0 p-0 lg:ml-5 lg:mr-5">
-      <div class="lg:col-8"></div>
-      <div class="col justify-content-center">
-        <p-card styleClass="shadow-8">
-          <h1 class="flex align-items-center justify-content-center">Suscribete a nuestro Newsletter</h1>
-          <p-inputgroup class="flex align-items-center justify-content-center">
-            <p-inputgroup-addon styleClass="fadeinleft animation-duration-1000 animation-iteration-infinite">
-              <i class="pi pi-arrow-right"></i>
-            </p-inputgroup-addon>
-            <p-inputgroup>
-              <input pInputText placeholder="Correo electronico"/>
-              <p-inputgroup-addon>
-                  <p-button icon="pi pi-verified" severity="secondary" variant="text" />
-              </p-inputgroup-addon>
-            </p-inputgroup>
-            <p-inputgroup-addon styleClass="fadeinright animation-duration-1000 animation-iteration-infinite">
-                <i class="pi pi-arrow-left"></i>
-            </p-inputgroup-addon>
-          </p-inputgroup>
-        </p-card>
+      <div class="lg:col-8 col-12 flex justify-content-center">
+        <p-image
+            src="assets/images/generales/unirse.png"
+            alt="Image"
+            [width]="widthImageUnirse"
+            (click)="onClickUnirse()"
+            [style]="{'cursor': 'pointer'}"/>
+      </div>
+      <div class="lg:col-4 col-12 justify-content-center">
+        <div class="flex flex-column">
+          <div class="vertical-align-top">
+            <p-card styleClass="shadow-8">
+              <h1 class="flex align-items-center justify-content-center">Suscribete a nuestro Newsletter</h1>
+              <p-inputgroup class="flex align-items-center justify-content-center">
+                <p-inputgroup-addon styleClass="fadeinleft animation-duration-1000 animation-iteration-infinite">
+                  <i class="pi pi-arrow-right"></i>
+                </p-inputgroup-addon>
+                <p-inputgroup>
+                  <input pInputText placeholder="Correo electronico"/>
+                  <p-inputgroup-addon>
+                      <p-button icon="pi pi-verified" severity="secondary" variant="text" />
+                  </p-inputgroup-addon>
+                </p-inputgroup>
+                <p-inputgroup-addon styleClass="fadeinright animation-duration-1000 animation-iteration-infinite">
+                    <i class="pi pi-arrow-left"></i>
+                </p-inputgroup-addon>
+              </p-inputgroup>
+            </p-card>
+          </div>
+
+        </div>
       </div>
     </div>
     <button class="btn btn-primary floating-btn">+</button>

@@ -18,6 +18,7 @@ import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { IResizeImg } from '../../core/interfaces/ui/ui.interface';
 import { redibujaImg } from '../../core/utils/index';
 import { TipoSvg } from '../../shared/enums';
+import { UsuarioService } from '../../core/services/usuario/usuario.service';
 
 
 @Component({
@@ -33,6 +34,7 @@ export class PortalComponent implements OnInit {
   public widthImg:string = "600";
   public tipoSvg = TipoSvg;
   public items!: MenuItem[];
+  public widthImageUnirse:string = '300';
 //#endregion
 
 //#region Variables privadas
@@ -47,7 +49,8 @@ export class PortalComponent implements OnInit {
 //#region Constructor
   constructor(
     private messageService: MessageService,
-    private router: Router
+    private router: Router,
+    private usuarioService: UsuarioService
   ) { }
 //#endregion
 

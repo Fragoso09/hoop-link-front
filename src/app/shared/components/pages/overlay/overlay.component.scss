@@ -1,0 +1,36 @@
+.centered-container {
+  display: flex;
+  justify-content: center;   // Centra el contenido horizontalmente
+  align-items: center;       // Centra el contenido verticalmente
+  height: 100vh;             // Asegura que ocupe toda la altura de la ventana
+  width: 100vw;              // Asegura que ocupe toda la anchura de la ventana
+}
+
+/* HTML: <div class="loader"></div> */
+.loader {
+  width: fit-content;
+  // font-weight: bold;
+  // font-family: 'Raleway';
+  // font-family: monospace;
+  font-family: 'Roboto Mono', monospace;
+  text-shadow:
+    0 0 0 rgb(0 78 109),
+    0 0 0 rgb(241 118 33),
+    0 0 0 rgb(0 62 97);
+  font-size: 45px;
+  animation: l32 1s infinite cubic-bezier(0.5,-2000,0.5,2000);
+}
+
+.loader:before {
+  // content:"Cargando...";
+  content: attr(data-content);
+}
+
+@keyframes l32{
+  25%,100% {
+  text-shadow:
+     0.03px -0.01px 0.01px rgb(0 78 109),
+     0.02px  0.02px 0     rgb(241 118 33),
+    -0.02px  0.02px 0     rgb(0 62 97);
+  }
+}

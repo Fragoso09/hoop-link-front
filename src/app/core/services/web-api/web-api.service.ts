@@ -11,22 +11,22 @@ export class WebApiService {
   constructor(private http: HttpClient) {}
 
   // Método GET (con opción de autenticación)
-  get<T>(endpoint: string, authRequired = false): Observable<T> {
+  get<T>(endpoint: string, authRequired: boolean = false): Observable<T> {
     return this.http.get<T>(`${environment.apiUrl}/${endpoint}`, this.getOptions(authRequired));
   }
 
   // Método POST
-  post<T>(endpoint: string, data: any, authRequired = false): Observable<T> {
+  post<T>(endpoint: string, data: any, authRequired: boolean = false): Observable<T> {
     return this.http.post<T>(`${environment.apiUrl}/${endpoint}`, data, this.getOptions(authRequired));
   }
 
   // Método PUT
-  put<T>(endpoint: string, data: any, authRequired = false): Observable<T> {
+  put<T>(endpoint: string, data: any, authRequired: boolean = false): Observable<T> {
     return this.http.put<T>(`${environment.apiUrl}/${endpoint}`, data, this.getOptions(authRequired));
   }
 
   // Método DELETE
-  delete<T>(endpoint: string, authRequired = false): Observable<T> {
+  delete<T>(endpoint: string, authRequired: boolean = false): Observable<T> {
     return this.http.delete<T>(`${environment.apiUrl}/${endpoint}`, this.getOptions(authRequired));
   }
 
