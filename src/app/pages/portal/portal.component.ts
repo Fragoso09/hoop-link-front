@@ -10,9 +10,9 @@ import { ButtonModule } from 'primeng/button';
 import { InputGroup } from 'primeng/inputgroup';
 import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
-import { MenuItem, MessageService } from 'primeng/api';
-import { SpeedDial } from 'primeng/speeddial';
+import { MenuItem } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
+import { Dialog, DialogModule } from 'primeng/dialog';
 
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { IResizeImg } from '../../core/interfaces/ui/ui.interface';
@@ -24,10 +24,25 @@ import { UsuarioService } from '../../core/services/usuario/usuario.service';
 @Component({
   selector: 'app-portal',
   standalone: true,
-  imports: [RouterModule, HeaderComponent, FooterComponent, ImageModule, ButtonModule, RouterModule, InputGroup, InputGroupAddonModule, CardModule, InputTextModule, IconsSvgComponent, ToastModule],
+  imports: [
+    RouterModule,
+    HeaderComponent,
+    FooterComponent,
+    ImageModule,
+    ButtonModule,
+    RouterModule,
+    InputGroup,
+    InputGroupAddonModule,
+    CardModule,
+    InputTextModule,
+    IconsSvgComponent,
+    ToastModule,
+    Dialog,
+    DialogModule,
+  ],
   templateUrl: './portal.component.html',
   styleUrl: './portal.component.scss',
-  providers: [MessageService]
+  providers: []
 })
 export class PortalComponent implements OnInit {
 //#region Variables publicas
@@ -35,6 +50,7 @@ export class PortalComponent implements OnInit {
   public tipoSvg = TipoSvg;
   public items!: MenuItem[];
   public widthImageUnirse:string = '300';
+  public esVisibleDialog:boolean = false;
 //#endregion
 
 //#region Variables privadas
@@ -48,7 +64,6 @@ export class PortalComponent implements OnInit {
 
 //#region Constructor
   constructor(
-    private messageService: MessageService,
     private router: Router,
     private usuarioService: UsuarioService
   ) { }
@@ -56,7 +71,7 @@ export class PortalComponent implements OnInit {
 
 //#region Metodos Ng
   ngOnInit(): void {
-    this.widthImg = redibujaImg(this._imgWidht, 2);
+   this.inicializa();
   }
 //#endregion
 
@@ -70,6 +85,23 @@ export class PortalComponent implements OnInit {
 //#region Metodos
   onClickUnirse() {
     this.router.navigateByUrl('/registro')
+  }
+
+  private inicializa() {
+    this.defineTamanio();
+    this.muestraEsRegistro();
+  }
+
+  private defineTamanio() {
+    this.widthImg = redibujaImg(this._imgWidht, 2);
+  }
+
+  private muestraEsRegistro() {
+    this.esVisibleDialog = this.usuarioService.esRegistro;
+  }
+
+  onHide(){
+    this.usuarioService.esRegistro = this.esVisibleDialog;
   }
 //#endregion
 

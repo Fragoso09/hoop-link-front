@@ -124,6 +124,7 @@ export class RegistroComponent implements OnInit {
           this.toastService.showMessage('success', 'Genial', response.mensaje, 5000);
           this.formulario.reset();
           this.blockUserIService.hide();
+          this.usuarioService.esRegistro = true;
           this.router.navigateByUrl('/portal');
         },
         error: (error) => {

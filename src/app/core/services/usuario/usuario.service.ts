@@ -10,7 +10,7 @@ import { WebApiConstants } from '../../constants/web-api/web-api.constants';
 export class UsuarioService {
 
   //#region Propiedades
-
+  public esRegistro:boolean = false;
   //#endregion Propiedades
 
   //#region Constructor
