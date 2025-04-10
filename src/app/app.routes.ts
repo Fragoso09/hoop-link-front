@@ -23,6 +23,11 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/legal/legal.component').then(l => l.LegalComponent),
     children: [
       {
+        path: '',
+        redirectTo: 'acerca-de',
+        pathMatch: 'full'
+      },
+      {
         path: 'acerca-de',
         title: 'Acerca de | HoopLink',
         loadComponent: () => import('./pages/legal/acerca-de/acerca-de.component').then(c => c.AcercaDeComponent),
@@ -59,6 +64,16 @@ export const routes: Routes = [
     title: 'Registro | HoopLink',
     loadComponent: () => import('./pages/registro/registro.component').then(r => r.RegistroComponent),
     children: [
+      {
+        path: '',
+        redirectTo: 'formulario-registro',
+        pathMatch: 'full'
+      },
+      {
+        path: 'formulario-registro',
+        title: 'Formulario Registro | HoopLink',
+        loadComponent: () => import('./pages/registro/formulario-registro/formulario-registro.component').then(f => f.FormularioRegistroComponent),
+      },
       {
         path: 'valida-correo',
         title: 'Valida Correo | HoopLink',
