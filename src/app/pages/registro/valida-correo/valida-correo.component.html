@@ -1,1 +1,21 @@
-<p>estoy funcionado</p>
+<div class="grid m-0 p-0 lg:ml-5 lg:mr-5 mt-8">
+  <div class="col-12 mt-4 mb-4">
+    <div class="flex justify-content-center align-items-center">
+      @if (muestraLoader) {
+        <div class="loader"></div>
+      } @else {
+        <p-dialog
+          header="¡Error! ❌."
+          [visible]="true"
+          [modal]="true"
+          [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }"
+          [style]="{ width: '50vw' }"
+          [draggable]="true"
+          [resizable]="true"
+          [closable]="false">
+             <div [innerHTML]="error"></div>
+        </p-dialog>
+      }
+    </div>
+  </div>
+</div>

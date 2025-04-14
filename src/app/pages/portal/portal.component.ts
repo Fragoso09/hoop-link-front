@@ -12,13 +12,13 @@ import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
 import { MenuItem } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
-import { Dialog, DialogModule } from 'primeng/dialog';
 
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { IResizeImg } from '../../core/interfaces/ui/ui.interface';
 import { redibujaImg } from '../../core/utils/index';
 import { TipoSvg } from '../../shared/enums';
 import { UsuarioService } from '../../core/services/usuario/usuario.service';
+import { ModalRegistroComponent } from './modal-registro/modal-registro.component';
 
 
 @Component({
@@ -37,8 +37,7 @@ import { UsuarioService } from '../../core/services/usuario/usuario.service';
     InputTextModule,
     IconsSvgComponent,
     ToastModule,
-    Dialog,
-    DialogModule,
+    ModalRegistroComponent
   ],
   templateUrl: './portal.component.html',
   styleUrl: './portal.component.scss',
@@ -100,9 +99,6 @@ export class PortalComponent implements OnInit {
     this.esVisibleDialog = this.usuarioService.esRegistro;
   }
 
-  onHide(){
-    this.usuarioService.esRegistro = this.esVisibleDialog;
-  }
 //#endregion
 
 }

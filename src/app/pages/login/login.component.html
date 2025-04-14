@@ -1,1 +1,9 @@
-<p>login works!</p>
+<div class="container-page">
+  <app-header></app-header>
+  <main>
+    @if (esVisibleDialog) {
+      <app-modal-token-valido [(esVisibleDialog)]="esVisibleDialog"></app-modal-token-valido>
+    }
+  </main>
+  <app-footer></app-footer>
+</div>
