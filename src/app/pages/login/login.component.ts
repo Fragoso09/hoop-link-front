@@ -16,6 +16,7 @@ import { DividerModule } from 'primeng/divider';
 import { FloatLabel } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
+import { ModalRecuperaContrasenaComponent } from "./modal-recupera-contrasena/modal-recupera-contrasena.component";
 
 @Component({
   selector: 'app-login',
@@ -23,9 +24,10 @@ import { PasswordModule } from 'primeng/password';
   imports: [
     HeaderComponent, FooterComponent, ModalTokenValidoComponent,
     CardModule, ButtonModule, InputTextModule,
-          FormsModule, FloatLabel, CommonModule, ReactiveFormsModule, PasswordModule, DividerModule,
-          RouterModule
-  ],
+    FormsModule, FloatLabel, CommonModule, ReactiveFormsModule, PasswordModule, DividerModule,
+    RouterModule,
+    ModalRecuperaContrasenaComponent
+],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
@@ -33,6 +35,7 @@ export class LoginComponent implements OnInit {
 //#region Variables publicas
   public esVisibleDialog:boolean = false;
   public formulario: FormGroup;
+  public esVisibleRecuperaContrasenaDialog:boolean = false;
 //#endregion Variables publicas
 
 //#region Constructor
@@ -83,6 +86,10 @@ export class LoginComponent implements OnInit {
 
   public registrarme():void {
     this.router.navigateByUrl('/registro');
+  }
+
+  public muestraRecuperaContrasena() {
+    this.esVisibleRecuperaContrasenaDialog = true;
   }
 
 //#endregion Metodos

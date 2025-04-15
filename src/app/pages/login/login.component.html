@@ -39,7 +39,7 @@
                   <p-button label="Registrarme" (onClick)="registrarme()" class="w-full" styleClass="w-full" type="button" [style]="{'background-color': '#f47621', 'border-color': '#f47621'}" />
                 </div>
                 <div class="flex gap-4 mt-1">
-                  <p-button label="Olvide mi contraseña" class="w-full" styleClass="w-full" type="button" [style]="{'background-color': '#6c757d', 'border-color': '#6c757d'}" />
+                  <p-button label="Olvide mi contraseña" (onClick)="muestraRecuperaContrasena()" class="w-full" styleClass="w-full" type="button" [style]="{'background-color': '#6c757d', 'border-color': '#6c757d'}" />
                 </div>
             </ng-template>
             </p-card>
@@ -49,6 +49,9 @@
     </div>
     @if (esVisibleDialog) {
       <app-modal-token-valido [(esVisibleDialog)]="esVisibleDialog"></app-modal-token-valido>
+    }
+    @if (esVisibleRecuperaContrasenaDialog) {
+      <app-modal-recupera-contrasena [(esVisibleRecuperaContrasenaDialog)]="esVisibleRecuperaContrasenaDialog"></app-modal-recupera-contrasena>
     }
   </main>
   <app-footer></app-footer>

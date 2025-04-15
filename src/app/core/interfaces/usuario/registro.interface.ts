@@ -10,3 +10,7 @@ export interface IRegistro {
   tipoUsuario:string;
   contrasena:string;
 }
+
+export interface IRecuperaContrasena {
+  correo: string
+}
