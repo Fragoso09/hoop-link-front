@@ -10,6 +10,7 @@ import { Routes } from '@angular/router';
 // import { PoliticaCopyrightComponent } from './pages/legal/politica-copyright/politica-copyright.component';
 // import { RegistroComponent } from './pages/registro/registro.component';
 // import { LoginComponent } from './pages/login/login.component';
+import { DesktopComponent } from './pages/desktop/desktop.component';
 
 export const routes: Routes = [
   {
@@ -90,6 +91,11 @@ export const routes: Routes = [
     path: 'terminos-condiciones',
     title: 'Terminos y Condiciones | HoopLink',
     loadComponent: () => import('./pages/terminos-condiciones/terminos-condiciones.component').then(t => t.TerminosCondicionesComponent),
+  },
+  {
+    path: 'desktop',
+    title: 'Desktop | HoopLink',
+    loadComponent: () => import('./pages/desktop/desktop.component').then(d=> d.DesktopComponent),
   },
   {
     path: '',

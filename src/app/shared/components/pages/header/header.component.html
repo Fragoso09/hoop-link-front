@@ -14,7 +14,7 @@
       <div class="card flex align-items-center justify-content-center">
         <p-menubar [model]="items" [style]="{'background-color': 'white', 'border-color': 'white'}">
           <ng-template #end>
-            <p-button rounded class="flex align-items-center justify-content-center" [style]="{'background-color': '#f47621', 'border-color': '#f47621'}" >
+            <p-button rounded (onClick)="goLogin()" class="flex align-items-center justify-content-center" [style]="{'background-color': '#f47621', 'border-color': '#f47621'}" >
               <span class="components-font">Inicio Sesion</span>
             </p-button>
           </ng-template>

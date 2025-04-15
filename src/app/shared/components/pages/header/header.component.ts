@@ -64,6 +64,10 @@ export class HeaderComponent implements OnInit {
   }
 
   public redirectHome():void {
-    this.router.navigateByUrl('/portal')
+    this.router.navigateByUrl('/portal');
+  }
+
+  public goLogin() {
+    this.router.navigateByUrl('/login')
   }
 }
