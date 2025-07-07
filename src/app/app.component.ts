@@ -5,7 +5,7 @@ import { Toast } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 
 import { ToastService } from './core/services/messages/toast.service';
-import { OverlayComponent } from './shared/components/pages/overlay/overlay.component';
+import { OverlayComponent } from './core/components/overlay/overlay.component';
 import { BlockUserIService } from './core/services/blockUI/block-user-i.service';
 
 @Component({

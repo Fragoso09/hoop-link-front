@@ -1,27 +1,29 @@
 import { Routes } from '@angular/router';
-// import { PortalComponent } from './pages/portal/portal.component';
-// import { NotFoundComponent } from './pages/not-found/not-found.component';
-// import { AcercaDeComponent } from './pages/legal/acerca-de/acerca-de.component';
-// import { LegalComponent } from './pages/legal/legal.component';
-// import { PoliticaPrivacidadComponent } from './pages/legal/politica-privacidad/politica-privacidad.component';
-// import { PoliticaCookiesComponent } from './pages/legal/politica-cookies/politica-cookies.component';
-// import { CondicionesUsoComponent } from './pages/legal/condiciones-uso/condiciones-uso.component';
-// import { PoliticaMarcaComponent } from './pages/legal/politica-marca/politica-marca.component';
-// import { PoliticaCopyrightComponent } from './pages/legal/politica-copyright/politica-copyright.component';
-// import { RegistroComponent } from './pages/registro/registro.component';
-// import { LoginComponent } from './pages/login/login.component';
-import { DesktopComponent } from './pages/desktop/desktop.component';
+import { DesktopComponent } from './features/desktop/desktop.component';
+import { authGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
   {
     path: 'portal',
     title: 'Portal | HoopLink',
-    loadComponent: () => import('./pages/portal/portal.component').then(p => p.PortalComponent),
+    loadComponent: () => import('./layouts/public-layout/public-portal-layout/public-portal-layout.component').then(p => p.PublicPortalLayoutComponent),
+    children: [
+      {
+        path: '',
+        pathMatch: 'full',
+        loadComponent:() => import('./features/portal/pages/portal-page/portal-page.component').then(p => p.PortalPageComponent),
+      },
+      {
+        path: 'terminos-condiciones',
+        title: 'Terminos y Condiciones | HoopLink',
+        loadComponent: () => import('./features/portal/pages/terminos-condiciones/terminos-condiciones.component').then(t => t.TerminosCondicionesComponent),
+      },
+    ]
   },
   {
     path: 'legal',
     title: 'Legal | HoopLink',
-    loadComponent: () => import('./pages/legal/legal.component').then(l => l.LegalComponent),
+    loadComponent: () => import('./layouts/public-layout/public-legal-layout/legal.component').then(l => l.LegalComponent),
     children: [
       {
         path: '',
@@ -31,39 +33,39 @@ export const routes: Routes = [
       {
         path: 'acerca-de',
         title: 'Acerca de | HoopLink',
-        loadComponent: () => import('./pages/legal/acerca-de/acerca-de.component').then(c => c.AcercaDeComponent),
+        loadComponent: () => import('./features/legal/pages/acerca-de/acerca-de.component').then(c => c.AcercaDeComponent),
       },
       {
         path: 'condiciones-uso',
         title: 'Condiciones de Uso | HoopLink',
-        loadComponent: () => import('./pages/legal/condiciones-uso/condiciones-uso.component').then(c => c.CondicionesUsoComponent),
+        loadComponent: () => import('./features/legal/pages/condiciones-uso/condiciones-uso.component').then(c => c.CondicionesUsoComponent),
       },
       {
         path: 'politica-privacidad',
         title: 'Política de Privacidad | HoopLink',
-        loadComponent: () => import('./pages/legal/politica-privacidad/politica-privacidad.component').then(c => c.PoliticaPrivacidadComponent),
+        loadComponent: () => import('./features/legal/pages/politica-privacidad/politica-privacidad.component').then(c => c.PoliticaPrivacidadComponent),
       },
       {
         path: 'politica-cookies',
         title: 'Política de Cookies | HoopLink',
-        loadComponent: () => import('./pages/legal/politica-cookies/politica-cookies.component').then(c => c.PoliticaCookiesComponent),
+        loadComponent: () => import('./features/legal/pages/politica-cookies/politica-cookies.component').then(c => c.PoliticaCookiesComponent),
       },
       {
         path: 'politica-copyright',
         title: 'Política de Copyright | HoopLink',
-        loadComponent: () => import('./pages/legal/politica-copyright/politica-copyright.component').then(c => c.PoliticaCopyrightComponent),
+        loadComponent: () => import('./features/legal/pages/politica-copyright/politica-copyright.component').then(c => c.PoliticaCopyrightComponent),
       },
       {
         path: 'politica-marca',
         title: 'Política de Marca | HoopLink',
-        loadComponent: () => import('./pages/legal/politica-marca/politica-marca.component').then(c => c.PoliticaMarcaComponent),
+        loadComponent: () => import('./features/legal/pages/politica-marca/politica-marca.component').then(c => c.PoliticaMarcaComponent),
       },
     ]
   },
   {
     path: 'registro',
     title: 'Registro | HoopLink',
-    loadComponent: () => import('./pages/registro/registro.component').then(r => r.RegistroComponent),
+    loadComponent: () => import('./layouts/public-layout/public-portal-layout/public-portal-layout.component').then(r => r.PublicPortalLayoutComponent),
     children: [
       {
         path: '',
@@ -73,29 +75,33 @@ export const routes: Routes = [
       {
         path: 'formulario-registro',
         title: 'Formulario Registro | HoopLink',
-        loadComponent: () => import('./pages/registro/formulario-registro/formulario-registro.component').then(f => f.FormularioRegistroComponent),
+        loadComponent: () => import('./features/registro/pages/formulario-registro/formulario-registro.component').then(f => f.FormularioRegistroComponent),
       },
       {
         path: 'valida-correo',
         title: 'Valida Correo | HoopLink',
-        loadComponent: () => import('./pages/registro/valida-correo/valida-correo.component').then(v => v.ValidaCorreoComponent),
+        loadComponent: () => import('./features/registro/pages/valida-correo/valida-correo.component').then(v => v.ValidaCorreoComponent),
       }
     ]
   },
   {
     path: 'login',
     title: 'Login | HoopLink',
-    loadComponent: () => import('./pages/login/login.component').then(l=> l.LoginComponent),
-  },
-  {
-    path: 'terminos-condiciones',
-    title: 'Terminos y Condiciones | HoopLink',
-    loadComponent: () => import('./pages/terminos-condiciones/terminos-condiciones.component').then(t => t.TerminosCondicionesComponent),
+    loadComponent: () => import('./layouts/public-layout/public-portal-layout/public-portal-layout.component').then(p => p.PublicPortalLayoutComponent),
+    children: [
+      {
+        path: '',
+        pathMatch: 'full',
+        loadComponent: () => import('./features/login/pages/login-page/login-page.component').then(l => l.LoginPageComponent)
+      }
+    ],
   },
   {
     path: 'desktop',
     title: 'Desktop | HoopLink',
-    loadComponent: () => import('./pages/desktop/desktop.component').then(d=> d.DesktopComponent),
+    loadComponent: () => import('./features/desktop/desktop.component').then(d=> d.DesktopComponent),
+    canLoad: [authGuard],
+    canActivate: [authGuard]
   },
   {
     path: '',
@@ -105,6 +111,6 @@ export const routes: Routes = [
   {
     path: '**',
     title: '404 | HoopLink',
-    loadComponent: () => import('./pages/not-found/not-found.component').then(n => n.NotFoundComponent),
+    loadComponent: () => import('./features/not-found/pages/not-found/not-found.component').then(n => n.NotFoundComponent),
   }
 ];

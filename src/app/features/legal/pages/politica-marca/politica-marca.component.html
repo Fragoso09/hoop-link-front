@@ -1,0 +1,325 @@
+<div class="flex justify-center">
+  <div class="w-full max-w-3xl">
+    <h1 class="text-7xl font-bold text-center my-6">Política de Marca</h1>
+    <p class="text-center">Última actualización: 01-01-2025</p>
+  </div>
+</div>
+<div class="flex justify-center mt-4 mb-8">
+  <div class="w-full max-w-3xl">
+    <p class="leading-relaxed">
+      La presente política de marca establece las directrices para el uso correcto de la identidad
+      visual y comunicativa de HoopLink, una plataforma operada por Sport Forum, S.A.P.I. de C.V.
+      El objetivo es garantizar la coherencia y protección de la marca en todos los puntos de contacto.
+    </p>
+  </div>
+</div>
+<div class="flex justify-center">
+  <div class="w-full max-w-3xl">
+    <h1 class="text-6xl text-left">Índice</h1>
+    <ol class="list-decimal ml-14">
+      @for (section of sections; track $index) {
+        <li class="my-2">
+          <a [href]="'#'+section.id" (click)="moveToSection(section.id, $event)">{{section.title}}</a>
+        </li>
+      }
+      </ol>
+  </div>
+</div>
+<div class="flex justify-center">
+  <div class="w-full max-w-3xl">
+    <section class="my-5 px-2 py-2" id="pol1">
+      <h2 class="text-5xl">Misión y Valores de la Marca</h2>
+      <p>
+        Misión:<br>
+        <span>
+          <ul class="list-disc ml-10">
+            <li>
+              Conectar talento deportivo con oportunidades académicas.
+            </li>
+          </ul>
+        </span>
+        Visión:<br>
+        <span>
+          <ul class="list-disc ml-10">
+            <li>
+              Ser la plataforma líder en impulsar a jugadores hacia su máximo potencial, creando conexiones entre escuelas y deportistas.
+            </li>
+          </ul>
+        </span>
+        Valores:<br>
+        <span>
+          <ul class="list-disc ml-10">
+            <li>
+              Innovación, profesionalismo, accesibilidad, transparencia y compromiso con el desarrollo deportivo y académico.
+            </li>
+          </ul>
+        </span>
+      </p>
+    </section><br>
+    <section class="my-5 px-2 py-2" id="pol2">
+      <h2 class="text-5xl">Logo y Su Uso Correcto</h2>
+      <p>
+        Versiones del Logo::<br>
+        <span>
+          <ol class="list-decimal ml-10">
+            <li>
+              Principal:
+              <ul class="list-[circle] ml-10">
+                <li>
+                  Logo completo en colores oficiales.
+                </li>
+              </ul>
+            </li>
+            <li>
+              Monocromático:
+              <ul class="list-[circle] ml-10">
+                <li>
+                  Para fondos oscuros o claros, usar versiones en blanco y negro.
+                </li>
+              </ul>
+            </li>
+            <li>
+              Variantes:
+              <ul class="list-[circle] ml-10">
+                <li>
+                  Logo horizontal y vertical disponibles según el formato.
+                </li>
+              </ul>
+            </li>
+          </ol>
+        </span><br>
+        Normas de Uso del Logo:<br>
+        <span>
+          <ul class="list-disc ml-10">
+            <li>
+              Espacio de seguridad:
+              <ul class="list-[circle] ml-10">
+                <li>
+                  Dejar al menos un margen equivalente al alto de la letra "H"<br>
+                  alrededor del logo.
+                </li>
+              </ul>
+            </li>
+            <li>
+              Tamaño mínimo:
+              <ul class="list-[circle] ml-10">
+                <li>
+                  El logo no debe ser menor a 50 px de altura para garantizar su legibilidad.
+                </li>
+              </ul>
+            </li>
+            <li>
+              Colores permitidos:
+              <ul class="list-[circle] ml-10">
+                <li>
+                  Sólo se utilizarán los colores oficiales de la marca.
+                </li>
+              </ul>
+            </li>
+            <li>
+              Usos prohibidos:
+              <ul class="list-[circle] ml-10">
+                <li>
+                  No alterar la proporción del logo.
+                </li>
+                <li>
+                  No cambiar los colores oficiales.
+                </li>
+                <li>
+                  No añadir efectos, sombras o degradados no autorizados.
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </span>
+      </p>
+    </section><br>
+    <section class="my-5 px-2 py-2" id="pol3">
+      <h2 class="text-5xl">Paleta de Colores</h2>
+      <p>
+        Los colores oficiales de HoopLink son:<br>
+        <span>
+          <ul class="list-disc ml-10">
+            <li>
+              Naranja Intenso: <p-colorpicker [(ngModel)]="this.naranjaIntenso" [disabled]="true" />
+            </li><br>
+            <li>
+              Naranja: <p-colorpicker [(ngModel)]="this.naranja" [disabled]="true" />
+            </li><br>
+            <li>
+              Azul Profundo: <p-colorpicker [(ngModel)]="this.azulProdunfo" [disabled]="true" />
+            </li><br>
+            <li>
+              Azul Marino: <p-colorpicker [(ngModel)]="this.azulMarino" [disabled]="true" />
+            </li><br>
+            <li>
+              Azul Verde: <p-colorpicker [(ngModel)]="this.azulVerde" [disabled]="true" />
+            </li><br>
+            <li>
+              Azul Claro: <p-colorpicker [(ngModel)]="this.azulClaro" [disabled]="true" />
+            </li>
+          </ul>
+        </span>
+      </p>
+    </section><br>
+    <section class="my-5 px-2 py-2" id="pol4">
+      <h2 class="text-5xl">Tipografía Oficial</h2>
+      <p>
+        Fuentes Principales:<br>
+        <span>
+          <ul class="list-disc ml-10">
+            <li>
+              Títulos y encabezados:
+              <ul class="list-[circle] ml-10">
+                <li>
+                  Montserrat Bold
+                </li>
+              </ul>
+            </li>
+            <li>
+              Subtítulos:
+              <ul class="list-[circle] ml-10">
+                <li>
+                  Montserrat Medium
+                </li>
+              </ul>
+            </li>
+            <li>
+              Cuerpo de texto:
+              <ul class="list-[circle] ml-10">
+                <li>
+                  Open Sans Regular
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </span><br>
+        Normas:<br>
+        <span>
+          <ul class="list-disc ml-10">
+            <li>
+              No combinar fuentes que no sean las oficiales.
+            </li>
+            <li>
+              Usar tamaños de texto claros y legibles para cada formato.
+            </li>
+          </ul>
+        </span>
+      </p>
+    </section><br>
+    <section class="my-5 px-2 py-2" id="pol5">
+      <h2 class="text-5xl">Tono y Estilo de Comunicación</h2>
+      <p>
+        HoopLink debe comunicarse de manera:<br>
+        <span>
+          <ul class="list-disc ml-10">
+            <li>
+              Profesional y accesible:
+              <ul class="list-[circle] ml-10">
+                <li>
+                  Evitar tecnicismos innecesarios.
+                </li>
+              </ul>
+            </li>
+            <li>
+              Inspiradora:
+              <ul class="list-[circle] ml-10">
+                <li>
+                  Enfocada en resaltar logros y oportunidades.
+                </li>
+              </ul>
+            </li>
+            <li>
+              Clara y directa:
+              <ul class="list-[circle] ml-10">
+                <li>
+                  Mensajes breves, con un lenguaje positivo y motivador.
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </span>
+      </p>
+    </section><br>
+    <section class="my-5 px-2 py-2" id="pol6">
+      <h2 class="text-5xl">Usos Prohibidos</h2>
+      <p>
+        <span>
+          <ul class="list-disc ml-10">
+            <li>
+              No usar el logo o elementos de la marca en materiales no autorizados.
+            </li>
+            <li>
+              No asociar la marca con contenido ofensivo, discriminatorio o político.
+            </li>
+            <li>
+              No modificar el diseño, colores o proporciones de los elementos visuales.
+            </li>
+          </ul>
+        </span>
+      </p>
+    </section><br>
+    <section class="my-5 px-2 py-2" id="pol7">
+      <h2 class="text-5xl">Aplicaciones de la Marca</h2>
+      <p>
+        <span>
+          <ul class="list-disc ml-10">
+            <li>
+              Redes sociales:
+              <ul class="list-[circle] ml-10">
+                <li>
+                  Usar versiones optimizadas del logo para perfiles y publicaciones.
+                </li>
+                <li>
+                  Mantener colores y fuentes consistentes.
+                </li>
+              </ul>
+            </li>
+            <li>
+              Publicidad:
+              <ul class="list-[circle] ml-10">
+                <li>
+                  Respetar las proporciones y la paleta oficial.
+                </li>
+              </ul>
+            </li>
+            <li>
+              Sitio web:
+              <ul class="list-[circle] ml-10">
+                <li>
+                  Garantizar que los elementos visuales sean compatibles con la identidad de marca.
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </span>
+      </p>
+    </section><br>
+    <section class="my-5 px-2 py-2" id="pol8">
+      <h2 class="text-5xl">Contacto y Autorizaciones</h2>
+      <p>
+        Para cualquier consulta o autorización sobre el uso de la marca, por favor contacta a:<br>
+        <span>
+          <ul class="list-disc ml-10">
+            <li>
+              Correo electrónico:
+              <ul class="list-[circle] ml-10">
+                <li>
+                  hooplink2&#64;gmail.com
+                </li>
+              </ul>
+            </li>
+            <li>
+              Empresa:
+              <ul class="list-[circle] ml-10">
+                <li>
+                  Sport Forum, S.A.P.I. de C.V.
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </span>
+      </p>
+    </section>
+  </div>
+</div>
