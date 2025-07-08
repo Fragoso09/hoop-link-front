@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { DesktopComponent } from './features/desktop/desktop.component';
-import { authGuard } from './core/guards/auth.guard';
+import { authGuard } from './core/auth/guards/auth.guard';
 
 export const routes: Routes = [
   {

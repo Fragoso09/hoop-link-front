@@ -126,12 +126,13 @@
               <div class="col-span-12">
                 <p-floatlabel variant="on">
                   <p-inputmask
-                    mask="999-999-9999"
-                    [style]="{ width: '100%' }"
-                    [ngClass]="{ 'ng-invalid ng-dirty': esValido('telefono'), 'ng-valid': !esValido('telefono') }"
-                    formControlName='telefono'
-                    placeholder="999-999-9999"
-                    variant="filled" />
+                      inputId="on_telefono"
+                      mask="999-999-9999"
+                      [style]="{ width: '100%' }"
+                      formControlName='telefono'
+                      [class.ng-dirty]="esValido('telefono')"
+                      [class.ng-valid]="!esValido('telefono') && formulario.get('telefono')?.value"
+                      variant="filled" />
                 </p-floatlabel>
                 @if (esValido('telefono')) {
                   <small class="campoErrorTexto" [innerHTML]="getErrores('telefono', 'Telefono')" ></small>

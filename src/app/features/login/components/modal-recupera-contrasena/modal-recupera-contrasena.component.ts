@@ -9,7 +9,7 @@ import { FloatLabel } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
 import { UsuarioService } from '../../../../core/services/usuario/usuario.service';
 import { Router } from '@angular/router';
-import { GlobalfunctionsService } from '../../../../core/services/global-functions/global-functions.service';
+import { FormularioUtilsService } from '../../../../shared/utils/form/formulario-utils.service';
 import { correoElectronicoValidator } from '../../../../../app/shared/validators/';
 import { IRecuperaContrasena } from '../../../../shared/interfaces/usuario/registro.interface';
 import { IResponse } from '../../../../core/interfaces/response/response.interface';
@@ -38,7 +38,7 @@ export class ModalRecuperaContrasenaComponent implements OnDestroy {
 
 //#region Constructor
   constructor(
-    private readonly usuarioService:UsuarioService, private fb: FormBuilder, private readonly globalFunctionsService:GlobalfunctionsService,
+    private readonly usuarioService:UsuarioService, private fb: FormBuilder, private readonly _formularioUtils:FormularioUtilsService,
     private readonly router:Router, private readonly toastService: ToastService, private readonly blockUserIService:BlockUserIService,
   ) {
     this.formulario = this.fb.group({
@@ -64,7 +64,7 @@ export class ModalRecuperaContrasenaComponent implements OnDestroy {
       this.formulario.markAllAsTouched();
       return;
     } else if (this.formulario.valid) {
-      this.globalFunctionsService.aplicaTrim(this.formulario);
+      this._formularioUtils.aplicaTrim(this.formulario);
       const registro = this.formulario.value as IRecuperaContrasena;
       this.blockUserIService.show();
       this.usuarioService.recuperaContrasena(registro).subscribe({
@@ -84,11 +84,11 @@ export class ModalRecuperaContrasenaComponent implements OnDestroy {
   }
 
   public esValido(campo: string):boolean| null {
-    return this.globalFunctionsService.esCampoValido(this.formulario, campo);
+    return this._formularioUtils.esCampoValido(this.formulario, campo);
   }
 
   public getErrores(campo: string, nombreMostrar:string):string | null {
-    const errores = this.globalFunctionsService.getCampoError(this.formulario, campo, nombreMostrar);
+    const errores = this._formularioUtils.getCampoError(this.formulario, campo, nombreMostrar);
     return errores;
   }
 

@@ -8,7 +8,7 @@ import { IRegistro } from '../../../../shared/interfaces/usuario/registro.interf
 
 import { CatalogoService } from '../../../../shared/services/catalogo/catalogo.service';
 import { UsuarioService } from '../../../../core/services/usuario/usuario.service';
-import { GlobalfunctionsService } from '../../../../core/services/global-functions/global-functions.service';
+import { FormularioUtilsService } from '../../../../shared/utils/form/formulario-utils.service';
 
 import { contraseniaFuerteValidator, correoElectronicoValidator, edadMinimaValidator, edadSegunTipoUsuarioValidator } from '../../../../../app/shared/validators';
 
@@ -51,7 +51,7 @@ export class FormularioRegistroComponent implements OnInit {
 //#endregion Constructor
   constructor(
     private readonly catalagoService: CatalogoService, private readonly usuarioService:UsuarioService,
-    private readonly globalFunctionsService:GlobalfunctionsService, private fb: FormBuilder,
+    private readonly _formularioUtiuls:FormularioUtilsService, private fb: FormBuilder,
     private readonly toastService: ToastService, private readonly blockUserIService:BlockUserIService,
     private readonly router:Router
   ) {
@@ -110,9 +110,9 @@ export class FormularioRegistroComponent implements OnInit {
       this.formulario.markAllAsTouched();
       return;
     } else if (this.formulario.valid) {
-      this.globalFunctionsService.aplicaTrim(this.formulario);
+      this._formularioUtiuls.aplicaTrim(this.formulario);
       const registro = this.formulario.value as IRegistro;
-      this.blockUserIService.show();
+      this.blockUserIService.show('Registrando Información...');
       this.usuarioService.save(registro).subscribe({
         next: (response:IResponse<any>) => {
           this.toastService.showMessage('success', 'Genial', response.mensaje, 5000);
@@ -130,11 +130,11 @@ export class FormularioRegistroComponent implements OnInit {
   }
 
   public esValido(campo: string):boolean| null {
-    return this.globalFunctionsService.esCampoValido(this.formulario, campo);
+    return this._formularioUtiuls.esCampoValido(this.formulario, campo);
   }
 
   public getErrores(campo: string, nombreMostrar:string):string | null {
-    const errores = this.globalFunctionsService.getCampoError(this.formulario, campo, nombreMostrar);
+    const errores = this._formularioUtiuls.getCampoError(this.formulario, campo, nombreMostrar);
     return errores;
 
   }

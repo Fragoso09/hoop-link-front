@@ -4,8 +4,8 @@ import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { environment } from '../../../../environments/environment';
 import { WebApiConstants } from '../../constants/web-api/web-api.constants';
-import { ILogin } from '../../interfaces/auth/login.interface';
-import { WebApiService } from '../web-api/web-api.service';
+import { ILogin } from '../interfaces/login.interface';
+import { WebApiService } from '../../services/web-api/web-api.service';
 
 @Injectable({
   providedIn: 'root'
@@ -40,7 +40,7 @@ export class AuthService {
   }
 
   logout(): void {
-     const url: string = WebApiConstants.auth.logout;
+    const url: string = WebApiConstants.auth.logout;
     this._authSubject.next(false);
 
     this.webApiService.post(url, {}, true).subscribe({

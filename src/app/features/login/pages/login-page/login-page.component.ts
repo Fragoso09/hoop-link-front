@@ -5,7 +5,7 @@ import { Router, RouterModule } from '@angular/router';
 
 import { UsuarioService } from '../../../../core/services/usuario/usuario.service';
 import { ModalTokenValidoComponent } from "../../components/modal-token-valido/modal-token-valido.component";
-import { GlobalfunctionsService } from '../../../../core/services/global-functions/global-functions.service';
+import { FormularioUtilsService } from '../../../../shared/utils/form/formulario-utils.service';
 import { correoElectronicoValidator } from '../../../../../app/shared/validators';
 
 import { ButtonModule } from 'primeng/button';
@@ -19,8 +19,8 @@ import { IRegistro } from '../../../../shared/interfaces/usuario/registro.interf
 import { IResponse } from '../../../../core/interfaces/response/response.interface';
 import { BlockUserIService } from '../../../../core/services/blockUI/block-user-i.service';
 import { ToastService } from '../../../../core/services/messages/toast.service';
-import { ILogin } from '../../../../core/interfaces/auth/login.interface';
-import { AuthService } from '../../../../core/services/auth/auth.service';
+import { ILogin } from '../../../../core/auth/interfaces/login.interface';
+import { AuthService } from '../../../../core/auth/services/auth.service';
 
 @Component({
   selector: 'app-login-page',
@@ -44,7 +44,7 @@ export class LoginPageComponent {
 
 //#region Constructor
   constructor(
-    private readonly usuarioService:UsuarioService, private fb: FormBuilder, private readonly globalFunctionsService:GlobalfunctionsService,
+    private readonly usuarioService:UsuarioService, private fb: FormBuilder, private readonly _formularioUtils:FormularioUtilsService,
     private readonly router:Router, private readonly toastService: ToastService, private readonly blockUserIService:BlockUserIService,
     private readonly authService: AuthService
   ) {
@@ -80,7 +80,7 @@ export class LoginPageComponent {
       this.formulario.markAllAsTouched();
       return;
     } else if (this.formulario.valid) {
-      this.globalFunctionsService.aplicaTrim(this.formulario);
+      this._formularioUtils.aplicaTrim(this.formulario);
       const credenciales = this.formulario.value as ILogin;
       this.blockUserIService.show();
       this.authService.login(credenciales).subscribe({
@@ -98,11 +98,11 @@ export class LoginPageComponent {
   }
 
   public esValido(campo: string):boolean| null {
-    return this.globalFunctionsService.esCampoValido(this.formulario, campo);
+    return this._formularioUtils.esCampoValido(this.formulario, campo);
   }
 
   public getErrores(campo: string, nombreMostrar:string):string | null {
-    const errores = this.globalFunctionsService.getCampoError(this.formulario, campo, nombreMostrar);
+    const errores = this._formularioUtils.getCampoError(this.formulario, campo, nombreMostrar);
     return errores;
 
   }
