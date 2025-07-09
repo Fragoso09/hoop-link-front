@@ -7,11 +7,11 @@ export const WebApiConstants = {
   usuario: {
     save: `usuario/save`,
     validaToken: (token:string) => `usuario/valida-token?token=${token}`,
-    recuperaContrasena: `recupera-contrasena`,
+    recuperaContrasena: `usuario/recupera-contrasena`,
   },
   auth:{
     login: `auth/login`,
     refresh: `auth/refresh`,
-    logout: `logout`
+    logout: `auth/logout`
   }
 }
