@@ -21,6 +21,7 @@ import { BlockUserIService } from '../../../../core/services/blockUI/block-user-
 import { ToastService } from '../../../../core/services/messages/toast.service';
 import { ILogin } from '../../../../core/auth/interfaces/login.interface';
 import { AuthService } from '../../../../core/auth/services/auth.service';
+import { IAuthUser } from '../../../../core/auth/interfaces/auth-user.interface';
 
 @Component({
   selector: 'app-login-page',
@@ -84,12 +85,14 @@ export class LoginPageComponent {
       const credenciales = this.formulario.value as ILogin;
       this.blockUserIService.show();
       this.authService.login(credenciales).subscribe({
-        next: (response:IResponse<any>) => {
+        next: (response:IAuthUser) => {
           this.formulario.reset();
           this.blockUserIService.hide();
+          this.authService.setChecked(true);
           this.router.navigateByUrl('/desktop');
         },
         error: (error) => {
+          console.log(error);
           this.toastService.showMessage('error', 'Error', error.error.message);
           this.blockUserIService.hide();
         }

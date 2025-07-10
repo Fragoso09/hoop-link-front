@@ -3,7 +3,7 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 
 import { ImageModule } from 'primeng/image';
 import { DividerModule } from 'primeng/divider';
-import { CommunicationService } from '../../../../core/services/ui/communication.service';
+import { CommunicationService } from '../../../core/services/ui/communication.service';
 
 @Component({
   selector: 'app-footer',

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FooterComponent } from "../components/footer/footer.component";
+import { FooterComponent } from "../../components/footer/footer.component";
 import { RouterModule } from '@angular/router';
 import { HeaderLegalComponent } from "../components/header-legal/header-legal.component";
 

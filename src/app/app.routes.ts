@@ -97,11 +97,18 @@ export const routes: Routes = [
     ],
   },
   {
+    canLoad: [authGuard],
+    canActivate: [authGuard],
     path: 'desktop',
     title: 'Desktop | HoopLink',
-    loadComponent: () => import('./features/desktop/desktop.component').then(d=> d.DesktopComponent),
-    canLoad: [authGuard],
-    canActivate: [authGuard]
+    loadComponent: () => import('./layouts/authenticated-layout/authenticated-layout.component').then(d=> d.AuthenticatedLayoutComponent),
+    children: [
+      {
+        path: '',
+        pathMatch: 'full',
+        loadComponent: () => import('./features/desktop/desktop.component').then(l => l.DesktopComponent)
+      }
+    ]
   },
   {
     path: '',

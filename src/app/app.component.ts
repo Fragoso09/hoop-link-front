@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
 import { Toast } from 'primeng/toast';
@@ -7,6 +7,7 @@ import { MessageService } from 'primeng/api';
 import { ToastService } from './core/services/messages/toast.service';
 import { OverlayComponent } from './core/components/overlay/overlay.component';
 import { BlockUserIService } from './core/services/blockUI/block-user-i.service';
+import { AuthService } from './core/auth/services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -16,10 +17,14 @@ import { BlockUserIService } from './core/services/blockUI/block-user-i.service'
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-export class AppComponent implements AfterViewInit {
+export class AppComponent implements AfterViewInit, OnInit {
   @ViewChild(OverlayComponent) loadingComponent!: OverlayComponent;
 
-  constructor(private toastService: ToastService, private blockUserIService: BlockUserIService) {}
+  constructor(private toastService: ToastService, private blockUserIService: BlockUserIService, private authService: AuthService) {}
+
+  ngOnInit(): void {
+    this.authService.checkAuth().subscribe();
+  }
 
   ngAfterViewInit() {
     // Cuando el componente AppComponent se inicialice, configuramos el servicio de carga.

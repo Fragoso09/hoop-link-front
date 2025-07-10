@@ -9,18 +9,18 @@ import { WebApiConstants } from '../../constants/web-api/web-api.constants';
 })
 export class UsuarioService {
 
-  //#region Propiedades
+//#region Propiedades
   public esRegistro:boolean = false;
   public usuarioTokenValidado = false;
-  //#endregion Propiedades
+//#endregion Propiedades
 
-  //#region Constructor
+//#region Constructor
   constructor(
     private readonly webApiService:WebApiService
   ) { }
-  //#endregion Constructor
+//#endregion Constructor
 
-  //#region Generales
+//#region Generales
   public save(registroDTO:IRegistro): Observable<any> {
     const url: string = WebApiConstants.usuario.save;
 
@@ -48,6 +48,7 @@ export class UsuarioService {
       })
     );
   }
-  //#endregion Generales
+
+//#endregion Generales
 
 }
