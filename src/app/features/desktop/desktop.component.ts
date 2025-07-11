@@ -1,9 +1,10 @@
-import { AfterViewInit, Component, OnDestroy, OnInit, signal } from '@angular/core';
+import { AfterViewInit, Component, effect, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { UsuarioService } from '../../core/services/usuario/usuario.service';
 import { AuthService } from '../../core/auth/services/auth.service';
 import { CommonModule, JsonPipe } from '@angular/common';
 import { IAuthUser } from '../../core/auth/interfaces/auth-user.interface';
 import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-desktop',
@@ -14,21 +15,29 @@ import { Subscription } from 'rxjs';
   templateUrl: './desktop.component.html',
   styleUrl: './desktop.component.scss'
 })
-export class DesktopComponent implements OnInit {
-//#region Propiedaddes
-  usuario = this._authService.user;
-//#endregion
+export class DesktopComponent {
+constructor(private readonly authService: AuthService, private readonly router: Router) {
+    effect(() => {
+      const user = this.authService.user();
+      const checked = this.authService.authChecked();
 
-//#region Constructor
-  constructor(private readonly _authService:AuthService) { }
-//#endregion
+      if (!checked) return;
 
-//#region Ng
-  ngOnInit(): void {
-    console.log(this.usuario);
-    this._authService.yopli().subscribe(user => {
-    console.log('Usuario obtenido en desktop:', user);
-  });
+      if (!user) {
+        this.router.navigate(['/login']);
+        return;
+      }
+
+      switch (user.rol) {
+        case 'jugador':
+          this.router.navigate(['/desktop/jugador']);
+          break;
+        case 'admin':
+          this.router.navigate(['/desktop/admin']);
+          break;
+        default:
+          this.router.navigate(['/access-denied']);
+      }
+    });
   }
-//#endregion
 }

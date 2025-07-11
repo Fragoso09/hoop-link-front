@@ -692,6 +692,10 @@ const MyPreset = definePreset(Lara, {
   }
 });
 
+export function initAuth(authService: AuthService) {
+  return () => authService.checkAuth().toPromise();
+}
+
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),

@@ -98,12 +98,17 @@ export const routes: Routes = [
     ],
   },
   {
-    canLoad: [authGuard],
+    // canLoad: [authGuard],
     canActivate: [authGuard],
     path: 'desktop',
     title: 'Desktop | HoopLink',
     loadComponent: () => import('./layouts/authenticated-layout/authenticated-layout.component').then(d=> d.AuthenticatedLayoutComponent),
     children: [
+      {
+        path: '',
+        pathMatch: 'full',
+        loadComponent: () => import('./features/desktop/desktop.component').then(m => m.DesktopComponent)
+      },
       {
         path: 'jugador',
         pathMatch: 'full',
@@ -111,7 +116,7 @@ export const routes: Routes = [
         canLoad: [roleGuard],
         data: { role: 'jugador' },
         title: 'Jugador | HoopLink',
-        loadComponent: () => import('./features/desktop/desktop.component').then(l => l.DesktopComponent)
+        loadComponent: () => import('./features/jugador/pages/jugador-dashboard/jugador-dashboard.component').then(l => l.JugadorDashboardComponent)
       }
     ]
   },

@@ -67,16 +67,20 @@ export class AuthService {
   }
 
   checkAuth(): Observable<IAuthUser | null> {
+    console.log('[checkAuth] INICIANDO');
     return this.webApiService.get<IResponse<IAuthUser>>(WebApiConstants.auth.yopli, true).pipe(
       // tap(checked => console.log('Auth checked:', checked)),
       map(response => response.data ?? null), // Extrae solo el usuario
       tap(user => {
+        console.log('[checkAuth] USUARIO CARGADO:', user);
         this._user.set(user);
         this._authChecked.set(true);  // <- Esto es crucial
       }),
-      catchError(() => {
+      catchError((err) => {
+        console.warn('[checkAuth] ERROR:', err);
         this._user.set(null);
         this._authChecked.set(true);  // <- Esto también
+        this.logout().subscribe();
         return of(null);
       })
     );
