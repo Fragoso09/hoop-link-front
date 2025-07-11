@@ -1,1 +1,6 @@
 <p>desktop works!</p>
+@if (usuario()?.rol === 'jugador') {
+  <p>es jugador</p>
+}@else {
+  <p>no es</p>
+}

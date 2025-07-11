@@ -1,4 +1,6 @@
 export interface IAuthUser {
-  usuarioId:number,
-
+  id: number,
+  nombre:string,
+  correo:string,
+  rol:string
 }

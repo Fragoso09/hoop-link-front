@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { DesktopComponent } from './features/desktop/desktop.component';
 import { authGuard } from './core/auth/guards/auth.guard';
+import { roleGuard } from './core/auth/guards/role.guard';
 
 export const routes: Routes = [
   {
@@ -104,8 +105,12 @@ export const routes: Routes = [
     loadComponent: () => import('./layouts/authenticated-layout/authenticated-layout.component').then(d=> d.AuthenticatedLayoutComponent),
     children: [
       {
-        path: '',
+        path: 'jugador',
         pathMatch: 'full',
+        canActivate: [roleGuard],
+        canLoad: [roleGuard],
+        data: { role: 'jugador' },
+        title: 'Jugador | HoopLink',
         loadComponent: () => import('./features/desktop/desktop.component').then(l => l.DesktopComponent)
       }
     ]

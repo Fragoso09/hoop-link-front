@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
-import { catchError, switchMap, tap } from 'rxjs/operators';
+import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import { environment } from '../../../../environments/environment';
 import { WebApiConstants } from '../../constants/web-api/web-api.constants';
 import { ILogin } from '../interfaces/login.interface';
 import { WebApiService } from '../../services/web-api/web-api.service';
 import { IAuthUser } from '../interfaces/auth-user.interface';
 import { AuthApiService } from './auth-api.service';
+import { IResponse } from '../../interfaces/response/response.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -45,18 +46,19 @@ export class AuthService {
   }
 
  checkAuth(): Observable<IAuthUser | null> {
-  return this.webApiService.get<IAuthUser>(WebApiConstants.auth.yopli, true).pipe(
-    tap(user => {
-      this.userSubject.next(user);
-      this.authChecked.next(true);
-    }),
-    catchError(() => {
-      this.userSubject.next(null);
-      this.authChecked.next(true);
-      return of(null);
-    })
-  );
-}
+  return this.webApiService.get<IResponse<IAuthUser>>(WebApiConstants.auth.yopli, true).pipe(
+      map(response => response.data ?? null), // Extrae solo el usuario
+      tap(user => {
+        this.userSubject.next(user);
+        this.authChecked.next(true);
+      }),
+      catchError(() => {
+        this.userSubject.next(null);
+        this.authChecked.next(true);
+        return of(null);
+      })
+    );
+  }
 
 
   refreshToken(): Observable<any> {
@@ -75,7 +77,7 @@ export class AuthService {
   }
 
   getUser(): IAuthUser | null {
-    return this.userSubject.value;
+    return this.userSubject.value as IAuthUser;
   }
 
   setUser(user: IAuthUser) {
@@ -86,12 +88,21 @@ export class AuthService {
     this.authChecked.next(checked);
   }
 
+  clearUser() {
+    this.userSubject.next(null);
+  }
+
   public yopli(): Observable<any> {
     const url:string = WebApiConstants.auth.yopli;
-    return this.webApiService.get<any>(url, true).pipe(
+    return this.webApiService.get<IResponse<IAuthUser>>(url, true).pipe(
+      map(response => response.data ?? null), // extrae solo el usuario
+      tap(user => {
+        this.userSubject.next(user)
+      }),
       catchError(error => {
         return throwError(() => error);
       })
     );
   }
 }
+
