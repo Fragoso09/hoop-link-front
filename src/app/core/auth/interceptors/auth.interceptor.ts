@@ -11,27 +11,27 @@ export const authInterceptor: HttpInterceptorFn = (
   req: HttpRequest<unknown>,
   next: HttpHandlerFn
 ): Observable<HttpEvent<unknown>> => {
-  // Obtén el injector general una sola vez
   const injector = inject(Injector);
 
   return next(req).pipe(
     catchError((error: HttpErrorResponse) => {
-      if (error.status === 401 && !req.url.includes('/auth/login')) {
+      if (error.status === 401 && !req.url.includes('/auth/login') && !req.url.includes('/auth/yopli')) {
         if (!isRefreshing) {
           isRefreshing = true;
           refreshTokenSubject.next(null);
 
-          // Obtén AuthService usando injector.get (diferido)
           const authService = injector.get(AuthService);
 
           return authService.refreshToken().pipe(
+            switchMap(() => authService.checkAuth()),  // Espera a checkAuth
             switchMap(() => {
               refreshTokenSubject.next(true);
               return next(req);
             }),
             catchError(err => {
-              authService.logout().subscribe();
-              return throwError(() => err);
+              return authService.logout().pipe(
+                switchMap(() => throwError(() => error))
+              );
             }),
             finalize(() => {
               isRefreshing = false;
@@ -50,3 +50,4 @@ export const authInterceptor: HttpInterceptorFn = (
     })
   );
 };
+

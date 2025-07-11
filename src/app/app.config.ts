@@ -1,4 +1,4 @@
-import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
+import { APP_INITIALIZER, ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter, withInMemoryScrolling, withViewTransitions } from '@angular/router';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { providePrimeNG } from 'primeng/config';
@@ -13,6 +13,8 @@ import { definePreset } from "@primeng/themes";
 
 import { es } from "primelocale/es.json";
 import { authInterceptor } from './core/auth/interceptors/auth.interceptor';
+import { authInitializerFactory } from './core/auth/services/auth-init.factory';
+import { AuthService } from './core/auth/services/auth.service';
 
 // const MyPreset = definePreset(Lara, {
 //   semantic: {

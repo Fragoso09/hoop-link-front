@@ -1,6 +1,5 @@
 <p>desktop works!</p>
-@if (usuario()?.rol === 'jugador') {
-  <p>es jugador</p>
-}@else {
-  <p>no es</p>
-}
+
+<p *ngIf="usuario() as user">
+  {{ user.rol === 'jugador' ? 'es jugador' : 'no es' }}
+</p>

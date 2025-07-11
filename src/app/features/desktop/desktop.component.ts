@@ -14,10 +14,9 @@ import { Subscription } from 'rxjs';
   templateUrl: './desktop.component.html',
   styleUrl: './desktop.component.scss'
 })
-export class DesktopComponent implements OnInit, OnDestroy {
+export class DesktopComponent implements OnInit {
 //#region Propiedaddes
-  usuario = signal<IAuthUser | null>(null);
-  private subscription?: Subscription;
+  usuario = this._authService.user;
 //#endregion
 
 //#region Constructor
@@ -26,14 +25,10 @@ export class DesktopComponent implements OnInit, OnDestroy {
 
 //#region Ng
   ngOnInit(): void {
-    this.subscription = this._authService.user$.subscribe(user => {
-      this.usuario.set(user);
-    });
-    this._authService.yopli().subscribe();
-  }
-
-  ngOnDestroy() {
-    this.subscription?.unsubscribe();
+    console.log(this.usuario);
+    this._authService.yopli().subscribe(user => {
+    console.log('Usuario obtenido en desktop:', user);
+  });
   }
 //#endregion
 }

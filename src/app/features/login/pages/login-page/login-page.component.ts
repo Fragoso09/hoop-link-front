@@ -22,6 +22,7 @@ import { ToastService } from '../../../../core/services/messages/toast.service';
 import { ILogin } from '../../../../core/auth/interfaces/login.interface';
 import { AuthService } from '../../../../core/auth/services/auth.service';
 import { IAuthUser } from '../../../../core/auth/interfaces/auth-user.interface';
+import { firstValueFrom, filter, take, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-login-page',
@@ -76,7 +77,7 @@ export class LoginPageComponent {
     this.esVisibleDialog = this.usuarioService.usuarioTokenValidado;
   }
 
-  public enviar():void {
+  public async enviar(): Promise<void>  {
     if(this.formulario.invalid) {
       this.formulario.markAllAsTouched();
       return;
@@ -85,10 +86,10 @@ export class LoginPageComponent {
       const credenciales = this.formulario.value as ILogin;
       this.blockUserIService.show();
       this.authService.login(credenciales).subscribe({
-        next: (response:IAuthUser) => {
+       next: () => {
+          // console.log('Login success:', response);
           this.formulario.reset();
           this.blockUserIService.hide();
-          this.authService.setChecked(true);
           this.router.navigateByUrl('/desktop');
         },
         error: (error) => {
