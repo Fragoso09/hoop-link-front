@@ -98,7 +98,7 @@ export const routes: Routes = [
     ],
   },
   {
-    // canLoad: [authGuard],
+    canLoad: [authGuard],
     canActivate: [authGuard],
     path: 'desktop',
     title: 'Desktop | HoopLink',
@@ -117,6 +117,15 @@ export const routes: Routes = [
         data: { role: 'jugador' },
         title: 'Jugador | HoopLink',
         loadComponent: () => import('./features/jugador/pages/jugador-dashboard/jugador-dashboard.component').then(l => l.JugadorDashboardComponent)
+      },
+      {
+        path: 'informacion-personal',
+        pathMatch: 'full',
+        canActivate: [roleGuard],
+        canLoad: [roleGuard],
+        data: { role: 'jugador' },
+        title: 'Información personal | HoopLink',
+        loadComponent: () => import('./features/jugador/pages/jugador-form/jugador-form.component').then(l => l.JugadorFormComponent)
       }
     ]
   },

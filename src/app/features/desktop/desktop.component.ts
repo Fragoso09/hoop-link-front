@@ -16,7 +16,9 @@ import { Router } from '@angular/router';
   styleUrl: './desktop.component.scss'
 })
 export class DesktopComponent {
-constructor(private readonly authService: AuthService, private readonly router: Router) {
+
+//#region Constructor
+  constructor(private readonly authService: AuthService, private readonly router: Router) {
     effect(() => {
       const user = this.authService.user();
       const checked = this.authService.authChecked();
@@ -40,4 +42,6 @@ constructor(private readonly authService: AuthService, private readonly router: 
       }
     });
   }
+//#endregion
+
 }
