@@ -25,6 +25,7 @@ import { PasswordModule } from 'primeng/password';
 import { ToastService } from '../../../../core/services/messages/toast.service';
 import { IResponse } from '../../../../core/interfaces/response/response.interface';
 import { BlockUserIService } from '../../../../core/services/blockUI/block-user-i.service';
+import { SeverityMessageType } from '../../../../core/enums';
 
 @Component({
   selector: 'app-formulario-registro',
@@ -115,14 +116,14 @@ export class FormularioRegistroComponent implements OnInit {
       this.blockUserIService.show('Registrando Información...');
       this.usuarioService.save(registro).subscribe({
         next: (response:IResponse<any>) => {
-          this.toastService.showMessage('success', 'Genial', response.mensaje, 5000);
+          this.toastService.showMessage(SeverityMessageType.Success, 'Genial', response.mensaje, undefined, 5000);
           this.formulario.reset();
           this.blockUserIService.hide();
           this.usuarioService.esRegistro = true;
           this.router.navigateByUrl('/portal');
         },
         error: (error) => {
-          this.toastService.showMessage('error', 'Error', error.error.message);
+          this.toastService.showMessage(SeverityMessageType.Error, 'Error', error.error.message);
           this.blockUserIService.hide();
         }
       });

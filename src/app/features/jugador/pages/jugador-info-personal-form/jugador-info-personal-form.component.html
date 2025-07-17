@@ -1,0 +1,15 @@
+<app-boton-volver></app-boton-volver>
+<form class="my-4" [formGroup]="formularioPrincipal" (ngSubmit)="onSubmit()">
+  <app-responsive-tabs [tabLabels]="tabs">
+    <ng-template #tab>
+      <app-jugador-perfil [form]="perfil"></app-jugador-perfil>
+    </ng-template>
+
+  </app-responsive-tabs>
+  <div class="flex justify-end mx-2 my-4">
+    <div class="flex align-center justify-contt-center">
+      <p-button label="Enviar" type="submit" [style]="{'background-color': '#f47621', 'border-color': '#f47621'}" />
+    </div>
+  </div>
+</form>
+

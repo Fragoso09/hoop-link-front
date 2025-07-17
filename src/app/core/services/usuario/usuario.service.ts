@@ -16,7 +16,7 @@ export class UsuarioService {
 
 //#region Constructor
   constructor(
-    private readonly webApiService:WebApiService
+    private readonly _webApiService:WebApiService
   ) { }
 //#endregion Constructor
 
@@ -24,7 +24,7 @@ export class UsuarioService {
   public save(registroDTO:IRegistro): Observable<any> {
     const url: string = WebApiConstants.usuario.save;
 
-    return this.webApiService.post<IRegistro>(url, registroDTO).pipe(
+    return this._webApiService.post<IRegistro>(url, registroDTO).pipe(
       catchError(error => {
         return throwError(() => error);
       })
@@ -33,7 +33,7 @@ export class UsuarioService {
 
   public validaToken(token:string): Observable<any> {
     const url: string = WebApiConstants.usuario.validaToken(token);
-    return this.webApiService.get<string>(url).pipe(
+    return this._webApiService.get<string>(url).pipe(
       catchError(error => {
         return throwError(() => error);
       })
@@ -42,7 +42,7 @@ export class UsuarioService {
 
   public recuperaContrasena(correo: IRecuperaContrasena): Observable<any> {
     const url: string = WebApiConstants.usuario.recuperaContrasena;
-    return this.webApiService.post<any>(url, correo).pipe(
+    return this._webApiService.post<any>(url, correo).pipe(
       catchError(error => {
         return throwError(() => error);
       })

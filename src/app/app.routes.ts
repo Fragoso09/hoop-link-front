@@ -125,7 +125,7 @@ export const routes: Routes = [
         canLoad: [roleGuard],
         data: { role: 'jugador' },
         title: 'Información personal | HoopLink',
-        loadComponent: () => import('./features/jugador/pages/jugador-form/jugador-form.component').then(l => l.JugadorFormComponent)
+        loadComponent: () => import('./features/jugador/pages/jugador-info-personal-form/jugador-info-personal-form.component').then(l => l.JugadorInfoPersonalFormComponent)
       }
     ]
   },

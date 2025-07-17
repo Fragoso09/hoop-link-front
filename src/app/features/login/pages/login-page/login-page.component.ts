@@ -23,6 +23,7 @@ import { ILogin } from '../../../../core/auth/interfaces/login.interface';
 import { AuthService } from '../../../../core/auth/services/auth.service';
 import { IAuthUser } from '../../../../core/auth/interfaces/auth-user.interface';
 import { firstValueFrom, filter, take, switchMap } from 'rxjs';
+import { SeverityMessageType } from '../../../../core/enums';
 
 @Component({
   selector: 'app-login-page',
@@ -94,7 +95,7 @@ export class LoginPageComponent {
         },
         error: (error) => {
           console.log(error);
-          this.toastService.showMessage('error', 'Error', error.error.message);
+          this.toastService.showMessage(SeverityMessageType.Error, 'Error', error.error.message);
           this.blockUserIService.hide();
         }
       });

@@ -15,6 +15,7 @@ import { IRecuperaContrasena } from '../../../../shared/interfaces/usuario/regis
 import { IResponse } from '../../../../core/interfaces/response/response.interface';
 import { BlockUserIService } from '../../../../core/services/blockUI/block-user-i.service';
 import { ToastService } from '../../../../core/services/messages/toast.service';
+import { SeverityMessageType } from '../../../../core/enums';
 
 @Component({
   selector: 'app-modal-recupera-contrasena',
@@ -69,14 +70,14 @@ export class ModalRecuperaContrasenaComponent implements OnDestroy {
       this.blockUserIService.show();
       this.usuarioService.recuperaContrasena(registro).subscribe({
         next: (response:IResponse<any>) => {
-          this.toastService.showMessage('success', 'Genial 📩', 'Correo enviado.', 5000);
-          this.toastService.showMessage('info', 'Revisa tu correo 📩', response.mensaje, 10000);
+          this.toastService.showMessage(SeverityMessageType.Success, 'Genial 📩', 'Correo enviado.', undefined, 5000);
+          this.toastService.showMessage(SeverityMessageType.Info, 'Revisa tu correo 📩', response.mensaje, undefined, 10000);
           this.formulario.reset();
           this.blockUserIService.hide();
           this.esVisibleRecuperaContrasenaDialogChange.emit(false);
         },
         error: (error) => {
-          this.toastService.showMessage('error', 'Error', error.error.message);
+          this.toastService.showMessage(SeverityMessageType.Error, 'Error', error.error.message);
           this.blockUserIService.hide();
         }
       });

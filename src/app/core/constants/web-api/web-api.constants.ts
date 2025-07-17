@@ -3,12 +3,15 @@ export const WebApiConstants = {
     getAllTipoUsuario: `catalogo/getAllTipoUsuario`,
     getAllEstado: `catalogo/getAllEstado`,
     getAllMunicipioByEstado: (id:string) => `catalogo/getAllMunicipioByEstado/${id}`,
+    getAllEstatusBusquedaJugador: `catalogo/getAllEstatusBusquedaJugador`
   },
   usuario: {
     save: `usuario/save`,
     validaToken: (token:string) => `usuario/valida-token?token=${token}`,
     recuperaContrasena: `usuario/recupera-contrasena`,
-
+  },
+  informacion_personal: {
+    save: `informacion-personal/save`,
   },
   auth:{
     login: `auth/login`,

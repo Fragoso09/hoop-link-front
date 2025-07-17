@@ -7,6 +7,7 @@ import { ToastService } from '../../../../core/services/messages/toast.service';
 import { UsuarioService } from '../../../../core/services/usuario/usuario.service';
 import { IResponse } from '../../../../core/interfaces/response/response.interface';
 import { IResponseError } from '../../../../core/interfaces/error/error.interface';
+import { SeverityMessageType } from '../../../../core/enums';
 
 @Component({
   selector: 'app-valida-correo',
@@ -51,7 +52,7 @@ export class ValidaCorreoComponent implements OnInit, AfterViewInit {
   private validaToken() {
     this.usuarioService.validaToken(this.token).subscribe({
       next: (response:IResponse<string>) => {
-        this.toastService.showMessage('success', 'Excelente', response.mensaje, 5000);
+        this.toastService.showMessage(SeverityMessageType.Success, 'Excelente', response.mensaje, undefined, 5000);
         this.usuarioService.usuarioTokenValidado = true;
         this.router.navigateByUrl('/login');
       },
