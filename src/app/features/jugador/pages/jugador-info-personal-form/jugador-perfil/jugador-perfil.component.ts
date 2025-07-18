@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
@@ -57,7 +57,10 @@ export class JugadorPerfilComponent implements OnInit {
 
 //#region Ng
   async ngOnInit() {
-    await this.inicializa();
+    this.inicializa();
+    this.form.valueChanges.subscribe(val => {
+      this.cargaFotoPerfil();
+    });
   }
 //#endregion
 
@@ -70,6 +73,11 @@ export class JugadorPerfilComponent implements OnInit {
       this._blockUserIService.hide();
     }
   }
+
+  private cargaFotoPerfil() {
+    this.fotoPreviewUrl = this.form.get('fotoPerfil')?.value;
+  }
+
 
   private async cargaCatalogoEstatusJugador() {
     this.mensaje = CatalogoConstants.CARGANDO_CATALOGO_MULTIPLE('Busqueda Jugador', this.catalogosCargados + 1, this.totalCatalogos);

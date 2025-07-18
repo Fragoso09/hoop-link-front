@@ -12,6 +12,7 @@ export const WebApiConstants = {
   },
   informacion_personal: {
     save: `informacion-personal/save`,
+    getInformacion: `informacion-personal`
   },
   auth:{
     login: `auth/login`,

@@ -18,8 +18,10 @@ import { InfoPersonalDetail, InfoPersonalSummary } from '../../constants';
 import { JugadorConstants } from '../../constants/general/general.constants';
 import { InformacionPersonalService } from '../../../../core/services/informacion-personal/informacion-personal.service';
 import { finalize } from 'rxjs';
-import { IRegistraInformacionPersonal } from '../../../../shared/interfaces/informacion-personal';
+import { IPerfilInformacionPersonal, IRegistraInformacionPersonal } from '../../../../shared/interfaces/informacion-personal';
 import { AuthService } from '../../../../core/auth/services/auth.service';
+import { IResponse } from '../../../../core/interfaces/response/response.interface';
+import { IInformacinPersonal } from '../../../../shared/interfaces/informacion-personal/informacion-personal.interfaces';
 
 @Component({
   selector: 'app-jugador-info-personal-form',
@@ -98,6 +100,7 @@ export class JugadorInfoPersonalFormComponent implements OnInit {
    private prepareFormularios(): void {
     this.formularioPrincipal = this._fb.group({
       perfil: this._fb.group({
+        informacionPersonalId: new FormControl(null),
         usuarioId: new FormControl(null),
         fotoPerfil: new FormControl(null),
         altura: new FormControl(null, Validators.required),
@@ -111,7 +114,40 @@ export class JugadorInfoPersonalFormComponent implements OnInit {
   }
 
   private cargaDatos() {
-    console.log(this._authService.user());
+    this._informacionPersonalService.getInformacionPersonal().subscribe({
+      next: (response: IResponse<IInformacinPersonal>) => {
+        const { data } = response;
+        console.log(data);
+
+        const perfil: IPerfilInformacionPersonal = {
+          altura: data?.altura ?? 0,
+          peso: data?.peso ?? 0,
+          estatusBusquedaJugador: data?.estatusBusquedaJugador ?? { id: '', nombre: ''},
+          largoBrazo: data?.largoBrazo ?? 0,
+          medidaMano: data?.medidaMano ?? 0,
+          quienEres: data?.quienEres ?? '',
+          informacionPersonalId: data?.informacionPersonalId,
+          fotoPerfil: data?.fotoPerfilPublicUrl
+        }
+
+        this.setPerfilEnFormulario(perfil);
+      },
+      error: (error) => { }
+    });
+  }
+
+  private setPerfilEnFormulario(perfil: IPerfilInformacionPersonal) {
+    console.log('aqui el perfil en set perfil', perfil);
+    this.perfil.patchValue({
+      informacionPersonalId: perfil.informacionPersonalId,
+      fotoPerfil: perfil.fotoPerfil,
+      altura: perfil.altura,
+      peso: perfil.peso,
+      estatusBusquedaJugador: perfil.estatusBusquedaJugador,
+      medidaMano: perfil.medidaMano,
+      largoBrazo: perfil.largoBrazo,
+      quienEres: perfil.quienEres,
+    });
   }
 
   get perfil(): FormGroup {
@@ -171,6 +207,7 @@ export class JugadorInfoPersonalFormComponent implements OnInit {
         next: (response: any) => {
           console.log('Respuesta exitosa:', response);
           this._toastService.showMessage(SeverityMessageType.Success, 'Genial', response.mensaje, undefined, 5000);
+          this.cargaDatos();
         },
         error: (error: any) => {
           console.error('Ocurrió un error:', error);
