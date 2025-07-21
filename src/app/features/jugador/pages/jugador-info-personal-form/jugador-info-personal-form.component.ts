@@ -18,10 +18,11 @@ import { InfoPersonalDetail, InfoPersonalSummary } from '../../constants';
 import { JugadorConstants } from '../../constants/general/general.constants';
 import { InformacionPersonalService } from '../../../../core/services/informacion-personal/informacion-personal.service';
 import { finalize } from 'rxjs';
-import { IPerfilInformacionPersonal, IRegistraInformacionPersonal } from '../../../../shared/interfaces/informacion-personal';
+import { IFuerzaResistenciaInformacionPersonal, IPerfilInformacionPersonal, IRegistraInformacionPersonal } from '../../../../shared/interfaces/informacion-personal';
 import { AuthService } from '../../../../core/auth/services/auth.service';
 import { IResponse } from '../../../../core/interfaces/response/response.interface';
 import { IInformacinPersonal } from '../../../../shared/interfaces/informacion-personal/informacion-personal.interfaces';
+import { JugadorFuerzaResistenciaComponent } from "./jugador-fuerza-resistencia/jugador-fuerza-resistencia.component";
 
 @Component({
   selector: 'app-jugador-info-personal-form',
@@ -33,6 +34,7 @@ import { IInformacinPersonal } from '../../../../shared/interfaces/informacion-p
     ResponsiveTabsComponent,
     JugadorPerfilComponent,
     ButtonModule,
+    JugadorFuerzaResistenciaComponent
 ],
   templateUrl: './jugador-info-personal-form.component.html',
   styleUrl: './jugador-info-personal-form.component.scss'
@@ -109,7 +111,21 @@ export class JugadorInfoPersonalFormComponent implements OnInit {
         medidaMano: new FormControl(null, Validators.required),
         largoBrazo: new FormControl(null, Validators.required),
         quienEres: new FormControl(null, Validators.required),
-      })
+      }),
+      fuerzaResistencia: this._fb.group({
+        alturaSaltoVertical: new FormControl(null),
+        distanciaSaltoHorizontal: new FormControl(null),
+        pesoBenchPress: new FormControl(null),
+        pesoSquats: new FormControl(null),
+        pesoPressMilitar: new FormControl(null),
+        pesoRepeticionBenchPress: new FormControl(null),
+        pesoRepeticionSquats: new FormControl(null),
+        pesoRepeticionPressMilitar: new FormControl(null),
+        tiempoDistanciaCienMts: new FormControl(null),
+        tiempoDistanciaUnKm: new FormControl(null),
+        tiempoDistanciaTresKm: new FormControl(null),
+        tiempoDistanciaCincoKm: new FormControl(null),
+      }),
     });
   }
 
@@ -119,20 +135,66 @@ export class JugadorInfoPersonalFormComponent implements OnInit {
         const { data } = response;
         console.log(data);
 
-        const perfil: IPerfilInformacionPersonal = {
-          altura: data?.altura ?? 0,
-          peso: data?.peso ?? 0,
-          estatusBusquedaJugador: data?.estatusBusquedaJugador ?? { id: '', nombre: ''},
-          largoBrazo: data?.largoBrazo ?? 0,
-          medidaMano: data?.medidaMano ?? 0,
-          quienEres: data?.quienEres ?? '',
-          informacionPersonalId: data?.informacionPersonalId,
-          fotoPerfil: data?.fotoPerfilPublicUrl
-        }
+        // preparo la informacion
+        const { perfil, fuerzaResistencia } = this.preparaSeccionesToSetEnFormulario(data);
 
+        // actualizo la informacion
         this.setPerfilEnFormulario(perfil);
+        this.setFuerzaResistenciaEnFormulario(fuerzaResistencia);
       },
       error: (error) => { }
+    });
+  }
+
+  private preparaSeccionesToSetEnFormulario(infoPersonal?: IInformacinPersonal): IRegistraInformacionPersonal {
+    const perfil: IPerfilInformacionPersonal = {
+      altura: infoPersonal?.altura,
+      peso: infoPersonal?.peso,
+      estatusBusquedaJugador: infoPersonal?.estatusBusquedaJugador ?? { id: '', nombre: ''},
+      largoBrazo: infoPersonal?.largoBrazo,
+      medidaMano: infoPersonal?.medidaMano,
+      quienEres: infoPersonal?.quienEres ?? '',
+      informacionPersonalId: infoPersonal?.informacionPersonalId,
+      fotoPerfil: infoPersonal?.fotoPerfilPublicUrl
+    }
+
+    const fuerzaResistencia: IFuerzaResistenciaInformacionPersonal = {
+      alturaSaltoVertical: infoPersonal?.alturaSaltoVertical,
+      distanciaSaltoHorizontal: infoPersonal?.distanciaSaltoHorizontal,
+      pesoBenchPress: infoPersonal?.pesoBenchPress,
+      pesoSquats: infoPersonal?.pesoSquats,
+      pesoPressMilitar: infoPersonal?.pesoPressMilitar,
+      pesoRepeticionBenchPress: infoPersonal?.pesoRepeticionBenchPress,
+      pesoRepeticionSquats: infoPersonal?.pesoRepeticionSquats,
+      pesoRepeticionPressMilitar: infoPersonal?.pesoRepeticionPressMilitar,
+      tiempoDistanciaCienMts: infoPersonal?.tiempoDistanciaCienMts,
+      tiempoDistanciaUnKm: infoPersonal?.tiempoDistanciaUnKm,
+      tiempoDistanciaTresKm: infoPersonal?.tiempoDistanciaTresKm,
+      tiempoDistanciaCincoKm: infoPersonal?.tiempoDistanciaCincoKm,
+    }
+
+    const infoPersonalPreparada: IRegistraInformacionPersonal = {
+      perfil,
+      fuerzaResistencia
+    }
+
+    return infoPersonalPreparada;
+  }
+
+  private setFuerzaResistenciaEnFormulario(fuerzaResistencia: IFuerzaResistenciaInformacionPersonal) {
+    this.fuerzaResistencia.patchValue({
+      alturaSaltoVertical: fuerzaResistencia.alturaSaltoVertical,
+      distanciaSaltoHorizontal: fuerzaResistencia.distanciaSaltoHorizontal,
+      pesoBenchPress: fuerzaResistencia.pesoBenchPress,
+      pesoSquats: fuerzaResistencia.pesoSquats,
+      pesoPressMilitar: fuerzaResistencia.pesoPressMilitar,
+      pesoRepeticionBenchPress: fuerzaResistencia.pesoRepeticionBenchPress,
+      pesoRepeticionSquats: fuerzaResistencia.pesoRepeticionSquats,
+      pesoRepeticionPressMilitar: fuerzaResistencia.pesoRepeticionPressMilitar,
+      tiempoDistanciaCienMts: fuerzaResistencia.tiempoDistanciaCienMts,
+      tiempoDistanciaUnKm: fuerzaResistencia.tiempoDistanciaUnKm,
+      tiempoDistanciaTresKm: fuerzaResistencia.tiempoDistanciaTresKm,
+      tiempoDistanciaCincoKm: fuerzaResistencia.tiempoDistanciaCincoKm,
     });
   }
 
@@ -154,14 +216,25 @@ export class JugadorInfoPersonalFormComponent implements OnInit {
     return this.formularioPrincipal.get('perfil') as FormGroup;
   }
 
+  get fuerzaResistencia(): FormGroup {
+    return this.formularioPrincipal.get('fuerzaResistencia') as FormGroup;
+  }
+
   private validaPerfil() {
     if (this._formularioService.tieneErroresEnControlEspecifico(this.formularioPrincipal, 'perfil')) {
       this._toastService.showMessage(SeverityMessageType.Warn, InfoPersonalSummary.SECCION_FALTANTE, InfoPersonalDetail.PERFIL_INCOMPLETO, undefined, 5000);
     }
   }
 
+  private validaFuerzaResistencia() {
+    if (this._formularioService.tieneErroresEnControlEspecifico(this.formularioPrincipal, 'fuerzaResistencia')) {
+      this._toastService.showMessage(SeverityMessageType.Warn, InfoPersonalSummary.SECCION_FALTANTE, InfoPersonalDetail.FUERZA_RESISTENCIA_INCOMPLETO, undefined, 5000);
+    }
+  }
+
   private validaErrores() {
     this.validaPerfil();
+    this.validaFuerzaResistencia();
   }
 
   public onSubmit(): void {
@@ -197,7 +270,8 @@ export class JugadorInfoPersonalFormComponent implements OnInit {
 
       let formCompleto: IRegistraInformacionPersonal;
       formCompleto = {
-        perfil: raw.perfil
+        perfil: raw.perfil,
+        fuerzaResistencia: raw.fuerzaResistencia
       }
       const formData = dtoToFormData(formCompleto, this.formularioPrincipal);
 
