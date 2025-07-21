@@ -32,7 +32,7 @@ import { ErrorImagenPerfil } from '../../../../../shared/components/profile-imag
     Select,
     TextareaModule,
     ProfileImageComponent
-],
+  ],
   templateUrl: './jugador-perfil.component.html',
   styleUrl: './jugador-perfil.component.scss'
 })
