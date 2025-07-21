@@ -1,0 +1,20 @@
+<div class="container-page">
+  <app-header></app-header>
+  <main>
+    <div class="grid m-0 p-0 lg:ml-5 lg:mr-5">
+      <div class="lg:col col-12">
+        <h1 class="text-6xl m-0 p-0 flex align-items-center justify-content-center ">Nuestros Terminos y Condiciones</h1>
+      </div>
+    </div>
+    <div class="grid m-0 p-0 lg:ml-5 lg:mr-5">
+      <div class="col-4"></div>
+      <div class="col-4  flex flex-column align-items-center justify-content-center">
+        @for (section of sections; track $index) {
+          <a [routerLink]="section.route" target="_blank" class="flex enlace-color no-underline">{{section.title}}</a>
+        }
+      </div>
+      <div class="col-4"></div>
+    </div>
+  </main>
+  <app-footer></app-footer>
+</div>

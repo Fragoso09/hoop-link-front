@@ -58,11 +58,23 @@ export const routes: Routes = [
     path: 'registro',
     title: 'Registro | HoopLink',
     loadComponent: () => import('./pages/registro/registro.component').then(r => r.RegistroComponent),
+    children: [
+      {
+        path: 'valida-correo',
+        title: 'Valida Correo | HoopLink',
+        loadComponent: () => import('./pages/registro/valida-correo/valida-correo.component').then(v => v.ValidaCorreoComponent),
+      }
+    ]
   },
   {
     path: 'login',
     title: 'Login | HoopLink',
     loadComponent: () => import('./pages/login/login.component').then(l=> l.LoginComponent),
+  },
+  {
+    path: 'terminos-condiciones',
+    title: 'Terminos y Condiciones | HoopLink',
+    loadComponent: () => import('./pages/terminos-condiciones/terminos-condiciones.component').then(t => t.TerminosCondicionesComponent),
   },
   {
     path: '',
