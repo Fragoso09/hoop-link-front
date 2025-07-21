@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BlockUI } from 'primeng/blockui';
-import { OverlayComponent } from '../../../shared/components/pages/overlay/overlay.component';
+import { OverlayComponent } from '../../components/overlay/overlay.component';
 
 @Injectable({
   providedIn: 'root'

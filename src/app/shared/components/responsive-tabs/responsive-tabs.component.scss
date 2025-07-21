@@ -1,0 +1,145 @@
+// // Contenedor de los botones de las pestañas
+// // Tu HTML ya usa las clases flex, hidden, md:flex, gap-3
+// // Vamos a apuntar al div que contiene los botones y añadir la línea gris inferior
+// .flex.flex-wrap.justify-content-between.align-items-center > .hidden.md\:flex {
+//   // Estas clases ya vienen de tu HTML y PrimeFlex/Tailwind
+//   // display: none; // hidden
+//   // @media (min-width: 768px) { display: flex !important; } // md:flex
+//   // flex-wrap: wrap;
+//   // gap: 1.5rem; // gap-3
+
+//   // border-bottom: 2px solid #e0e0e0; // <-- Línea gris continua como en la imagen
+//   // padding-bottom: 2px; // Espacio entre los botones y la línea gris
+//   // width: 100%; // Asegura que el contenedor ocupe todo el ancho disponible
+//   // // Puedes ajustar la justificación si quieres que los tabs estén centrados, etc.
+//   // justify-content: flex-start; // Alinea los tabs al inicio
+// }
+
+
+// button {
+//   // Tus estilos base para el botón
+//   transition: all 0.2s ease;
+//   border: none; // border-none
+//   background-color: transparent; // bg-transparent
+//   cursor: pointer; // cursor-pointer
+//   padding: 0.5rem; // p-2 (0.5rem es el valor típico de p-2 en PrimeFlex)
+
+
+//   // Estado por defecto (inactivo) - Texto gris y línea transparente
+//   color: var(--text-color-secondary, #6666669f); // <-- Color gris (text-500)
+//   border-bottom: 2px solid transparent; // <-- Línea transparente por defecto
+//   border-top: 2px solid transparent;
+//   // Estado activo - Texto azul y línea azul
+//   // Apuntamos a las clases que aplica ngClass en el HTML
+//   &.text-xl.text-blue-600.border-bottom-2.border-top-2.border-primary {
+//       color: blue; // <-- Color azul (text-primary)
+//       font-weight: bold; // <-- Hace el texto activo más negrita
+//       border-bottom-color: blue; // <-- Color azul de la línea activa
+//       border-bottom-width: 2px; // <-- Asegura que el ancho sea 2px, anulando border-bottom-2 de PrimeFlex si fuera diferente (0.5rem por defecto)
+//       margin-bottom: -2px; // <-- Mueve la línea activa 2px hacia arriba para solaparse con la línea gris del contenedor
+//   }
+
+//   // Estado hover - Texto azul
+//   &:hover {
+//      color: var(--primary-color, rgba(0, 0, 255, 0.404)); // <-- Cambia el color a azul al pasar el ratón
+//      // Opcional: si quieres una línea sutil al pasar el ratón incluso en tabs inactivos
+//      // border-bottom-color: rgba(var(--primary-color-rgb, 0, 0, 255), 0.3);
+//   }
+
+//   // Asegurarnos de que el botón dentro del hidden div no tenga bordes extra en mobile si por alguna razón se muestra
+//    .hidden.md\:flex & {
+//       // Este selector apunta a los botones dentro del div que se oculta en mobile
+//       // No se necesitan estilos específicos aquí si las media queries ya los ocultan
+//    }
+// }
+
+// Variable primaria (asegúrate que esté definida o usa un color directo)
+:root {
+  --primary-color: #3B82F6; // Ejemplo de azul (como text-blue-600)
+  --text-color-secondary: #6666669f; // Ejemplo de gris
+}
+
+.tab-button {
+  // Estilos base (inactivo)
+  padding: 0.5rem;                     // Equivalente a p-2
+  background-color: transparent;       // Equivalente a bg-transparent
+  cursor: pointer;                     // Equivalente a cursor-pointer
+  font-size: 1.25rem;                  // Equivalente a text-xl (ajusta si es necesario)
+  text-align: center;
+  transition: color 0.2s ease, border-color 0.2s ease; // Transición más específica
+
+  // Bordes por defecto (transparentes)
+  border-top: 2px solid transparent;
+  border-bottom: 2px solid transparent;
+  border-left: none;                   // Asegura no tener bordes laterales
+  border-right: none;                  // Asegura no tener bordes laterales
+
+  color: var(--text-color-secondary, #666666de); // <-- Color gris (text-500)  // Color de texto inactivo (gris)
+
+  // Estado Hover (para cualquier tab)
+  &:hover {
+    color: var(--primary-color, rgba(0, 0, 255, 0.836));     // Cambia a color primario al pasar el ratón
+  }
+
+  // Estado Activo
+  &.tab-active {
+    color: #094177;       // Color de texto activo (azul)
+    font-weight: 600;                  // Un poco de negrita (ajusta si prefieres 'bold')
+    border-top-color: var(--primary-color);    // Color de borde superior activo
+    border-bottom-color: var(--primary-color); // Color de borde inferior activo
+  }
+}
+
+
+// Estilos para el select en mobile
+.mobile-tab-select { // Apunta a la clase específica
+  // --- Reseteo y Apariencia Base ---
+  // display: block; // Asegura que ocupe el ancho completo
+  width: 100%;    // Equivalente a w-full
+  padding: 0.6rem 2.5rem 0.6rem 0.8rem; // Ajusta padding (más a la derecha para la flecha)
+  margin: 0.5rem; // Equivalente a m-2
+  font-size: 1.1rem; // Ajustado ligeramente desde text-xl para select, puedes mantener 1.25rem si prefieres
+  font-weight: 500;
+  line-height: 1.5;
+  color: var(--text-color, #425a77); // Color de texto base
+  background-color: #fff;   // Fondo blanco
+  background-clip: padding-box;
+  border: 1px solid var(--border-color, #9bb0ca); // Borde base
+  border-radius: var(--border-radius, 6px);   // Borde redondeado (ajusta var o valor)
+  cursor: pointer;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+
+  // --- Quitar Apariencia Nativa ---
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+
+  // --- Flecha Personalizada (SVG como background) ---
+  // (SVG de flecha hacia abajo, color #6c757d - gris secundario)
+  // Puedes cambiar el color en 'fill' si quieres que sea azul --primary-color (#3B82F6)
+  background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path fill="none" stroke="%236c757d" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2 5l6 6 6-6"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 0.8rem center; // Posición de la flecha
+  background-size: 16px 12px;              // Tamaño de la flecha
+
+  // --- Estados ---
+  &:hover {
+    border-color: #adb5bd; // Borde ligeramente más oscuro al pasar el ratón
+  }
+
+  // Estilo cuando el select está enfocado (abierto o clickeado)
+  &:focus {
+    border-color: var(--primary-color); // Borde azul al enfocar
+    outline: 0; // Quitar outline por defecto
+    // Sombra sutil azul para indicar foco (similar a Bootstrap/PrimeNG)
+    box-shadow: 0 0 0 0.2rem rgba(var(--primary-color-rgb, #d8e1eb), 0.25);
+  }
+
+  // Opcional: Estilos para las opciones (muy limitado)
+  .option-select {
+    font-weight: normal;
+    background-color: #f0f0f0;
+    color: #333;
+    // Estilizar color/background de options es inconsistente entre navegadores
+  }
+}

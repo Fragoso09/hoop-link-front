@@ -1,0 +1,126 @@
+<div [formGroup]="form" class="my-4">
+  <div class="grid grid-cols-12 gap-4">
+    <div class="col-span-12 lg:col-span-3 content-center">
+      <app-profile-image
+        [imageUrl]="fotoPreviewUrl"
+        (imageSelected)="onFileSelected($event)"
+        (fileTooLarge)="handleFileTooLarge($event)"></app-profile-image>
+    </div>
+    <div class="col-span-12 lg:col-span-9 space-y-4">
+      <div class="grid grid-cols-12 gap-4 mb-4">
+        <div class="col-span-12 md:col-span-6 lg:col-span-4">
+          <p-floatlabel variant="on">
+            <p-inputnumber
+              inputId="on_label_altura"
+              formControlName='altura'
+              [class.ng-dirty]="esValido('altura')"
+              [class.ng-valid]="!esValido('altura') && form.get('altura')?.value"
+              autocomplete="off"
+              fluid="true"
+              mode="decimal"
+              suffix=" mts"
+              [minFractionDigits]="2" [maxFractionDigits]="5"
+              [useGrouping]="false" />
+            <label for="on_label_altura">Altura en mts.</label>
+          </p-floatlabel>
+          @if (esValido('altura')) {
+            <small class="campo-error-texto" [innerHTML]="getErrores('altura', 'Altura')" ></small>
+          }
+        </div>
+        <div class="col-span-12 md:col-span-6 lg:col-span-4">
+          <p-floatlabel variant="on">
+            <p-inputnumber
+              inputId="on_label_peso"
+              formControlName='peso'
+              [class.ng-dirty]="esValido('peso')"
+              [class.ng-valid]="!esValido('peso') && form.get('peso')?.value"
+              autocomplete="off"
+              fluid="true"
+              mode="decimal"
+              suffix=" kg"
+              [minFractionDigits]="2" [maxFractionDigits]="5"
+              [useGrouping]="false" />
+            <label for="on_label_peso">Peso en kg.</label>
+          </p-floatlabel>
+          @if (esValido('peso')) {
+            <small class="campo-error-texto" [innerHTML]="getErrores('peso', 'Peso')" ></small>
+          }
+        </div>
+        <div class="col-span-12 md:col-span-6 lg:col-span-4">
+          <p-floatlabel variant="on">
+            <p-select
+              [ngClass]="{ 'ng-invalid ng-dirty': esValido('estatusBusquedaJugador'), 'ng-valid': !esValido('estatusBusquedaJugador') }"
+              formControlName='estatusBusquedaJugador'
+              [class.ng-dirty]="esValido('estatusBusquedaJugador')"
+              inputId="on_label_estatusBusquedaJugador"
+              filter="true"
+              [options]="allEstatusJugador"
+              optionLabel="nombre"
+              placeholder="Selecciona una opción"
+              class="w-full capitalize" />
+            <label for="on_label_estatusBusquedaJugador">Busqueda Jugador</label>
+          </p-floatlabel>
+          @if (esValido('estatusBusquedaJugador')) {
+            <small class="campo-error-texto" [innerHTML]="getErrores('estatusBusquedaJugador', 'Busqueda Jugador')" ></small>
+          }
+        </div>
+         <div class="col-span-12 md:col-span-6 lg:col-span-4">
+          <p-floatlabel variant="on">
+            <p-inputnumber
+              inputId="on_label_medidaMano"
+              formControlName='medidaMano'
+              [class.ng-dirty]="esValido('medidaMano')"
+              [class.ng-valid]="!esValido('medidaMano') && form.get('medidaMano')?.value"
+              autocomplete="off"
+              fluid="true"
+              mode="decimal"
+              suffix=" cm"
+              [minFractionDigits]="2" [maxFractionDigits]="5"
+              [useGrouping]="false" />
+            <label for="on_label_medidaMano">Medida de mano en cm.</label>
+          </p-floatlabel>
+          @if (esValido('medidaMano')) {
+            <small class="campo-error-texto" [innerHTML]="getErrores('medidaMano', 'Mediada de Mano')" ></small>
+          }
+        </div>
+        <div class="col-span-12 md:col-span-6 lg:col-span-4">
+          <p-floatlabel variant="on">
+            <p-inputnumber
+              inputId="on_label_largoBrazo"
+              formControlName='largoBrazo'
+              [class.ng-dirty]="esValido('largoBrazo')"
+              [class.ng-valid]="!esValido('largoBrazo') && form.get('largoBrazo')?.value"
+              autocomplete="off"
+              fluid="true"
+              mode="decimal"
+              suffix=" cm"
+              [minFractionDigits]="2" [maxFractionDigits]="5"
+              [useGrouping]="false" />
+            <label for="on_label_largoBrazo">Largo de brazo en cm.</label>
+          </p-floatlabel>
+          @if (esValido('largoBrazo')) {
+            <small class="campo-error-texto" [innerHTML]="getErrores('largoBrazo', 'Largo de Brazo')" ></small>
+          }
+        </div>
+      </div>
+      <div class="grid grid-cols-12 gap-4 mb-4">
+        <div class="col-span-12">
+          <p-floatlabel variant="on">
+            <textarea
+              pTextarea
+              id="on_label_quienEres"
+              formControlName='quienEres'
+              [class.ng-dirty]="esValido('quienEres')"
+              [class.ng-valid]="!esValido('quienEres') && form.get('quienEres')?.value"
+              autocomplete="off"
+              fluid="true" ></textarea>
+            <label for="on_label_quienEres">Cuentanos quien eres? (Personalidad)</label>
+          </p-floatlabel>
+          @if (esValido('quienEres')) {
+            <small class="campo-error-texto" [innerHTML]="getErrores('quienEres', 'Quien eres?')" ></small>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

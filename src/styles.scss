@@ -1,10 +1,24 @@
-/* You can add global styles to this file, and also import other style files */
-// @font-face {
-//   font-family: 'Bebas Neue';
-//   src: url('assets/fonts/Bebas_Neue/BebasNeue-Regular.ttf') format('ttf');
-//   font-weight: normal;
-//   font-style: normal;
-// }
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  a {
+  @apply text-blue-600 underline;
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Bebas Neue', serif;
+    color: #334155;
+  }
+
+  body {
+    font-family: "Raleway", serif;
+  }
+
+}
+
+}
+
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
 
@@ -35,18 +49,18 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Estilos para primeng */
 .components-font {
-  font-family: 'Bebas Neue', serif;
-  font-size: larger;
-  font: bold;
+  font-family: 'Bebas Neue', serif !important;
+  // font-size: larger;
+  // font: bold;
 }
 
 .components-placeholder {
   // font-family: 'Roboto Mono', monospace;
-  font-family: "Raleway", serif;
+  font-family: "Raleway", serif !important;
 }
 
 .components-font-title-card {
-  font-family: 'Bebas Neue', serif;
+  font-family: 'Bebas Neue', serif !important;
 }
 /* end Estilos para primeng */
 
@@ -78,8 +92,38 @@ h1, h2, h3, h4, h5, h6 {
 input.ng-valid {
   border: 1px solid green; /* Resalta el borde con color verde si es válido */
 }
+
+.p-select.ng-valid {
+  border: 1px solid green; /* Resalta el borde con color verde si es válido */
+}
+
+.ng-valid .p-datepicker-input {
+  border: 1px solid green;
+}
+
+.p-inputnumber.ng-valid input {
+  border: 1px solid green;
+}
+
+.ng-valid .p-inputmask  {
+  border: 1px solid green;
+}
+
+.p-textarea.ng-valid {
+  border: 1px solid green;
+}
+
+p-password.ng-touched.ng-valid .p-inputtext {
+  border: 1px solid green;
+}
 /* end Estilos para validaciones */
 
+/* Estilos Legal */
+.sectionLegalClick {
+  background-color: #deebf9;
+}
+
+/* end Estilos Legal */
 /* Box Shadow */
 .shadow-9 {
   box-shadow: 0px 18px 92px 16px rgba(0, 0, 0, 0.12),

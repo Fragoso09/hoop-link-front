@@ -31,16 +31,15 @@ export class WebApiService {
   }
 
   // Método privado para construir los headers
-  private getOptions(authRequired: boolean) {
-    let headers = new HttpHeaders();
+  private getOptions(authRequired: boolean): { headers?: HttpHeaders, withCredentials?: boolean } {
+    let options: any = {};
 
+    // Solo añadir withCredentials si es necesario
     if (authRequired) {
-      const token = localStorage.getItem('token'); // O usa un servicio de autenticación
-      if (token) {
-        headers = headers.set('Authorization', `Bearer ${token}`);
-      }
+      options.withCredentials = true;
     }
 
-    return { headers };
+    return options;
   }
+
 }
