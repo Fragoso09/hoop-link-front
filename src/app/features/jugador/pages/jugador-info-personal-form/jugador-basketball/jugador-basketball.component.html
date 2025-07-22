@@ -1,0 +1,189 @@
+<div [formGroup]="form" class="my-4">
+  <div class="grid grid-cols-12 gap-4 mb-4">
+    <div class="col-span-12 md:col-span-6 lg:col-span-4">
+      <p-floatlabel variant="on">
+        <p-datepicker
+          [ngClass]="{ 'ng-invalid ng-dirty': esValido('anioEmpezoAJugar'), 'ng-valid': !esValido('anioEmpezoAJugar') }"
+          formControlName='anioEmpezoAJugar'
+          inputId="on_label_anioEmpezoAJugar"
+          showIcon
+          iconDisplay="input"
+          fluid="true"
+          view="year"
+          dateFormat="yy"
+          appendTo="body" />
+        <label for="on_label_anioEmpezoAJugar">Cuando empezaste a jugar.</label>
+      </p-floatlabel>
+      @if (esValido('anioEmpezoAJugar')) {
+        <small class="campo-error-texto" [innerHTML]="getErrores('anioEmpezoAJugar', 'Cuando empezaste a jugar')" ></small>
+      }
+    </div>
+    <div class="col-span-12 md:col-span-6 lg:col-span-5">
+      <span class="text-xl">Mano de Juego?</span> &nbsp;
+      <p-togglebutton
+        formControlName='manoJuego'
+        onLabel="Izquierda"
+        offLabel="Derecha"
+        [onIcon]="iconoSi"
+        offIcon="fa-solid fa-hand-point-right"
+        styleClass="w-1/2"
+        ariaLabel="Do you confirm" />
+    </div>
+    <div class="col-span-12 md:col-span-6 lg:col-span-3">
+      <p-floatlabel variant="on">
+        <p-select
+          [ngClass]="{ 'ng-invalid ng-dirty': esValido('posicionJuegoUno'), 'ng-valid': !esValido('posicionJuegoUno') }"
+          formControlName='posicionJuegoUno'
+          [class.ng-dirty]="esValido('posicionJuegoUno')"
+          inputId="on_label_posicionJuegoUno"
+          filter="true"
+          [options]="allPosicionJugador"
+          optionLabel="nombre"
+          placeholder="Selecciona una opción"
+          class="w-full capitalize" />
+        <label for="on_label_posicionJuegoUno">Posición de juego uno</label>
+      </p-floatlabel>
+      @if (esValido('posicionJuegoUno')) {
+        <small class="campo-error-texto" [innerHTML]="getErrores('posicionJuegoUno', 'Posición de juego uno')" ></small>
+      }
+    </div>
+  </div>
+  <div class="grid grid-cols-12 gap-4 mb-4">
+    <div class="col-span-12 md:col-span-6 lg:col-span-3">
+      <p-floatlabel variant="on">
+        <p-select
+          [ngClass]="{ 'ng-invalid ng-dirty': esValido('posicionJuegoDos'), 'ng-valid': !esValido('posicionJuegoDos') }"
+          formControlName='posicionJuegoDos'
+          [class.ng-dirty]="esValido('posicionJuegoDos')"
+          inputId="on_label_posicionJuegoDos"
+          filter="true"
+          [options]="allPosicionJugador"
+          optionLabel="nombre"
+          placeholder="Selecciona una opción"
+          class="w-full capitalize" />
+        <label for="on_label_posicionJuegoDos">Posición de juego dos</label>
+      </p-floatlabel>
+      @if (esValido('posicionJuegoDos')) {
+        <small class="campo-error-texto" [innerHTML]="getErrores('posicionJuegoDos', 'Posición de juego dos')" ></small>
+      }
+    </div>
+    <div class="col-span-12 md:col-span-6 lg:col-span-3">
+      <span class="text-xl">Clavas?</span> &nbsp;
+      <p-togglebutton
+        formControlName='manoJuego'
+        onLabel="Si"
+        offLabel="No"
+        [onIcon]="iconoSi2"
+        offIcon="pi pi-times"
+        styleClass="w-1/2"
+        ariaLabel="Do you confirm" />
+    </div>
+    <div class="col-span-12 md:col-span-6 lg:col-span-3">
+      <p-floatlabel variant="on">
+        <p-inputnumber
+          inputId="on_label_puntosPorJuego"
+          formControlName='puntosPorJuego'
+          [class.ng-dirty]="esValido('puntosPorJuego')"
+          [class.ng-valid]="!esValido('puntosPorJuego') && form.get('puntosPorJuego')?.value"
+          autocomplete="off"
+          fluid="true"
+          suffix=" pts"
+          [useGrouping]="false" />
+        <label for="on_label_puntosPorJuego">Pts promedio por juego.</label>
+      </p-floatlabel>
+      @if (esValido('puntosPorJuego')) {
+        <small class="campo-error-texto" [innerHTML]="getErrores('puntosPorJuego', 'Puntos promedio por juego')" ></small>
+      }
+    </div>
+    <div class="col-span-12 md:col-span-6 lg:col-span-3">
+      <p-floatlabel variant="on">
+        <p-inputnumber
+          inputId="on_label_asistenciasPorJuego"
+          formControlName='asistenciasPorJuego'
+          [class.ng-dirty]="esValido('asistenciasPorJuego')"
+          [class.ng-valid]="!esValido('asistenciasPorJuego') && form.get('asistenciasPorJuego')?.value"
+          autocomplete="off"
+          fluid="true"
+          suffix=" asist"
+          [useGrouping]="false" />
+        <label for="on_label_asistenciasPorJuego">Asist. promedio por juego.</label>
+      </p-floatlabel>
+      @if (esValido('asistenciasPorJuego')) {
+        <small class="campo-error-texto" [innerHTML]="getErrores('asistenciasPorJuego', 'Asistencia. promedio por juego')" ></small>
+      }
+    </div>
+  </div>
+  <div class="grid grid-cols-12 gap-4 mb-4">
+    <div class="col-span-12 md:col-span-6 lg:col-span-3">
+      <p-floatlabel variant="on">
+        <p-inputnumber
+          inputId="on_label_rebotesPorJuego"
+          formControlName='rebotesPorJuego'
+          [class.ng-dirty]="esValido('rebotesPorJuego')"
+          [class.ng-valid]="!esValido('rebotesPorJuego') && form.get('rebotesPorJuego')?.value"
+          autocomplete="off"
+          fluid="true"
+          suffix=" rebote"
+          [useGrouping]="false" />
+        <label for="on_label_rebotesPorJuego">Reb promedio por juego.</label>
+      </p-floatlabel>
+      @if (esValido('rebotesPorJuego')) {
+        <small class="campo-error-texto" [innerHTML]="getErrores('rebotesPorJuego', 'Rebotes promedio por juego')" ></small>
+      }
+    </div>
+    <div class="col-span-12 md:col-span-6 lg:col-span-3">
+      <p-floatlabel variant="on">
+        <p-inputnumber
+          inputId="on_label_porcentajeTirosMedia"
+          formControlName='porcentajeTirosMedia'
+          [class.ng-valid]="!esValido('porcentajeTirosMedia') && form.get('porcentajeTirosMedia')?.value"
+          autocomplete="off"
+          fluid="true"
+          mode="decimal"
+          suffix=" %"
+          [minFractionDigits]="2" [maxFractionDigits]="5"
+          [useGrouping]="false" />
+        <label for="on_label_porcentajeTirosMedia">Porcentaje de tiro de media.</label>
+      </p-floatlabel>
+      @if (esValido('porcentajeTirosMedia')) {
+        <small class="campo-error-texto" [innerHTML]="getErrores('porcentajeTirosMedia', 'Porcentaje de tiro de media')" ></small>
+      }
+    </div>
+    <div class="col-span-12 md:col-span-6 lg:col-span-3">
+      <p-floatlabel variant="on">
+        <p-inputnumber
+          inputId="on_label_porcentajeTirosTres"
+          formControlName='porcentajeTirosTres'
+          [class.ng-valid]="!esValido('porcentajeTirosTres') && form.get('porcentajeTirosTres')?.value"
+          autocomplete="off"
+          fluid="true"
+          mode="decimal"
+          suffix=" %"
+          [minFractionDigits]="2" [maxFractionDigits]="5"
+          [useGrouping]="false" />
+        <label for="on_label_porcentajeTirosTres">Porcentaje de tiro de tres.</label>
+      </p-floatlabel>
+      @if (esValido('porcentajeTirosTres')) {
+        <small class="campo-error-texto" [innerHTML]="getErrores('porcentajeTirosTres', 'Porcentaje de tiro de tres')" ></small>
+      }
+    </div>
+    <div class="col-span-12 md:col-span-6 lg:col-span-3">
+      <p-floatlabel variant="on">
+        <p-inputnumber
+          inputId="on_label_porcentajeTirosLibres"
+          formControlName='porcentajeTirosLibres'
+          [class.ng-valid]="!esValido('porcentajeTirosLibres') && form.get('porcentajeTirosLibres')?.value"
+          autocomplete="off"
+          fluid="true"
+          mode="decimal"
+          suffix=" %"
+          [minFractionDigits]="2" [maxFractionDigits]="5"
+          [useGrouping]="false" />
+        <label for="on_label_porcentajeTirosLibres">Porcentaje de tiro libre.</label>
+      </p-floatlabel>
+      @if (esValido('porcentajeTirosLibres')) {
+        <small class="campo-error-texto" [innerHTML]="getErrores('porcentajeTirosLibres', 'Porcentaje de tiro libre')" ></small>
+      }
+    </div>
+  </div>
+</div>

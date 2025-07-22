@@ -41,4 +41,10 @@ export class CatalogoService {
     return this.webApiService.get<ICatalogo[]>(url);
   }
 
+   public getAllPosicionJugador(): Observable<ICatalogo[]> {
+    const url: string = WebApiConstants.catalogo.getAllPosicionJugador;
+
+    return this.webApiService.get<ICatalogo[]>(url);
+  }
+
 }
