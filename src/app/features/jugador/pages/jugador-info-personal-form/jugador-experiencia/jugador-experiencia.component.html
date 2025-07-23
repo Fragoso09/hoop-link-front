@@ -1,1 +1,200 @@
-<p>jugador-experiencia works!</p>
+<div [formGroup]="form" class="my-4">
+  <div class="grid grid-cols-12 gap-4 mb-4">
+    <div class="col-span-12 md:col-span-6 lg:col-span-4">
+      <p-floatlabel variant="on">
+        <p-datepicker
+          [ngClass]="{ 'ng-invalid ng-dirty': esValido('desdeCuandoJuegas'), 'ng-valid': !esValido('desdeCuandoJuegas') }"
+          formControlName='desdeCuandoJuegas'
+          inputId="on_label_desdeCuandoJuegas"
+          showIcon
+          iconDisplay="input"
+          fluid="true"
+          appendTo="body" />
+        <label for="on_label_desdeCuandoJuegas">Desde cuando juegas.</label>
+      </p-floatlabel>
+      @if (esValido('desdeCuandoJuegas')) {
+        <small class="campo-error-texto" [innerHTML]="getErrores('desdeCuandoJuegas', 'Desde cuando juegas')" ></small>
+      }
+    </div>
+    <div class="col-span-12 md:col-span-6 lg:col-span-4">
+      <p-floatlabel variant="on">
+        <p-inputnumber
+          inputId="on_label_horasEntrenamientoSemana"
+          formControlName='horasEntrenamientoSemana'
+          [class.ng-valid]="!esValido('horasEntrenamientoSemana') && form.get('horasEntrenamientoSemana')?.value"
+          autocomplete="off"
+          fluid="true"
+          mode="decimal"
+          suffix=" hrs"
+          [minFractionDigits]="2" [maxFractionDigits]="5"
+          [useGrouping]="false" />
+        <label for="on_label_horasEntrenamientoSemana">Horas de entrenamiento por semana.</label>
+      </p-floatlabel>
+      @if (esValido('horasEntrenamientoSemana')) {
+        <small class="campo-error-texto" [innerHTML]="getErrores('horasEntrenamientoSemana', 'Hrs de entrenamiento poer semana')" ></small>
+      }
+    </div>
+    <div class="col-span-12 md:col-span-6 lg:col-span-4">
+      <p-floatlabel variant="on">
+        <p-inputnumber
+          inputId="on_label_horasGymSemana"
+          formControlName='horasGymSemana'
+          [class.ng-valid]="!esValido('horasGymSemana') && form.get('horasGymSemana')?.value"
+          autocomplete="off"
+          fluid="true"
+          mode="decimal"
+          suffix=" hrs"
+          [minFractionDigits]="2" [maxFractionDigits]="5"
+          [useGrouping]="false" />
+        <label for="on_label_horasGymSemana">Horas de gym por semana.</label>
+      </p-floatlabel>
+      @if (esValido('horasGymSemana')) {
+        <small class="campo-error-texto" [innerHTML]="getErrores('horasgymSemana', 'Hrs de entrenamiento poer semana')" ></small>
+      }
+    </div>
+  </div>
+  <div class="grid grid-cols-12 gap-4 mb-4">
+    <div class="col-span-12 md:col-span-6 lg:col-span-4">
+      <span class="text-xl">Perteneces a un club?</span> &nbsp;
+      <p-togglebutton
+        formControlName='pertenecesClub'
+        onLabel="Si"
+        offLabel="No"
+        [onIcon]="iconoSi"
+        offIcon="pi pi-times"
+        styleClass="w-1/8"
+        ariaLabel="Do you confirm" />
+    </div>
+    @if (form.get('pertenecesClub')?.value) {
+      <div class="col-span-12 md:col-span-6 lg:col-span-4">
+        <p-floatlabel variant="on">
+          <input
+            pInputText
+            id="on_label_nombreClub"
+            formControlName='nombreClub'
+            [class.ng-dirty]="esValido('nombreClub')"
+            [class.ng-valid]="esOpcionalValido('nombreClub')"
+            autocomplete="off"
+            fluid="true" />
+          <label for="on_label_nombreClub">Nombre club</label>
+        </p-floatlabel>
+        @if (esValido('nombreClub')) {
+          <small class="campo-error-texto" [innerHTML]="getErrores('nombreClub', 'Nombre club')" ></small>
+        }
+      </div>
+    }
+  </div>
+  <div class="grid grid-cols-12 gap-4 mb-4">
+    <div class="col-span-12 md:col-span-6 lg:col-span-4">
+      <div class="flex justify-start">
+        <h1 class="text-3xl">Historial de Equipos</h1>
+      </div>
+      <div class="flex justify-start mb-8">
+        <p-button icon="pi pi-plus-circle" (onClick)="onAgregaEquipo()" severity="success" [rounded]="true" [text]="true" [raised]="true" />
+      </div>
+      @if (Equipo.controls.length > 0) {
+        <div formArrayName="historialEquipos">
+          @for (control of Equipo.controls; track control.get('id')!.value ) {
+            <div [formGroupName]="$index">
+              <div class="flex justify-end mb-4">
+                <p-button icon="pi pi-plus-circle" (onClick)="onEliminaEquipo($index)" icon="pi pi-trash" severity="danger" [rounded]="true" [text]="true" [raised]="true" />
+              </div>
+              <div class="grid grid-cols-12 gap-4 mb-4">
+                <div class="col-span-12">
+                  <p-floatlabel variant="on">
+                    <input
+                      pInputText
+                      id="on_label_nombre"
+                      [ngClass]="{ 'ng-invalid ng-dirty': esValidoEquipo($index, 'nombre'), 'ng-valid': !esValidoEquipo($index, 'nombre') }"
+                      formControlName='nombre'
+                      [class.ng-dirty]="esValido('nombre')"
+                      autocomplete="off"
+                      fluid="true" />
+                    <label for="on_label_nombre">Nombre equipo</label>
+                  </p-floatlabel>
+                  @if (esValidoEquipo($index, 'nombre')) {
+                    <small class="campo-error-texto" [innerHTML]="getErroresEquipo($index, 'nombre', 'Nombre equipo')" ></small>
+                  }
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+      }
+    </div>
+    <div class="col-span-12 md:col-span-6 lg:col-span-4">
+      <div class="flex justify-start">
+        <h1 class="text-3xl">Historial de Entrenadores</h1>
+      </div>
+      <div class="flex justify-start mb-8">
+        <p-button icon="pi pi-plus-circle" (onClick)="onAgregaEntrenadores()" severity="success" [rounded]="true" [text]="true" [raised]="true" />
+      </div>
+      @if (Entrenadores.controls.length > 0) {
+        <div formArrayName="historialEntrenadores">
+          @for (control of Entrenadores.controls; track control.get('id')!.value ) {
+            <div [formGroupName]="$index">
+              <div class="flex justify-end mb-4">
+                <p-button icon="pi pi-plus-circle" (onClick)="onEliminaEntrenadores($index)" icon="pi pi-trash" severity="danger" [rounded]="true" [text]="true" [raised]="true" />
+              </div>
+              <div class="grid grid-cols-12 gap-4 mb-4">
+                <div class="col-span-12">
+                  <p-floatlabel variant="on">
+                    <input
+                      pInputText
+                      id="on_label_nombre"
+                      [ngClass]="{ 'ng-invalid ng-dirty': esValidoEntrenadores($index, 'nombre'), 'ng-valid': !esValidoEntrenadores($index, 'nombre') }"
+                      formControlName='nombre'
+                      [class.ng-dirty]="esValido('nombre')"
+                      autocomplete="off"
+                      fluid="true" />
+                    <label for="on_label_nombre">Nombre entrenador</label>
+                  </p-floatlabel>
+                  @if (esValidoEntrenadores($index, 'nombre')) {
+                    <small class="campo-error-texto" [innerHTML]="getErroresEntrenadores($index, 'nombre', 'Nombre entrenador')" ></small>
+                  }
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+      }
+    </div>
+    <div class="col-span-12 md:col-span-6 lg:col-span-4">
+      <div class="flex justify-start">
+          <h1 class="text-3xl">Logros clave</h1>
+        </div>
+        <div class="flex justify-start mb-8">
+          <p-button icon="pi pi-plus-circle" (onClick)="onAgregaLogros()" severity="success" [rounded]="true" [text]="true" [raised]="true" />
+        </div>
+        @if (Logros.controls.length > 0) {
+          <div formArrayName="logrosClave">
+            @for (control of Logros.controls; track control.get('id')!.value ) {
+              <div [formGroupName]="$index">
+                <div class="flex justify-end mb-4">
+                  <p-button icon="pi pi-plus-circle" (onClick)="onEliminaLogros($index)" icon="pi pi-trash" severity="danger" [rounded]="true" [text]="true" [raised]="true" />
+                </div>
+                <div class="grid grid-cols-12 gap-4 mb-4">
+                  <div class="col-span-12">
+                    <p-floatlabel variant="on">
+                      <input
+                        pInputText
+                        id="on_label_nombre"
+                        [ngClass]="{ 'ng-invalid ng-dirty': esValidoLogros($index, 'nombre'), 'ng-valid': !esValidoLogros($index, 'nombre') }"
+                        formControlName='nombre'
+                        [class.ng-dirty]="esValido('nombre')"
+                        autocomplete="off"
+                        fluid="true" />
+                      <label for="on_label_nombre">Logros</label>
+                    </p-floatlabel>
+                    @if (esValidoLogros($index, 'nombre')) {
+                      <small class="campo-error-texto" [innerHTML]="getErroresLogros($index, 'nombre', 'Logros')" ></small>
+                    }
+                  </div>
+                </div>
+              </div>
+            }
+          </div>
+        }
+    </div>
+  </div>
+</div>

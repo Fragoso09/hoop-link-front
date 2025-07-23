@@ -1,29 +1,32 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+
+import { finalize } from 'rxjs';
 
 import { ToastService } from '../../../../core/services/messages/toast.service';
 import { BlockUserIService } from '../../../../core/services/blockUI/block-user-i.service';
 import { FormularioUtilsService } from '../../../../shared/utils/form/formulario-utils.service';
+import { AuthService } from '../../../../core/auth/services/auth.service';
+import { InformacionPersonalService } from '../../../../core/services/informacion-personal/informacion-personal.service';
 
 import { ButtonModule } from 'primeng/button';
 
 import { BotonVolverComponent } from "../../../../shared/components/boton-volver/boton-volver.component";
-
-import { ITab } from '../../../../shared/components/responsive-tabs/interfaces/responsive-tabs.interface';
-import { CommonModule } from '@angular/common';
 import { ResponsiveTabsComponent } from "../../../../shared/components/responsive-tabs/responsive-tabs.component";
 import { JugadorPerfilComponent } from "./jugador-perfil/jugador-perfil.component";
-import { SeverityMessageType } from '../../../../core/enums';
-import { InfoPersonalDetail, InfoPersonalSummary } from '../../constants';
-import { JugadorConstants } from '../../constants/general/general.constants';
-import { InformacionPersonalService } from '../../../../core/services/informacion-personal/informacion-personal.service';
-import { finalize } from 'rxjs';
-import { IBasketballInformacionPersonal, IFuerzaResistenciaInformacionPersonal, IPerfilInformacionPersonal, IRegistraInformacionPersonal } from '../../../../shared/interfaces/informacion-personal';
-import { AuthService } from '../../../../core/auth/services/auth.service';
-import { IResponse } from '../../../../core/interfaces/response/response.interface';
-import { IInformacinPersonal } from '../../../../shared/interfaces/informacion-personal/informacion-personal.interfaces';
 import { JugadorFuerzaResistenciaComponent } from "./jugador-fuerza-resistencia/jugador-fuerza-resistencia.component";
 import { JugadorBasketballComponent } from './jugador-basketball/jugador-basketball.component';
+import { JugadorExperienciaComponent } from "./jugador-experiencia/jugador-experiencia.component";
+
+import { SeverityMessageType } from '../../../../core/enums';
+
+import { JugadorConstants } from '../../constants/general/general.constants';
+import { InfoPersonalDetail, InfoPersonalSummary } from '../../constants';
+
+import { ITab } from '../../../../shared/components/responsive-tabs/interfaces/responsive-tabs.interface';
+import { IBasketballInformacionPersonal, IFuerzaResistenciaInformacionPersonal, IPerfilInformacionPersonal, IRegistraInformacionPersonal, IExperienciaInformacionPersonal, IInformacinPersonal } from '../../../../shared/interfaces/informacion-personal';
+import { IResponse } from '../../../../core/interfaces/response/response.interface';
 
 @Component({
   selector: 'app-jugador-info-personal-form',
@@ -37,6 +40,7 @@ import { JugadorBasketballComponent } from './jugador-basketball/jugador-basketb
     ButtonModule,
     JugadorFuerzaResistenciaComponent,
     JugadorBasketballComponent,
+    JugadorExperienciaComponent
 ],
   templateUrl: './jugador-info-personal-form.component.html',
   styleUrl: './jugador-info-personal-form.component.scss'
@@ -141,6 +145,16 @@ export class JugadorInfoPersonalFormComponent implements OnInit {
         porcentajeTirosTres: new FormControl(null),
         porcentajeTirosLibres: new FormControl(null),
       }),
+      experiencia: this._fb.group({
+        desdeCuandoJuegas: new FormControl(null, Validators.required),
+        horasEntrenamientoSemana: new FormControl(null),
+        horasGymSemana: new FormControl(null),
+        pertenecesClub: new FormControl(false, Validators.required) ,
+        nombreClub: new FormControl(null) ,
+        historialEquipos: this._fb.array([]) ,
+        historialEntrenadores: this._fb.array([]) ,
+        logrosClave: this._fb.array([]) ,
+      })
     });
   }
 
@@ -151,12 +165,13 @@ export class JugadorInfoPersonalFormComponent implements OnInit {
         console.log(data);
 
         // preparo la informacion
-        const { perfil, fuerzaResistencia, basketball } = this.preparaSeccionesToSetEnFormulario(data);
+        const { perfil, fuerzaResistencia, basketball, experiencia } = this.preparaSeccionesToSetEnFormulario(data);
 
         // actualizo la informacion
         this.setPerfilEnFormulario(perfil);
         this.setFuerzaResistenciaEnFormulario(fuerzaResistencia);
         this.setBasketballEnFormulario(basketball);
+        this.setExperienciaEnFormulario(experiencia);
       },
       error: (error) => { }
     });
@@ -203,13 +218,78 @@ export class JugadorInfoPersonalFormComponent implements OnInit {
       porcentajeTirosLibres: infoPersonal?.porcentajeTirosLibres,
     }
 
+    const experiencia: IExperienciaInformacionPersonal = {
+      desdeCuandoJuegas: infoPersonal?.desdeCuandoJuegas ?? undefined,
+      horasEntrenamientoSemana: infoPersonal?.horasEntrenamientoSemana ,
+      horasGymSemana: infoPersonal?.horasGymSemana ,
+      pertenecesClub: infoPersonal?.pertenecesClub ?? false ,
+      nombreClub: infoPersonal?.nombreClub ,
+      historialEquipos: infoPersonal?.historialEquipos ,
+      historialEntrenadores: infoPersonal?.historialEntrenadores ,
+      logrosClave: infoPersonal?.logrosClave,
+    }
+
     const infoPersonalPreparada: IRegistraInformacionPersonal = {
       perfil,
       fuerzaResistencia,
-      basketball
+      basketball,
+      experiencia
     }
 
     return infoPersonalPreparada;
+  }
+
+  private setExperienciaEnFormulario(experiencia: IExperienciaInformacionPersonal) {
+    console.log('entro al set experiencia');
+    this.experiencia.patchValue({
+      desdeCuandoJuegas: experiencia?.desdeCuandoJuegas !== undefined ? new Date(experiencia?.desdeCuandoJuegas) : undefined,
+      horasEntrenamientoSemana: experiencia?.horasEntrenamientoSemana,
+      horasGymSemana: experiencia?.horasGymSemana,
+      pertenecesClub: experiencia?.pertenecesClub,
+      nombreClub: experiencia?.nombreClub,
+    });
+
+    // patcheo los que pueden tener mas de uno
+    const { historialEntrenadores, historialEquipos, logrosClave } = experiencia;
+    console.log('Entrenadores:', historialEntrenadores);
+    console.log('Eventos:', historialEquipos);
+    console.log('Logros:', logrosClave);
+
+    if (Array.isArray(historialEquipos)) {
+      // --- Historial de eventos ---
+      const historialEquiposFormArray = this.experiencia.get('historialEquipos') as FormArray;
+      historialEquiposFormArray.clear();
+      experiencia.historialEquipos?.forEach(evento => {
+        historialEquiposFormArray.push(this._fb.group({
+          id: [evento.id],
+          nombre: [evento.nombre],
+        }));
+      });
+    }
+
+    if (Array.isArray(historialEntrenadores)) {
+      // --- Historial de entrenadores ---
+      const historialEntrenadoresFormArray = this.experiencia.get('historialEntrenadores') as FormArray;
+      historialEntrenadoresFormArray.clear();
+      experiencia.historialEntrenadores?.forEach(entrenador => {
+        historialEntrenadoresFormArray.push(this._fb.group({
+          id: [entrenador.id],
+          nombre: [entrenador.nombre],
+        }));
+      });
+    }
+
+    if (Array.isArray(logrosClave)) {
+      // --- Logros clave ---
+      const logrosClaveFormArray = this.experiencia.get('logrosClave') as FormArray;
+      logrosClaveFormArray.clear();
+      experiencia.logrosClave?.forEach(logro => {
+        logrosClaveFormArray.push(this._fb.group({
+          id: [logro.id],
+          nombre: [logro.nombre],
+        }));
+      });
+    }
   }
 
   private setBasketballEnFormulario(basketball: IBasketballInformacionPersonal) {
@@ -271,6 +351,10 @@ export class JugadorInfoPersonalFormComponent implements OnInit {
     return this.formularioPrincipal.get('basketball') as FormGroup;
   }
 
+   get experiencia(): FormGroup {
+    return this.formularioPrincipal.get('experiencia') as FormGroup;
+  }
+
   private validaPerfil() {
     if (this._formularioService.tieneErroresEnControlEspecifico(this.formularioPrincipal, 'perfil')) {
       this._toastService.showMessage(SeverityMessageType.Warn, InfoPersonalSummary.SECCION_FALTANTE, InfoPersonalDetail.PERFIL_INCOMPLETO, undefined, 5000);
@@ -289,10 +373,17 @@ export class JugadorInfoPersonalFormComponent implements OnInit {
     }
   }
 
+  private validaExperiencia() {
+    if (this._formularioService.tieneErroresEnControlEspecifico(this.formularioPrincipal, 'experiencia')) {
+      this._toastService.showMessage(SeverityMessageType.Warn, InfoPersonalSummary.SECCION_FALTANTE, InfoPersonalDetail.EXPERIENCIA, undefined, 5000);
+    }
+  }
+
   private validaErrores() {
     this.validaPerfil();
     this.validaFuerzaResistencia();
     this.validaBasketball();
+    this.validaExperiencia();
   }
 
   public onSubmit(): void {
@@ -330,7 +421,8 @@ export class JugadorInfoPersonalFormComponent implements OnInit {
       formCompleto = {
         perfil: raw.perfil,
         fuerzaResistencia: raw.fuerzaResistencia,
-        basketball: raw.basketball
+        basketball: raw.basketball,
+        experiencia: raw.experiencia
       }
       const formData = dtoToFormData(formCompleto, this.formularioPrincipal);
 

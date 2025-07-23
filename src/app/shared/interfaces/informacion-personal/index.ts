@@ -2,3 +2,5 @@ export { IPerfilInformacionPersonal } from './perfil-informacion-personal.interf
 export { IRegistraInformacionPersonal } from './registra-informacion-personal.interface';
 export { IFuerzaResistenciaInformacionPersonal } from './fuerza-resistencia-informacion-personal.interface';
 export { IBasketballInformacionPersonal } from './basketball-informacion-personal.interface';
+export { IExperienciaInformacionPersonal } from './experiencia-informacion-personal.interface'
+export { IInformacinPersonal } from './informacion-personal.interfaces'

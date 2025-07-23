@@ -1,4 +1,7 @@
 import { ICatalogo } from "../catalogo/catalogo.interface";
+import { IHistorialEntrenadoresInformacionPersonal } from "./historial-entrenadores-informacion-personal.interface";
+import { IHistorialEquiposInformacionPersonal } from "./historial-equipos-informacion-personal.interface";
+import { ILogrosClaveInformacionPersonal } from "./logros-clave-informacion.personal.interface";
 
 export interface IInformacinPersonal {
   informacionPersonalId: number,
@@ -33,4 +36,12 @@ export interface IInformacinPersonal {
   porcentajeTirosMedia: number ,
   porcentajeTirosTres: number ,
   porcentajeTirosLibres: number ,
+  desdeCuandoJuegas: Date ,
+  horasEntrenamientoSemana?: number ,
+  horasGymSemana?: number ,
+  pertenecesClub: boolean ,
+  nombreClub?: string ,
+  historialEquipos?: IHistorialEquiposInformacionPersonal[] ,
+  historialEntrenadores?: IHistorialEntrenadoresInformacionPersonal[] ,
+  logrosClave?: ILogrosClaveInformacionPersonal[]
 }
