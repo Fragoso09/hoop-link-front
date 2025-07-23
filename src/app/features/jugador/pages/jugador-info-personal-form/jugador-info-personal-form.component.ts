@@ -25,8 +25,9 @@ import { JugadorConstants } from '../../constants/general/general.constants';
 import { InfoPersonalDetail, InfoPersonalSummary } from '../../constants';
 
 import { ITab } from '../../../../shared/components/responsive-tabs/interfaces/responsive-tabs.interface';
-import { IBasketballInformacionPersonal, IFuerzaResistenciaInformacionPersonal, IPerfilInformacionPersonal, IRegistraInformacionPersonal, IExperienciaInformacionPersonal, IInformacinPersonal } from '../../../../shared/interfaces/informacion-personal';
+import { IBasketballInformacionPersonal, IFuerzaResistenciaInformacionPersonal, IPerfilInformacionPersonal, IRegistraInformacionPersonal, IExperienciaInformacionPersonal, IInformacinPersonal, IVisionInformacionPersonal } from '../../../../shared/interfaces/informacion-personal';
 import { IResponse } from '../../../../core/interfaces/response/response.interface';
+import { JugadorVisionComponent } from './jugador-vision/jugador-vision.component';
 
 @Component({
   selector: 'app-jugador-info-personal-form',
@@ -40,7 +41,8 @@ import { IResponse } from '../../../../core/interfaces/response/response.interfa
     ButtonModule,
     JugadorFuerzaResistenciaComponent,
     JugadorBasketballComponent,
-    JugadorExperienciaComponent
+    JugadorExperienciaComponent,
+    JugadorVisionComponent,
 ],
   templateUrl: './jugador-info-personal-form.component.html',
   styleUrl: './jugador-info-personal-form.component.scss'
@@ -154,7 +156,11 @@ export class JugadorInfoPersonalFormComponent implements OnInit {
         historialEquipos: this._fb.array([]) ,
         historialEntrenadores: this._fb.array([]) ,
         logrosClave: this._fb.array([]) ,
-      })
+      }),
+      vision: this._fb.group({
+        objetivos: new FormControl(null, Validators.required),
+        valores: new FormControl(null, Validators.required),
+      }),
     });
   }
 
@@ -165,13 +171,14 @@ export class JugadorInfoPersonalFormComponent implements OnInit {
         console.log(data);
 
         // preparo la informacion
-        const { perfil, fuerzaResistencia, basketball, experiencia } = this.preparaSeccionesToSetEnFormulario(data);
+        const { perfil, fuerzaResistencia, basketball, experiencia, vision } = this.preparaSeccionesToSetEnFormulario(data);
 
         // actualizo la informacion
         this.setPerfilEnFormulario(perfil);
         this.setFuerzaResistenciaEnFormulario(fuerzaResistencia);
         this.setBasketballEnFormulario(basketball);
         this.setExperienciaEnFormulario(experiencia);
+        this.setVisionEnFormulario(vision);
       },
       error: (error) => { }
     });
@@ -229,14 +236,27 @@ export class JugadorInfoPersonalFormComponent implements OnInit {
       logrosClave: infoPersonal?.logrosClave,
     }
 
+    const vision: IVisionInformacionPersonal = {
+      objetivos: infoPersonal?.objetivos ?? '',
+      valores: infoPersonal?.valores ?? '',
+    }
+
     const infoPersonalPreparada: IRegistraInformacionPersonal = {
       perfil,
       fuerzaResistencia,
       basketball,
-      experiencia
+      experiencia,
+      vision,
     }
 
     return infoPersonalPreparada;
+  }
+
+  private setVisionEnFormulario(vision: IVisionInformacionPersonal) {
+    this.vision.patchValue({
+      objetivos: vision?.objetivos,
+      valores: vision?.valores,
+    });
   }
 
   private setExperienciaEnFormulario(experiencia: IExperienciaInformacionPersonal) {
@@ -351,8 +371,12 @@ export class JugadorInfoPersonalFormComponent implements OnInit {
     return this.formularioPrincipal.get('basketball') as FormGroup;
   }
 
-   get experiencia(): FormGroup {
+  get experiencia(): FormGroup {
     return this.formularioPrincipal.get('experiencia') as FormGroup;
+  }
+
+  get vision(): FormGroup {
+    return this.formularioPrincipal.get('vision') as FormGroup;
   }
 
   private validaPerfil() {
@@ -379,11 +403,18 @@ export class JugadorInfoPersonalFormComponent implements OnInit {
     }
   }
 
+  private validaVision() {
+    if (this._formularioService.tieneErroresEnControlEspecifico(this.formularioPrincipal, 'vision')) {
+      this._toastService.showMessage(SeverityMessageType.Warn, InfoPersonalSummary.SECCION_FALTANTE, InfoPersonalDetail.VISION, undefined, 5000);
+    }
+  }
+
   private validaErrores() {
     this.validaPerfil();
     this.validaFuerzaResistencia();
     this.validaBasketball();
     this.validaExperiencia();
+    this.validaVision();
   }
 
   public onSubmit(): void {
@@ -422,7 +453,8 @@ export class JugadorInfoPersonalFormComponent implements OnInit {
         perfil: raw.perfil,
         fuerzaResistencia: raw.fuerzaResistencia,
         basketball: raw.basketball,
-        experiencia: raw.experiencia
+        experiencia: raw.experiencia,
+        vision: raw.vision
       }
       const formData = dtoToFormData(formCompleto, this.formularioPrincipal);
 

@@ -43,5 +43,7 @@ export interface IInformacinPersonal {
   nombreClub?: string ,
   historialEquipos?: IHistorialEquiposInformacionPersonal[] ,
   historialEntrenadores?: IHistorialEntrenadoresInformacionPersonal[] ,
-  logrosClave?: ILogrosClaveInformacionPersonal[]
+  logrosClave?: ILogrosClaveInformacionPersonal[],
+  objetivos: string,
+  valores: string,
 }
