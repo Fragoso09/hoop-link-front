@@ -12,6 +12,7 @@ import { BlockUI, BlockUIModule } from 'primeng/blockui';
 export class OverlayComponent {
   blockedDocument: boolean = false;
   mensaje:string = ''
+  progress = 0; // default 0
 
   constructor(private cd: ChangeDetectorRef) {}
 
@@ -22,5 +23,9 @@ export class OverlayComponent {
 
   unblockDocument() {
     this.blockedDocument = false;
+  }
+
+  setProgress(value: number) {
+    this.progress = value;
   }
 }

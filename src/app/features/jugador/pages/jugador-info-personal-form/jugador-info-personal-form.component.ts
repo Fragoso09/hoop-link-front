@@ -28,6 +28,10 @@ import { ITab } from '../../../../shared/components/responsive-tabs/interfaces/r
 import { IBasketballInformacionPersonal, IFuerzaResistenciaInformacionPersonal, IPerfilInformacionPersonal, IRegistraInformacionPersonal, IExperienciaInformacionPersonal, IInformacinPersonal, IVisionInformacionPersonal } from '../../../../shared/interfaces/informacion-personal';
 import { IResponse } from '../../../../core/interfaces/response/response.interface';
 import { JugadorVisionComponent } from './jugador-vision/jugador-vision.component';
+import { JugadorTestComponent } from "./jugador-test/jugador-test.component";
+import { JugadorVideosComponent } from "./jugador-videos/jugador-videos.component";
+import { JugadorRedesSocialesComponent } from "./jugador-redes-sociales/jugador-redes-sociales.component";
+import { IVideosInformacionPersonal } from '../../../../shared/interfaces/informacion-personal/videos-informacion-personal.interface';
 
 @Component({
   selector: 'app-jugador-info-personal-form',
@@ -43,6 +47,9 @@ import { JugadorVisionComponent } from './jugador-vision/jugador-vision.componen
     JugadorBasketballComponent,
     JugadorExperienciaComponent,
     JugadorVisionComponent,
+    JugadorTestComponent,
+    JugadorVideosComponent,
+    JugadorRedesSocialesComponent
 ],
   templateUrl: './jugador-info-personal-form.component.html',
   styleUrl: './jugador-info-personal-form.component.scss'
@@ -161,6 +168,13 @@ export class JugadorInfoPersonalFormComponent implements OnInit {
         objetivos: new FormControl(null, Validators.required),
         valores: new FormControl(null, Validators.required),
       }),
+      videos: this._fb.group({
+        videoBotando: new FormControl(null),
+        videoTirando: new FormControl(null),
+        videoColada: new FormControl(null),
+        videoEntrenando: new FormControl(null),
+        videoJugando: new FormControl(null),
+      }),
     });
   }
 
@@ -171,7 +185,7 @@ export class JugadorInfoPersonalFormComponent implements OnInit {
         console.log(data);
 
         // preparo la informacion
-        const { perfil, fuerzaResistencia, basketball, experiencia, vision } = this.preparaSeccionesToSetEnFormulario(data);
+        const { perfil, fuerzaResistencia, basketball, experiencia, vision, videos } = this.preparaSeccionesToSetEnFormulario(data);
 
         // actualizo la informacion
         this.setPerfilEnFormulario(perfil);
@@ -179,6 +193,7 @@ export class JugadorInfoPersonalFormComponent implements OnInit {
         this.setBasketballEnFormulario(basketball);
         this.setExperienciaEnFormulario(experiencia);
         this.setVisionEnFormulario(vision);
+        this.setVideosEnFormulario(videos);
       },
       error: (error) => { }
     });
@@ -241,15 +256,34 @@ export class JugadorInfoPersonalFormComponent implements OnInit {
       valores: infoPersonal?.valores ?? '',
     }
 
+    const videos: IVideosInformacionPersonal = {
+      videoBotando: infoPersonal?.videoBotandoPublicUrl,
+      videoTirando: infoPersonal?.videoTirandoPublicUrl,
+      videoColada: infoPersonal?.videoColadaPublicUrl,
+      videoEntrenando: infoPersonal?.videoEntrenandoPublicUrl,
+      videoJugando: infoPersonal?.videoJugandoPublicUrl,
+    }
+
     const infoPersonalPreparada: IRegistraInformacionPersonal = {
       perfil,
       fuerzaResistencia,
       basketball,
       experiencia,
       vision,
+      videos
     }
 
     return infoPersonalPreparada;
+  }
+
+  private setVideosEnFormulario(videos: IVideosInformacionPersonal) {
+    this.videos.patchValue({
+      videoBotando: videos.videoBotando,
+      videoTirando: videos.videoTirando,
+      videoColada: videos.videoColada,
+      videoEntrenando: videos.videoEntrenando,
+      videoJugando: videos.videoJugando,
+    });
   }
 
   private setVisionEnFormulario(vision: IVisionInformacionPersonal) {
@@ -379,6 +413,10 @@ export class JugadorInfoPersonalFormComponent implements OnInit {
     return this.formularioPrincipal.get('vision') as FormGroup;
   }
 
+   get videos(): FormGroup {
+    return this.formularioPrincipal.get('videos') as FormGroup;
+  }
+
   private validaPerfil() {
     if (this._formularioService.tieneErroresEnControlEspecifico(this.formularioPrincipal, 'perfil')) {
       this._toastService.showMessage(SeverityMessageType.Warn, InfoPersonalSummary.SECCION_FALTANTE, InfoPersonalDetail.PERFIL_INCOMPLETO, undefined, 5000);
@@ -454,7 +492,8 @@ export class JugadorInfoPersonalFormComponent implements OnInit {
         fuerzaResistencia: raw.fuerzaResistencia,
         basketball: raw.basketball,
         experiencia: raw.experiencia,
-        vision: raw.vision
+        vision: raw.vision,
+        videos: raw.videos,
       }
       const formData = dtoToFormData(formCompleto, this.formularioPrincipal);
 

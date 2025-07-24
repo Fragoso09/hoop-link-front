@@ -13,7 +13,8 @@ export const WebApiConstants = {
   },
   informacion_personal: {
     save: `informacion-personal/save`,
-    getInformacion: `informacion-personal`
+    getInformacion: `informacion-personal`,
+    uploadVideos: (tipo:string, id: string) => `informacion-personal/upload-video/${tipo}${id}`
   },
   auth:{
     login: `auth/login`,
