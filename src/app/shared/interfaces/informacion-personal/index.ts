@@ -5,3 +5,4 @@ export { IBasketballInformacionPersonal } from './basketball-informacion-persona
 export { IExperienciaInformacionPersonal } from './experiencia-informacion-personal.interface';
 export { IInformacinPersonal } from './informacion-personal.interfaces';
 export { IVisionInformacionPersonal } from './vision-informacion-personal.interface';
+export { IRedesSocialesInformacionPersonal } from './redes-sociales-informacion-personal.interface';

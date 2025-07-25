@@ -25,7 +25,7 @@ import { JugadorConstants } from '../../constants/general/general.constants';
 import { InfoPersonalDetail, InfoPersonalSummary } from '../../constants';
 
 import { ITab } from '../../../../shared/components/responsive-tabs/interfaces/responsive-tabs.interface';
-import { IBasketballInformacionPersonal, IFuerzaResistenciaInformacionPersonal, IPerfilInformacionPersonal, IRegistraInformacionPersonal, IExperienciaInformacionPersonal, IInformacinPersonal, IVisionInformacionPersonal } from '../../../../shared/interfaces/informacion-personal';
+import { IBasketballInformacionPersonal, IFuerzaResistenciaInformacionPersonal, IPerfilInformacionPersonal, IRegistraInformacionPersonal, IExperienciaInformacionPersonal, IInformacinPersonal, IVisionInformacionPersonal, IRedesSocialesInformacionPersonal } from '../../../../shared/interfaces/informacion-personal';
 import { IResponse } from '../../../../core/interfaces/response/response.interface';
 import { JugadorVisionComponent } from './jugador-vision/jugador-vision.component';
 import { JugadorTestComponent } from "./jugador-test/jugador-test.component";
@@ -175,6 +175,12 @@ export class JugadorInfoPersonalFormComponent implements OnInit {
         videoEntrenando: new FormControl(null),
         videoJugando: new FormControl(null),
       }),
+      redes: this._fb.group({
+        facebook: new FormControl(null),
+        instagram: new FormControl(null),
+        tiktok: new FormControl(null),
+        youtube: new FormControl(null),
+      }),
     });
   }
 
@@ -185,7 +191,7 @@ export class JugadorInfoPersonalFormComponent implements OnInit {
         console.log(data);
 
         // preparo la informacion
-        const { perfil, fuerzaResistencia, basketball, experiencia, vision, videos } = this.preparaSeccionesToSetEnFormulario(data);
+        const { perfil, fuerzaResistencia, basketball, experiencia, vision, videos, redes } = this.preparaSeccionesToSetEnFormulario(data);
 
         // actualizo la informacion
         this.setPerfilEnFormulario(perfil);
@@ -194,6 +200,7 @@ export class JugadorInfoPersonalFormComponent implements OnInit {
         this.setExperienciaEnFormulario(experiencia);
         this.setVisionEnFormulario(vision);
         this.setVideosEnFormulario(videos);
+        this.setRedesEnFormulario(redes);
       },
       error: (error) => { }
     });
@@ -264,16 +271,33 @@ export class JugadorInfoPersonalFormComponent implements OnInit {
       videoJugando: infoPersonal?.videoJugandoPublicUrl,
     }
 
+    const redes: IRedesSocialesInformacionPersonal = {
+      facebook: infoPersonal?.facebook,
+      instagram: infoPersonal?.instagram,
+      tiktok: infoPersonal?.tiktok,
+      youtube: infoPersonal?.youtube,
+    }
+
     const infoPersonalPreparada: IRegistraInformacionPersonal = {
       perfil,
       fuerzaResistencia,
       basketball,
       experiencia,
       vision,
-      videos
+      videos,
+      redes,
     }
 
     return infoPersonalPreparada;
+  }
+
+  private setRedesEnFormulario(redes: IRedesSocialesInformacionPersonal) {
+    this.redes.patchValue({
+      facebook: redes?.facebook,
+      instagram: redes?.instagram,
+      tiktok: redes?.tiktok,
+      youtube: redes?.youtube,
+    });
   }
 
   private setVideosEnFormulario(videos: IVideosInformacionPersonal) {
@@ -413,8 +437,12 @@ export class JugadorInfoPersonalFormComponent implements OnInit {
     return this.formularioPrincipal.get('vision') as FormGroup;
   }
 
-   get videos(): FormGroup {
+  get videos(): FormGroup {
     return this.formularioPrincipal.get('videos') as FormGroup;
+  }
+
+  get redes(): FormGroup {
+    return this.formularioPrincipal.get('redes') as FormGroup;
   }
 
   private validaPerfil() {
@@ -447,12 +475,19 @@ export class JugadorInfoPersonalFormComponent implements OnInit {
     }
   }
 
+   private validaRedes() {
+    if (this._formularioService.tieneErroresEnControlEspecifico(this.formularioPrincipal, 'redes')) {
+      this._toastService.showMessage(SeverityMessageType.Warn, InfoPersonalSummary.SECCION_FALTANTE, InfoPersonalDetail.REDES, undefined, 5000);
+    }
+  }
+
   private validaErrores() {
     this.validaPerfil();
     this.validaFuerzaResistencia();
     this.validaBasketball();
     this.validaExperiencia();
     this.validaVision();
+    this.validaRedes();
   }
 
   public onSubmit(): void {
@@ -494,6 +529,7 @@ export class JugadorInfoPersonalFormComponent implements OnInit {
         experiencia: raw.experiencia,
         vision: raw.vision,
         videos: raw.videos,
+        redes: raw.redes,
       }
       const formData = dtoToFormData(formCompleto, this.formularioPrincipal);
 

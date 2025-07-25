@@ -1,1 +1,68 @@
-<p>jugador-redes-sociales works!</p>
+<div [formGroup]="form" class="my-4">
+  <div class="grid grid-cols-12 gap-4 mb-4">
+    <div class="col-span-12 md:col-span-6 lg:col-span-3">
+      <p-floatlabel variant="on">
+        <input
+          pInputText
+          id="on_label_facebook"
+          formControlName='facebook'
+          [class.ng-dirty]="esValido('facebook')"
+          [class.ng-valid]="esOpcionalValido('facebook')"
+          autocomplete="off"
+          fluid="true" />
+        <label for="on_label_facebook">Facebook</label>
+      </p-floatlabel>
+      @if (esValido('facebook')) {
+        <small class="campo-error-texto" [innerHTML]="getErrores('facebook', 'Facebook')" ></small>
+      }
+    </div>
+    <div class="col-span-12 md:col-span-6 lg:col-span-3">
+      <p-floatlabel variant="on">
+        <input
+          pInputText
+          id="on_label_instagram"
+          formControlName='instagram'
+          [class.ng-dirty]="esValido('instagram')"
+          [class.ng-valid]="esOpcionalValido('instagram')"
+          autocomplete="off"
+          fluid="true" />
+        <label for="on_label_instagram">Instagram</label>
+      </p-floatlabel>
+      @if (esValido('instagram')) {
+        <small class="campo-error-texto" [innerHTML]="getErrores('instagram', 'Instagram')" ></small>
+      }
+    </div>
+    <div class="col-span-12 md:col-span-6 lg:col-span-3">
+      <p-floatlabel variant="on">
+        <input
+          pInputText
+          id="on_label_tiktok"
+          formControlName='tiktok'
+          [class.ng-dirty]="esValido('tiktok')"
+          [class.ng-valid]="esOpcionalValido('tiktok')"
+          autocomplete="off"
+          fluid="true" />
+        <label for="on_label_tiktok">TikTok</label>
+      </p-floatlabel>
+      @if (esValido('tiktok')) {
+        <small class="campo-error-texto" [innerHTML]="getErrores('tiktok', 'TikTok')" ></small>
+      }
+    </div>
+    <div class="col-span-12 md:col-span-6 lg:col-span-3">
+      <p-floatlabel variant="on">
+        <input
+          pInputText
+          id="on_label_youtube"
+          formControlName='youtube'
+          [class.ng-dirty]="esValido('youtube')"
+          [class.ng-valid]="esOpcionalValido('youtube')"
+          autocomplete="off"
+          fluid="true" />
+        <label for="on_label_youtube">Youtube</label>
+      </p-floatlabel>
+      @if (esValido('youtube')) {
+        <small class="campo-error-texto" [innerHTML]="getErrores('youtube', 'Youtube')" ></small>
+      }
+    </div>
+  </div>
+</div>

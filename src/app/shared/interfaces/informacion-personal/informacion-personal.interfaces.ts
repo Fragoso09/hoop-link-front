@@ -56,4 +56,8 @@ export interface IInformacinPersonal {
   videoColadaPublicUrl?: string,
   videoEntrenandoPublicUrl?: string ,
   videoJugandoPublicUrl?: string,
+  facebook?: string,
+  instagram?: string,
+  tiktok?: string,
+  youtube?: string,
 }

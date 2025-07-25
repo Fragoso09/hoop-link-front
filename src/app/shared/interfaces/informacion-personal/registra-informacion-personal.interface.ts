@@ -2,6 +2,7 @@ import { IBasketballInformacionPersonal } from "./basketball-informacion-persona
 import { IExperienciaInformacionPersonal } from "./experiencia-informacion-personal.interface";
 import { IFuerzaResistenciaInformacionPersonal } from "./fuerza-resistencia-informacion-personal.interface";
 import { IPerfilInformacionPersonal } from "./perfil-informacion-personal.interface";
+import { IRedesSocialesInformacionPersonal } from "./redes-sociales-informacion-personal.interface";
 import { IVideosInformacionPersonal } from "./videos-informacion-personal.interface";
 import { IVisionInformacionPersonal } from "./vision-informacion-personal.interface";
 
@@ -12,4 +13,5 @@ export interface IRegistraInformacionPersonal {
   experiencia: IExperienciaInformacionPersonal,
   vision: IVisionInformacionPersonal,
   videos: IVideosInformacionPersonal,
+  redes: IRedesSocialesInformacionPersonal,
 }

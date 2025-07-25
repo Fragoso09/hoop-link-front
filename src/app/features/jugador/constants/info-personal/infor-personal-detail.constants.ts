@@ -3,5 +3,6 @@ export const InfoPersonalDetail = {
   FUERZA_RESISTENCIA_INCOMPLETO: 'Fuerza Resitencia Incompleto.',
   BASKETBALL: 'Basketball Incompleto.',
   EXPERIENCIA: 'Experiencia Incompleto.',
-  VISION: 'Vision Incompleto.'
+  VISION: 'Vision Incompleto.',
+  REDES: 'Redes Incompleto.'
 }
