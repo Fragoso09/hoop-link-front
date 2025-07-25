@@ -5,6 +5,8 @@ import { Observable, catchError, throwError } from 'rxjs';
 
 import { WebApiConstants } from '../../constants/web-api/web-api.constants';
 import { IResponse } from '../../interfaces/response/response.interface';
+import { IVideoInformacionPersonalResponse } from '../../../shared/interfaces/video/videos-response.interface';
+import { HttpEvent } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -34,6 +36,15 @@ export class InformacionPersonalService {
   public getInformacionPersonal(): Observable<any> {
     const url: string = WebApiConstants.informacion_personal.getInformacion
     return this._webApiService.get<IResponse<any>>(url, true).pipe(
+      catchError(error => {
+        return throwError(() => error);
+      })
+    );
+  }
+
+  public uploadVideos(tipo:string, id:string, file: FormData): Observable<HttpEvent<IResponse<IVideoInformacionPersonalResponse>>> {
+    const url: string = WebApiConstants.informacion_personal.uploadVideos(tipo, id);
+    return this._webApiService.post<IResponse<IVideoInformacionPersonalResponse>>(url, file, true, { reportProgress: true, observe: 'events' }).pipe(
       catchError(error => {
         return throwError(() => error);
       })

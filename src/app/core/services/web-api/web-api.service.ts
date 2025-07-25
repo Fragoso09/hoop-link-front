@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpEvent, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
@@ -16,9 +16,44 @@ export class WebApiService {
   }
 
   // Método POST
-  post<T>(endpoint: string, data: any, authRequired: boolean = false): Observable<T> {
-    return this.http.post<T>(`${environment.apiUrl}/${endpoint}`, data, this.getOptions(authRequired));
+  post<T>(
+    endpoint: string,
+    data: any,
+    authRequired?: boolean,
+    extraOptions?: { reportProgress?: boolean; observe?: 'body' }
+  ): Observable<T>;
+
+  post<T>(
+    endpoint: string,
+    data: any,
+    authRequired: boolean,
+    extraOptions: { reportProgress?: boolean; observe: 'events' }
+  ): Observable<HttpEvent<T>>;
+
+  post<T>(
+    endpoint: string,
+    data: any,
+    authRequired: boolean = false,
+    extraOptions: { reportProgress?: boolean; observe?: 'body' | 'events' } = {}
+  ): Observable<T> | Observable<HttpEvent<T>> {
+    const baseOptions = this.getOptions(authRequired);
+
+    // Crea un nuevo objeto para las opciones HTTP sin mezclar tipos
+    const httpOptions: any = { ...baseOptions };
+
+    if (extraOptions.observe === 'events') {
+      httpOptions.observe = 'events';
+      httpOptions.reportProgress = extraOptions.reportProgress ?? true;
+    } else {
+      // Por defecto o si observe es 'body' o undefined
+      httpOptions.observe = 'body';
+      httpOptions.reportProgress = extraOptions.reportProgress ?? false;
+    }
+
+    return this.http.post<T>(`${environment.apiUrl}/${endpoint}`, data, httpOptions);
   }
+
+
 
   // Método PUT
   put<T>(endpoint: string, data: any, authRequired: boolean = false): Observable<T> {

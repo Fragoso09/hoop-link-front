@@ -19,4 +19,8 @@ export class BlockUserIService {
   hide() {
     this.overlayComponent?.unblockDocument();
   }
+
+  setProgress(progress: number = 0) {
+    this.overlayComponent?.setProgress(progress)
+  }
 }

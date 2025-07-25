@@ -1,9 +1,17 @@
+/* Contenedor principal del overlay */
 .centered-container {
   display: flex;
-  justify-content: center;   // Centra el contenido horizontalmente
-  align-items: center;       // Centra el contenido verticalmente
-  height: 100vh;             // Asegura que ocupe toda la altura de la ventana
-  width: 100vw;              // Asegura que ocupe toda la anchura de la ventana
+  justify-content: center;  /* Centra horizontalmente */
+  align-items: center;      /* Centra verticalmente */
+  height: 100%;             /* Usa el 100% del alto del contenedor */
+  width: 100%;              /* Usa el 100% del ancho del contenedor */
+}
+
+/* Contenedor del contenido para apilar los loaders */
+.centered-content {
+  display: flex;
+  flex-direction: column; /* Apila el texto y la línea verticalmente */
+  align-items: center;
 }
 
 /* HTML: <div class="loader"></div> */
@@ -30,7 +38,60 @@
   25%,100% {
   text-shadow:
      0.03px -0.01px 0.01px rgb(0 78 109),
-     0.02px  0.02px 0     rgb(241 118 33),
+     0.02px  0.02px 0     #f17621,
     -0.02px  0.02px 0     rgb(0 62 97);
   }
 }
+
+/* HTML: <div class="loader"></div> */
+.loader2 {
+  position: relative;
+  width: 120px;
+  height: 90px;
+  margin: 0 auto;
+}
+.loader2:before {
+  content: "";
+  position: absolute;
+  bottom: 30px;
+  left: 50px;
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  background: #f17621;
+  animation: loading-bounce 0.5s ease-in-out infinite alternate;
+}
+.loader2:after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 7px;
+  width: 45px;
+  border-radius: 4px;
+  box-shadow: 0 5px 0 #fff, -35px 50px 0 #fff, -70px 95px 0 #fff;
+  animation: loading-step 1s ease-in-out infinite;
+}
+
+@keyframes loading-bounce {
+  0% { transform: scale(1, 0.7)}
+  40% { transform: scale(0.8, 1.2)}
+  60% { transform: scale(1, 1)}
+  100% { bottom: 140px }
+}
+@keyframes loading-step {
+  0% {
+    box-shadow: 0 10px 0 rgba(0,0,0,0),
+                0 10px 0 #fff,
+              -35px 50px 0 #fff,
+              -70px 90px 0 #fff;
+  }
+  100% {
+    box-shadow: 0 10px 0 #fff,
+              -35px 50px 0 #fff,
+              -70px 90px 0 #fff,
+              -70px 90px 0 rgba(0,0,0,0);
+  }
+}
+
+
