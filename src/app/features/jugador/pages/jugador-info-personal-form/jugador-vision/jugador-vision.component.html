@@ -1,0 +1,36 @@
+<div [formGroup]="form" class="my-4">
+  <div class="grid grid-cols-12 gap-4 mb-4">
+    <div class="col-span-12 md:col-span-6 lg:col-span-6">
+      <p-floatlabel variant="on">
+        <textarea
+          pTextarea
+          id="on_label_objetivos"
+          formControlName='objetivos'
+          [class.ng-dirty]="esValido('objetivos')"
+          [class.ng-valid]="!esValido('objetivos') && form.get('objetivos')?.value"
+          autocomplete="off"
+          fluid="true" ></textarea>
+        <label for="on_label_objetivos">Objetivos</label>
+      </p-floatlabel>
+      @if (esValido('objetivos')) {
+        <small class="campo-error-texto" [innerHTML]="getErrores('objetivos', 'Objetivos')" ></small>
+      }
+    </div>
+    <div class="col-span-12 md:col-span-6 lg:col-span-6">
+      <p-floatlabel variant="on">
+        <textarea
+          pTextarea
+          id="on_label_valores"
+          formControlName='valores'
+          [class.ng-dirty]="esValido('valores')"
+          [class.ng-valid]="!esValido('valores') && form.get('valores')?.value"
+          autocomplete="off"
+          fluid="true" ></textarea>
+        <label for="on_label_valores">Valores</label>
+      </p-floatlabel>
+      @if (esValido('valores')) {
+        <small class="campo-error-texto" [innerHTML]="getErrores('valores', 'Valores')" ></small>
+      }
+    </div>
+  </div>
+</div>

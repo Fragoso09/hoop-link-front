@@ -1,0 +1,15 @@
+<p-dialog
+  header="¡Éxito! ✅."
+  [(visible)]="esVisibleDialog"
+  [modal]="true"
+  [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }"
+  [style]="{ width: '50vw' }"
+  [draggable]="true"
+  [resizable]="true"
+  (closable)="true"
+  (visibleChange)="onHide()">
+      <p>
+        Tu correo ha sido verificado correctamente. 🎉<br><br>
+        Ahora puedes iniciar sesión y comenzar a disfrutar de HoopLink. 🏀🚀
+      </p>
+</p-dialog>

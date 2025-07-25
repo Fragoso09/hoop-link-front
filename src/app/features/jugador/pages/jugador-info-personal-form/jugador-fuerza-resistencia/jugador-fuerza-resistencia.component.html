@@ -1,0 +1,236 @@
+<div [formGroup]="form" class="my-4">
+  <div class="grid grid-cols-12 gap-4 mb-4">
+    <div class="col-span-12 md:col-span-6 lg:col-span-3">
+      <p-floatlabel variant="on">
+        <p-inputnumber
+          inputId="on_label_alturaSaltoVertical"
+          formControlName='alturaSaltoVertical'
+          [class.ng-dirty]="esValido('alturaSaltoVertical')"
+          [class.ng-valid]="!esValido('alturaSaltoVertical') && form.get('alturaSaltoVertical')?.value"
+          autocomplete="off"
+          fluid="true"
+          mode="decimal"
+          suffix=" cm"
+          [minFractionDigits]="2" [maxFractionDigits]="5"
+          [useGrouping]="false" />
+        <label for="on_label_alturaSaltoVertical">Altura en salto vertical.</label>
+      </p-floatlabel>
+      @if (esValido('alturaSaltoVertical')) {
+        <small class="campo-error-texto" [innerHTML]="getErrores('alturaSaltoVertical', 'Altura en salto vertical')" ></small>
+      }
+    </div>
+    <div class="col-span-12 md:col-span-6 lg:col-span-3">
+      <p-floatlabel variant="on">
+        <p-inputnumber
+          inputId="on_label_distanciaSaltoHorizontal"
+          formControlName='distanciaSaltoHorizontal'
+          [class.ng-dirty]="esValido('distanciaSaltoHorizontal')"
+          [class.ng-valid]="!esValido('distanciaSaltoHorizontal') && form.get('distanciaSaltoHorizontal')?.value"
+          autocomplete="off"
+          fluid="true"
+          mode="decimal"
+          suffix=" cm"
+          [minFractionDigits]="2" [maxFractionDigits]="5"
+          [useGrouping]="false" />
+        <label for="on_label_distanciaSaltoHorizontal">Distancia en salto horizontal.</label>
+      </p-floatlabel>
+      @if (esValido('distanciaSaltoHorizontal')) {
+        <small class="campo-error-texto" [innerHTML]="getErrores('distanciaSaltoHorizontal', 'Distancia en salto horizontal')" ></small>
+      }
+    </div>
+    <div class="col-span-12 md:col-span-6 lg:col-span-3">
+      <p-floatlabel variant="on">
+        <p-inputnumber
+          inputId="on_label_pesoBenchPress"
+          formControlName='pesoBenchPress'
+          [class.ng-dirty]="esValido('pesoBenchPress')"
+          [class.ng-valid]="!esValido('pesoBenchPress') && form.get('pesoBenchPress')?.value"
+          autocomplete="off"
+          fluid="true"
+          mode="decimal"
+          suffix=" lbs"
+          [minFractionDigits]="2" [maxFractionDigits]="5"
+          [useGrouping]="false" />
+        <label for="on_label_pesoBenchPress">Peso máximo en bench press.</label>
+      </p-floatlabel>
+      @if (esValido('pesoBenchPress')) {
+        <small class="campo-error-texto" [innerHTML]="getErrores('pesoBenchPress', 'Peso máximo en bench press')" ></small>
+      }
+    </div>
+    <div class="col-span-12 md:col-span-6 lg:col-span-3">
+      <p-floatlabel variant="on">
+        <p-inputnumber
+          inputId="on_label_pesoSquats"
+          formControlName='pesoSquats'
+          [class.ng-dirty]="esValido('pesoSquats')"
+          [class.ng-valid]="!esValido('pesoSquats') && form.get('pesoSquats')?.value"
+          autocomplete="off"
+          fluid="true"
+          mode="decimal"
+          suffix=" lbs"
+          [minFractionDigits]="2" [maxFractionDigits]="5"
+          [useGrouping]="false" />
+        <label for="on_label_pesoSquats">Peso máximo en squats.</label>
+      </p-floatlabel>
+      @if (esValido('pesoSquats')) {
+        <small class="campo-error-texto" [innerHTML]="getErrores('pesoSquats', 'Peso máximo en squats')" ></small>
+      }
+    </div>
+  </div>
+  <div class="grid grid-cols-12 gap-4 mb-4">
+    <div class="col-span-12 md:col-span-6 lg:col-span-3">
+      <p-floatlabel variant="on">
+        <p-inputnumber
+          inputId="on_label_pesoPressMilitar"
+          formControlName='pesoPressMilitar'
+          [class.ng-dirty]="esValido('pesoPressMilitar')"
+          [class.ng-valid]="!esValido('pesoPressMilitar') && form.get('pesoPressMilitar')?.value"
+          autocomplete="off"
+          fluid="true"
+          mode="decimal"
+          suffix=" lbs"
+          [minFractionDigits]="2" [maxFractionDigits]="5"
+          [useGrouping]="false" />
+        <label for="on_label_pesoPressMilitar">Peso máximo en press militar.</label>
+      </p-floatlabel>
+      @if (esValido('pesoPressMilitar')) {
+        <small class="campo-error-texto" [innerHTML]="getErrores('pesoPressMilitar', 'Peso máximo en press militar')" ></small>
+      }
+    </div>
+    <div class="col-span-12 md:col-span-6 lg:col-span-3">
+      <p-floatlabel variant="on">
+        <p-inputnumber
+          inputId="on_label_pesoRepeticionBenchPress"
+          formControlName='pesoRepeticionBenchPress'
+          [class.ng-dirty]="esValido('pesoRepeticionBenchPress')"
+          [class.ng-valid]="!esValido('pesoRepeticionBenchPress') && form.get('pesoRepeticionBenchPress')?.value"
+          autocomplete="off"
+          fluid="true"
+          mode="decimal"
+          suffix=" lbs"
+          [minFractionDigits]="2" [maxFractionDigits]="5"
+          [useGrouping]="false" />
+        <label for="on_label_pesoRepeticionBenchPress">Peso máximo en 10 repeticiones de squats.</label>
+      </p-floatlabel>
+      @if (esValido('pesoRepeticionBenchPress')) {
+        <small class="campo-error-texto" [innerHTML]="getErrores('pesoRepeticionBenchPress', 'Peso máximo en 10 repeticiones de squats')" ></small>
+      }
+    </div>
+    <div class="col-span-12 md:col-span-6 lg:col-span-3">
+      <p-floatlabel variant="on">
+        <p-inputnumber
+          inputId="on_label_pesoRepeticionSquats"
+          formControlName='pesoRepeticionSquats'
+          [class.ng-dirty]="esValido('pesoRepeticionSquats')"
+          [class.ng-valid]="!esValido('pesoRepeticionSquats') && form.get('pesoRepeticionSquats')?.value"
+          autocomplete="off"
+          fluid="true"
+          mode="decimal"
+          suffix=" lbs"
+          [minFractionDigits]="2" [maxFractionDigits]="5"
+          [useGrouping]="false" />
+        <label for="on_label_pesoRepeticionSquats">Peso máximo en 10 repeticiones de squats.</label>
+      </p-floatlabel>
+      @if (esValido('pesoRepeticionSquats')) {
+        <small class="campo-error-texto" [innerHTML]="getErrores('pesoRepeticionSquats', 'Peso máximo en 10 repeticiones de squats')" ></small>
+      }
+    </div>
+    <div class="col-span-12 md:col-span-6 lg:col-span-3">
+      <p-floatlabel variant="on">
+        <p-inputnumber
+          inputId="on_label_pesoRepeticionPressMilitar"
+          formControlName='pesoRepeticionPressMilitar'
+          [class.ng-dirty]="esValido('pesoRepeticionPressMilitar')"
+          [class.ng-valid]="!esValido('pesoRepeticionPressMilitar') && form.get('pesoRepeticionPressMilitar')?.value"
+          autocomplete="off"
+          fluid="true"
+          mode="decimal"
+          suffix=" lbs"
+          [minFractionDigits]="2" [maxFractionDigits]="5"
+          [useGrouping]="false" />
+        <label for="on_label_pesoRepeticionPressMilitar">Peso máximo en 10 repeticiones de press militar.</label>
+      </p-floatlabel>
+      @if (esValido('pesoRepeticionPressMilitar')) {
+        <small class="campo-error-texto" [innerHTML]="getErrores('pesoRepeticionPressMilitar', 'Peso máximo en 10 repeticiones de press militar')" ></small>
+      }
+    </div>
+  </div>
+  <div class="grid grid-cols-12 gap-4 mb-4">
+    <div class="col-span-12 md:col-span-6 lg:col-span-3">
+      <p-floatlabel variant="on">
+        <p-inputnumber
+          inputId="on_label_tiempoDistanciaCienMts"
+          formControlName='tiempoDistanciaCienMts'
+          [class.ng-dirty]="esValido('tiempoDistanciaCienMts')"
+          [class.ng-valid]="!esValido('tiempoDistanciaCienMts') && form.get('tiempoDistanciaCienMts')?.value"
+          autocomplete="off"
+          fluid="true"
+          mode="decimal"
+          suffix=" seg"
+          [minFractionDigits]="2" [maxFractionDigits]="5"
+          [useGrouping]="false" />
+        <label for="on_label_tiempoDistanciaCienMts">Tiempo en 100 mts.</label>
+      </p-floatlabel>
+      @if (esValido('tiempoDistanciaCienMts')) {
+        <small class="campo-error-texto" [innerHTML]="getErrores('tiempoDistanciaCienMts', 'Tiempo en 100 mts')" ></small>
+      }
+    </div>
+    <div class="col-span-12 md:col-span-6 lg:col-span-3">
+      <p-floatlabel variant="on">
+        <p-inputnumber
+          inputId="on_label_tiempoDistanciaUnKm"
+          formControlName='tiempoDistanciaUnKm'
+          [class.ng-dirty]="esValido('tiempoDistanciaUnKm')"
+          [class.ng-valid]="!esValido('tiempoDistanciaUnKm') && form.get('tiempoDistanciaUnKm')?.value"
+          autocomplete="off"
+          fluid="true"
+          mode="decimal"
+          suffix=" min"
+          [minFractionDigits]="2" [maxFractionDigits]="5"
+          [useGrouping]="false" />
+        <label for="on_label_tiempoDistanciaUnKm">Tiempo en 1 km.</label>
+      </p-floatlabel>
+      @if (esValido('tiempoDistanciaUnKm')) {
+        <small class="campo-error-texto" [innerHTML]="getErrores('tiempoDistanciaUnKm', 'Tiempo en 1 km')" ></small>
+      }
+    </div>
+    <div class="col-span-12 md:col-span-6 lg:col-span-3">
+      <p-floatlabel variant="on">
+        <p-inputnumber
+          inputId="on_label_tiempoDistanciaTresKm"
+          formControlName='tiempoDistanciaTresKm'
+          [class.ng-dirty]="esValido('tiempoDistanciaTresKm')"
+          [class.ng-valid]="!esValido('tiempoDistanciaTresKm') && form.get('tiempoDistanciaTresKm')?.value"
+          autocomplete="off"
+          fluid="true"
+          mode="decimal"
+          suffix=" min"
+          [minFractionDigits]="2" [maxFractionDigits]="5"
+          [useGrouping]="false" />
+        <label for="on_label_tiempoDistanciaTresKm">Tiempo en 3 km.</label>
+      </p-floatlabel>
+      @if (esValido('tiempoDistanciaTresKm')) {
+        <small class="campo-error-texto" [innerHTML]="getErrores('tiempoDistanciaTresKm', 'Tiempo en 3 km')" ></small>
+      }
+    </div>
+    <div class="col-span-12 md:col-span-6 lg:col-span-3">
+      <p-floatlabel variant="on">
+        <p-inputnumber
+          inputId="on_label_tiempoDistanciaCincoKm"
+          formControlName='tiempoDistanciaCincoKm'
+          [class.ng-dirty]="esValido('tiempoDistanciaCincoKm')"
+          [class.ng-valid]="!esValido('tiempoDistanciaCincoKm') && form.get('tiempoDistanciaCincoKm')?.value"
+          autocomplete="off"
+          fluid="true"
+          mode="decimal"
+          suffix=" min"
+          [minFractionDigits]="2" [maxFractionDigits]="5"
+          [useGrouping]="false" />
+        <label for="on_label_tiempoDistanciaCincoKm">Tiempo en 5 km.</label>
+      </p-floatlabel>
+      @if (esValido('tiempoDistanciaCincoKm')) {
+        <small class="campo-error-texto" [innerHTML]="getErrores('tiempoDistanciaCincoKm', 'Tiempo en 5 km')" ></small>
+      }
+    </div>
+  </div>
+</div>
