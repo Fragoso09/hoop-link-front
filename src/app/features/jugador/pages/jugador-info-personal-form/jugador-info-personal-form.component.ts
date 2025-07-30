@@ -32,6 +32,7 @@ import { JugadorTestComponent } from "./jugador-test/jugador-test.component";
 import { JugadorVideosComponent } from "./jugador-videos/jugador-videos.component";
 import { JugadorRedesSocialesComponent } from "./jugador-redes-sociales/jugador-redes-sociales.component";
 import { IVideosInformacionPersonal } from '../../../../shared/interfaces/informacion-personal/videos-informacion-personal.interface';
+import { SkeletonComponent } from "../../../../shared/components/skeleton/skeleton.component";
 
 @Component({
   selector: 'app-jugador-info-personal-form',
@@ -49,7 +50,8 @@ import { IVideosInformacionPersonal } from '../../../../shared/interfaces/inform
     JugadorVisionComponent,
     JugadorTestComponent,
     JugadorVideosComponent,
-    JugadorRedesSocialesComponent
+    JugadorRedesSocialesComponent,
+    SkeletonComponent
 ],
   templateUrl: './jugador-info-personal-form.component.html',
   styleUrl: './jugador-info-personal-form.component.scss'
@@ -91,6 +93,7 @@ export class JugadorInfoPersonalFormComponent implements OnInit {
       icon: 'fa-solid fa-globe',
     },
   ];
+  public cargandoData = true;
 //#endregion
 
 //#region Constructor
@@ -110,6 +113,7 @@ export class JugadorInfoPersonalFormComponent implements OnInit {
 
 //#region Generales
   private inicializa(): void {
+    console.log(this.cargandoData);
     this.prepareFormularios();
     this.cargaDatos();
   }
@@ -185,24 +189,27 @@ export class JugadorInfoPersonalFormComponent implements OnInit {
   }
 
   private cargaDatos() {
-    this._informacionPersonalService.getInformacionPersonal().subscribe({
-      next: (response: IResponse<IInformacinPersonal>) => {
-        const { data } = response;
-        console.log(data);
+    this._informacionPersonalService.getInformacionPersonal()
+      .pipe(
+        finalize(() => this.cargandoData = false) // desactiva cuando termina
+      ).subscribe({
+        next: (response: IResponse<IInformacinPersonal>) => {
+          const { data } = response;
+          console.log(data);
 
-        // preparo la informacion
-        const { perfil, fuerzaResistencia, basketball, experiencia, vision, videos, redes } = this.preparaSeccionesToSetEnFormulario(data);
+          // preparo la informacion
+          const { perfil, fuerzaResistencia, basketball, experiencia, vision, videos, redes } = this.preparaSeccionesToSetEnFormulario(data);
 
-        // actualizo la informacion
-        this.setPerfilEnFormulario(perfil);
-        this.setFuerzaResistenciaEnFormulario(fuerzaResistencia);
-        this.setBasketballEnFormulario(basketball);
-        this.setExperienciaEnFormulario(experiencia);
-        this.setVisionEnFormulario(vision);
-        this.setVideosEnFormulario(videos);
-        this.setRedesEnFormulario(redes);
-      },
-      error: (error) => { }
+          // actualizo la informacion
+          this.setPerfilEnFormulario(perfil);
+          this.setFuerzaResistenciaEnFormulario(fuerzaResistencia);
+          this.setBasketballEnFormulario(basketball);
+          this.setExperienciaEnFormulario(experiencia);
+          this.setVisionEnFormulario(vision);
+          this.setVideosEnFormulario(videos);
+          this.setRedesEnFormulario(redes);
+        },
+        error: (error) => { }
     });
   }
 

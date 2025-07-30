@@ -10,9 +10,11 @@ import { Observable, BehaviorSubject, throwError } from 'rxjs';
 import { catchError, filter, finalize, switchMap, take } from 'rxjs/operators';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
+import { environment } from '../../../../environments/environment';
 
 let isRefreshing = false;
 const refreshTokenSubject = new BehaviorSubject<boolean | null>(null);
+
 
 export const authInterceptor: HttpInterceptorFn = (
   req: HttpRequest<unknown>,
@@ -22,6 +24,7 @@ export const authInterceptor: HttpInterceptorFn = (
 
   return next(req).pipe(
     catchError((error: HttpErrorResponse) => {
+      console.log(req);
       console.log('[Interceptor] Error 401 detectado');
       if (error.status === 401 && !req.url.includes('/auth/login')) {
         // if (error.status === 401 && !req.url.includes('/auth/login') && !req.url.includes('/auth/yopli')) {

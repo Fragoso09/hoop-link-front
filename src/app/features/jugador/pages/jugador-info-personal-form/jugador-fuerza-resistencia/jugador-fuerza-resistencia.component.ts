@@ -7,6 +7,7 @@ import { FormularioUtilsService } from '../../../../../shared/utils/form/formula
 import { FloatLabel } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputNumber } from 'primeng/inputnumber';
+import { SkeletonComponent } from "../../../../../shared/components/skeleton/skeleton.component";
 
 @Component({
   selector: 'app-jugador-fuerza-resistencia',
@@ -16,7 +17,8 @@ import { InputNumber } from 'primeng/inputnumber';
     CommonModule,
     InputTextModule,
     InputNumber,
-  ],
+    SkeletonComponent
+],
   templateUrl: './jugador-fuerza-resistencia.component.html',
   styleUrl: './jugador-fuerza-resistencia.component.scss'
 })
@@ -24,6 +26,7 @@ export class JugadorFuerzaResistenciaComponent {
 
 //#region Propiedades
   @Input({required: true}) form!: FormGroup;
+  @Input({required: true}) cargandoData: boolean = true;
 //#endregion
 
 //#region Constructor

@@ -18,14 +18,10 @@ import { ToastContainerComponent } from "./core/components/toast-container/toast
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-export class AppComponent implements AfterViewInit, OnInit {
+export class AppComponent implements AfterViewInit {
   @ViewChild(OverlayComponent) loadingComponent!: OverlayComponent;
 
   constructor(private toastService: ToastService, private blockUserIService: BlockUserIService, private authService: AuthService) {}
-
-  ngOnInit(): void {
-    this.authService.checkAuth().subscribe();
-  }
 
   ngAfterViewInit() {
     // Cuando el componente AppComponent se inicialice, configuramos el servicio de carga.

@@ -7,25 +7,22 @@ export const authGuard: CanActivateFn & CanLoadFn = (route, state) => {
   const authService = inject(AuthService);
   const router = inject(Router);
 
-  return combineLatest([authService.user$, authService.authChecked$]).pipe(
-    tap(([user, checked]) => {
-      console.log('[authGuard] user:', user, 'checked:', checked);
-    }),
-    filter(([_, checked]) => checked),
-    take(1),
-    map(([user]) => {
-      if (user) {
-        console.log('[authGuard] acceso concedido');
-        return true;
-      } else {
-        console.log('[authGuard] acceso denegado, redirigiendo a login');
-        return router.parseUrl('/login');
-      }
-    }),
-    catchError(err => {
-      console.error('[authGuard] error:', err);
-      return of(router.parseUrl('/login'));
-    })
+  return authService.checkAuth().pipe(
+    switchMap(() =>
+      combineLatest([authService.user$, authService.authChecked$]).pipe(
+        filter(([_, checked]) => checked),
+        take(1),
+        map(([user]) => {
+          if (user) {
+            return true;
+          } else {
+            return router.parseUrl('/login');
+          }
+        }),
+        catchError(() => of(router.parseUrl('/login')))
+      )
+    )
   );
 };
+
 
