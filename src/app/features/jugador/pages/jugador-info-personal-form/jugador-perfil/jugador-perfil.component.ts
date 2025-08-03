@@ -20,6 +20,7 @@ import { CatalogoConstants } from '../../../../../shared/constants/catalogo/cata
 import { ProfileImageComponent } from "../../../../../shared/components/profile-image/profile-image.component";
 import { CommonMessages, SeverityMessageType } from '../../../../../core/enums';
 import { ErrorImagenPerfil } from '../../../../../shared/components/profile-image/enums/error-profile-image.enum';
+import { SkeletonComponent } from "../../../../../shared/components/skeleton/skeleton.component";
 
 @Component({
   selector: 'app-jugador-perfil',
@@ -31,8 +32,9 @@ import { ErrorImagenPerfil } from '../../../../../shared/components/profile-imag
     InputNumber,
     Select,
     TextareaModule,
-    ProfileImageComponent
-  ],
+    ProfileImageComponent,
+    SkeletonComponent
+],
   templateUrl: './jugador-perfil.component.html',
   styleUrl: './jugador-perfil.component.scss'
 })
@@ -40,6 +42,7 @@ export class JugadorPerfilComponent implements OnInit {
 
 //#region Propiedades
   @Input({required: true}) form!: FormGroup;
+  @Input({required: true}) cargandoData: boolean = true;
   public allEstatusJugador: ICatalogo[] | undefined;
   private mensaje:string = '';
   private totalCatalogos: number = 1; // Ejemplo

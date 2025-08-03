@@ -1,4 +1,15 @@
 <div [formGroup]="form" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+@if (cargandoData) {
+  <app-skeleton height="12rem" width="100%"></app-skeleton>
+
+  <app-skeleton height="12rem" width="100%"></app-skeleton>
+
+  <app-skeleton height="12rem" width="100%"></app-skeleton>
+
+  <app-skeleton height="12rem" width="100%"></app-skeleton>
+
+  <app-skeleton height="12rem" width="100%"></app-skeleton>
+} @else {
   <app-video-uploader
     label="Botando"
     [errorMessage]="videoErrors['videoBotando']"
@@ -43,4 +54,5 @@
     [videoUrl]="videoJugandoUrl"
     id="Jugando"
   ></app-video-uploader>
+}
 </div>

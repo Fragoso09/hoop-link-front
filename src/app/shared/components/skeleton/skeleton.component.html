@@ -1,0 +1,11 @@
+@switch (shape) {
+  @case ('circle') {
+     <p-skeleton [styleClass]="styleClass" shape="circle" [size]="size" />
+  }
+  @case ('rectangle') {
+    <p-skeleton [height]="height" [width]="width" />
+  }
+  @default {
+    <p-skeleton styleClass="mb-2" />
+  }
+}

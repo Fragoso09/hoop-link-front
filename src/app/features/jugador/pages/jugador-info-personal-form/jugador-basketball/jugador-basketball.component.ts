@@ -16,6 +16,7 @@ import { InputNumber } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { Select } from 'primeng/select';
 import { ToggleButton } from 'primeng/togglebutton';
+import { SkeletonComponent } from "../../../../../shared/components/skeleton/skeleton.component";
 
 @Component({
   selector: 'app-jugador-basketball',
@@ -28,7 +29,8 @@ import { ToggleButton } from 'primeng/togglebutton';
     Select,
     DatePicker,
     ToggleButton,
-  ],
+    SkeletonComponent
+],
   templateUrl: './jugador-basketball.component.html',
   styleUrl: './jugador-basketball.component.scss'
 })
@@ -36,6 +38,7 @@ export class JugadorBasketballComponent implements OnInit {
 
 //#region Propiedades
   @Input({required: true}) form!: FormGroup;
+  @Input({required: true}) cargandoData: boolean = true;
   public allPosicionJugador: ICatalogo[] | undefined;
   private mensaje:string = '';
   private totalCatalogos: number = 1; // Ejemplo
