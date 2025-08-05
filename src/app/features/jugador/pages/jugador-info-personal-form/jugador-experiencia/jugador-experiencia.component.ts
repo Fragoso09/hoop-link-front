@@ -13,7 +13,8 @@ import { ToastService } from '../../../../../core/services/messages/toast.servic
 import { FormularioUtilsService } from '../../../../../shared/utils/form/formulario-utils.service';
 import { ButtonModule } from 'primeng/button';
 
-import { v4 as uuidv4 } from 'uuid'; // Asegúrate de instalar: npm install uuid
+import { v4 as uuidv4 } from 'uuid';
+import { SkeletonComponent } from "../../../../../shared/components/skeleton/skeleton.component"; // Asegúrate de instalar: npm install uuid
 
 @Component({
   selector: 'app-jugador-experiencia',
@@ -26,7 +27,8 @@ import { v4 as uuidv4 } from 'uuid'; // Asegúrate de instalar: npm install uuid
     DatePicker,
     ToggleButton,
     ButtonModule,
-  ],
+    SkeletonComponent
+],
   templateUrl: './jugador-experiencia.component.html',
   styleUrl: './jugador-experiencia.component.scss'
 })
@@ -34,6 +36,7 @@ export class JugadorExperienciaComponent {
 
 //#region Propiedades
   @Input({required: true}) form!: FormGroup;
+  @Input({required: true}) cargandoData: boolean = true;
   public iconoSi: string = "pi pi-check";
 //#endregion
 

@@ -1,4 +1,35 @@
 <div [formGroup]="form" class="my-4">
+@if (cargandoData) {
+  <div class="grid grid-cols-12 gap-4">
+    <div class="col-span-12 lg:col-span-3 content-center">
+      <app-skeleton styleClass="place-self-center" shape="circle" size="8rem"></app-skeleton>
+    </div>
+    <div class="col-span-12 lg:col-span-9 space-y-4">
+      <div class="grid grid-cols-12 gap-4 mb-4">
+        <div class="col-span-12 md:col-span-6 lg:col-span-4">
+          <app-skeleton height="3rem" width="100%"></app-skeleton>
+        </div>
+        <div class="col-span-12 md:col-span-6 lg:col-span-4">
+          <app-skeleton height="3rem" width="100%"></app-skeleton>
+        </div>
+        <div class="col-span-12 md:col-span-6 lg:col-span-4">
+          <app-skeleton height="3rem" width="100%"></app-skeleton>
+        </div>
+        <div class="col-span-12 md:col-span-6 lg:col-span-4">
+          <app-skeleton height="3rem" width="100%"></app-skeleton>
+        </div>
+        <div class="col-span-12 md:col-span-6 lg:col-span-4">
+          <app-skeleton height="3rem" width="100%"></app-skeleton>
+        </div>
+      </div>
+      <div class="grid grid-cols-12 gap-4 mb-4">
+        <div class="col-span-full">
+          <app-skeleton height="3rem" width="100%"></app-skeleton>
+        </div>
+      </div>
+    </div>
+  </div>
+} @else {
   <div class="grid grid-cols-12 gap-4">
     <div class="col-span-12 lg:col-span-3 content-center">
       <app-profile-image
@@ -64,7 +95,7 @@
             <small class="campo-error-texto" [innerHTML]="getErrores('estatusBusquedaJugador', 'Busqueda Jugador')" ></small>
           }
         </div>
-         <div class="col-span-12 md:col-span-6 lg:col-span-4">
+          <div class="col-span-12 md:col-span-6 lg:col-span-4">
           <p-floatlabel variant="on">
             <p-inputnumber
               inputId="on_label_medidaMano"
@@ -123,4 +154,5 @@
       </div>
     </div>
   </div>
+}
 </div>

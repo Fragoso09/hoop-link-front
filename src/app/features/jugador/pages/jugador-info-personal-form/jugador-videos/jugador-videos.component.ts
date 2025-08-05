@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { VideoUploaderComponent } from '../../../components/video-uploader/video-uploader.component';
+import { SkeletonComponent } from "../../../../../shared/components/skeleton/skeleton.component";
 
 @Component({
   selector: 'app-jugador-videos',
@@ -9,13 +10,15 @@ import { VideoUploaderComponent } from '../../../components/video-uploader/video
     ReactiveFormsModule,
     CommonModule,
     VideoUploaderComponent,
-  ],
+    SkeletonComponent
+],
   templateUrl: './jugador-videos.component.html',
   styleUrl: './jugador-videos.component.scss'
 })
 export class JugadorVideosComponent implements OnInit {
 //#region Propiedades
   @Input({required: true}) form!: FormGroup;
+  @Input({required: true}) cargandoData: boolean = true;
   public categorias = [
     { key: 'botando', label: 'Botando' },
     { key: 'tirando', label: 'Tirando' },

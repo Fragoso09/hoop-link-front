@@ -6,6 +6,7 @@ import { FormularioUtilsService } from '../../../../../shared/utils/form/formula
 
 import { FloatLabel } from 'primeng/floatlabel';
 import { TextareaModule } from 'primeng/textarea';
+import { SkeletonComponent } from "../../../../../shared/components/skeleton/skeleton.component";
 
 @Component({
   selector: 'app-jugador-vision',
@@ -14,13 +15,15 @@ import { TextareaModule } from 'primeng/textarea';
     FloatLabel,
     CommonModule,
     TextareaModule,
-  ],
+    SkeletonComponent
+],
   templateUrl: './jugador-vision.component.html',
   styleUrl: './jugador-vision.component.scss'
 })
 export class JugadorVisionComponent {
 //#region Propiedades
   @Input({required: true}) form!: FormGroup;
+  @Input({required: true}) cargandoData: boolean = true;
 //#endregion
 
 //#region Constructor

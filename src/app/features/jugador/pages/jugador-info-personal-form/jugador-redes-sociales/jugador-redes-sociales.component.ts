@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 
 import { FloatLabel } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
+import { SkeletonComponent } from "../../../../../shared/components/skeleton/skeleton.component";
 
 @Component({
   selector: 'app-jugador-redes-sociales',
@@ -13,13 +14,15 @@ import { InputTextModule } from 'primeng/inputtext';
     ReactiveFormsModule,
     FloatLabel,
     InputTextModule,
-  ],
+    SkeletonComponent
+],
   templateUrl: './jugador-redes-sociales.component.html',
   styleUrl: './jugador-redes-sociales.component.scss'
 })
 export class JugadorRedesSocialesComponent implements OnInit {
 //#region Propiedades
   @Input({required: true}) form!: FormGroup;
+  @Input({required: true}) cargandoData: boolean = true;
 //#endregion
 
 ngOnInit(): void {
