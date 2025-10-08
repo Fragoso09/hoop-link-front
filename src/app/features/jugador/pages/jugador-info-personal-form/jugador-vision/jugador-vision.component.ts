@@ -18,7 +18,7 @@ import { SkeletonComponent } from "../../../../../shared/components/skeleton/ske
     SkeletonComponent
 ],
   templateUrl: './jugador-vision.component.html',
-  styleUrl: './jugador-vision.component.scss'
+  styleUrl: './jugador-vision.component.css'
 })
 export class JugadorVisionComponent {
 //#region Propiedades

@@ -32,7 +32,7 @@ import { SkeletonComponent } from "../../../../../shared/components/skeleton/ske
     SkeletonComponent
 ],
   templateUrl: './jugador-basketball.component.html',
-  styleUrl: './jugador-basketball.component.scss'
+  styleUrl: './jugador-basketball.component.css'
 })
 export class JugadorBasketballComponent implements OnInit {
 

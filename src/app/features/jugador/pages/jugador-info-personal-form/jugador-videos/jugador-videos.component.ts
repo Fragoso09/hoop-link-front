@@ -13,7 +13,7 @@ import { SkeletonComponent } from "../../../../../shared/components/skeleton/ske
     SkeletonComponent
 ],
   templateUrl: './jugador-videos.component.html',
-  styleUrl: './jugador-videos.component.scss'
+  styleUrl: './jugador-videos.component.css'
 })
 export class JugadorVideosComponent implements OnInit {
 //#region Propiedades

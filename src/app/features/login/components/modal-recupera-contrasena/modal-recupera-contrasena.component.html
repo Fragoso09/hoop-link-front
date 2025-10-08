@@ -14,8 +14,8 @@
         <form [formGroup]="formulario" (ngSubmit)="enviar()" autocomplete="off">
           <p-card [className]="'shadow-1'" [style]="{ width: '25rem', overflow: 'hidden',  }">
             <ng-template pTemplate="content">
-              <div class="grid">
-                <div class="col-12">
+              <div class="grid-cols-12">
+                <div class="col-span-12">
                   <p-floatlabel variant="on">
                     <input pInputText id="on_label_correo" type="email" [ngClass]="{ 'ng-invalid ng-dirty': esValido('correo'), 'ng-valid': !esValido('correo') }"  formControlName='correo' autocomplete="off" fluid="true" />
                     <label for="on_label_correo">Correo</label>

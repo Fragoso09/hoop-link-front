@@ -35,7 +35,7 @@ import { SeverityMessageType } from '../../../../core/enums';
       Select, CommonModule, ReactiveFormsModule, PasswordModule, DividerModule,
       RouterModule],
   templateUrl: './formulario-registro.component.html',
-  styleUrl: './formulario-registro.component.scss'
+  styleUrl: './formulario-registro.component.css'
 })
 export class FormularioRegistroComponent implements OnInit {
 

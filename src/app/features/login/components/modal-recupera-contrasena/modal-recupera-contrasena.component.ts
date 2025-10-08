@@ -27,7 +27,7 @@ import { SeverityMessageType } from '../../../../core/enums';
     FormsModule, FloatLabel, CommonModule, ReactiveFormsModule,
   ],
   templateUrl: './modal-recupera-contrasena.component.html',
-  styleUrl: './modal-recupera-contrasena.component.scss'
+  styleUrl: './modal-recupera-contrasena.component.css'
 })
 export class ModalRecuperaContrasenaComponent implements OnDestroy {
 

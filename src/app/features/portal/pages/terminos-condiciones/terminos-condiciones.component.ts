@@ -7,7 +7,7 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
   standalone: true,
   imports: [RouterModule],
   templateUrl: './terminos-condiciones.component.html',
-  styleUrl: './terminos-condiciones.component.scss'
+  styleUrl: './terminos-condiciones.component.css'
 })
 export class TerminosCondicionesComponent {
 

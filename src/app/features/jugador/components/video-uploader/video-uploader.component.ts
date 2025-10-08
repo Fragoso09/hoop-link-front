@@ -17,7 +17,7 @@ import { HttpEventType } from '@angular/common/http';
     CommonModule
   ],
   templateUrl: './video-uploader.component.html',
-  styleUrl: './video-uploader.component.scss'
+  styleUrl: './video-uploader.component.css'
 })
 export class VideoUploaderComponent implements OnInit {
 //#region Propiedades
