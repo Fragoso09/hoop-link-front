@@ -4,7 +4,7 @@ import { Component, Input } from '@angular/core';
   selector: 'app-cinta-horizontal',
   imports: [],
   templateUrl: './cinta-horizontal.component.html',
-  styleUrl: './cinta-horizontal.component.scss'
+  styleUrl: './cinta-horizontal.component.css'
 })
 export class CintaHorizontalComponent {
 //#region Propiedades

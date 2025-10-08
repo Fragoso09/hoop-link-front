@@ -17,7 +17,7 @@ import { SkeletonComponent } from "../../../../../shared/components/skeleton/ske
     SkeletonComponent
 ],
   templateUrl: './jugador-redes-sociales.component.html',
-  styleUrl: './jugador-redes-sociales.component.scss'
+  styleUrl: './jugador-redes-sociales.component.css'
 })
 export class JugadorRedesSocialesComponent implements OnInit {
 //#region Propiedades

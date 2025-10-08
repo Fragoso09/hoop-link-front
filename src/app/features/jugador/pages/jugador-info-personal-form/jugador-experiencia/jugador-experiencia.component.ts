@@ -30,7 +30,7 @@ import { SkeletonComponent } from "../../../../../shared/components/skeleton/ske
     SkeletonComponent
 ],
   templateUrl: './jugador-experiencia.component.html',
-  styleUrl: './jugador-experiencia.component.scss'
+  styleUrl: './jugador-experiencia.component.css'
 })
 export class JugadorExperienciaComponent {
 

@@ -10,7 +10,7 @@ import { ArchivoPreview } from './types/archivo-preview.type';
   standalone: true,
   imports: [],
   templateUrl: './upload-files.component.html',
-  styleUrl: './upload-files.component.scss'
+  styleUrl: './upload-files.component.css'
 })
 export class UploadFilesComponent {
 

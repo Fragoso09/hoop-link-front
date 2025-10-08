@@ -16,7 +16,7 @@ import { ToastContainerComponent } from "./core/components/toast-container/toast
   imports: [RouterOutlet, OverlayComponent, ToastContainerComponent],
   providers: [MessageService, ToastService],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  styleUrl: './app.component.css'
 })
 export class AppComponent implements AfterViewInit {
   @ViewChild(OverlayComponent) loadingComponent!: OverlayComponent;

@@ -20,7 +20,7 @@ import { SkeletonComponent } from "../../../../../shared/components/skeleton/ske
     SkeletonComponent
 ],
   templateUrl: './jugador-fuerza-resistencia.component.html',
-  styleUrl: './jugador-fuerza-resistencia.component.scss'
+  styleUrl: './jugador-fuerza-resistencia.component.css'
 })
 export class JugadorFuerzaResistenciaComponent {
 

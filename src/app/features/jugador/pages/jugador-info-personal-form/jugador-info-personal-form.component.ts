@@ -54,7 +54,7 @@ import { SkeletonComponent } from "../../../../shared/components/skeleton/skelet
     SkeletonComponent
 ],
   templateUrl: './jugador-info-personal-form.component.html',
-  styleUrl: './jugador-info-personal-form.component.scss'
+  styleUrl: './jugador-info-personal-form.component.css'
 })
 export class JugadorInfoPersonalFormComponent implements OnInit {
 //#region Propiedades

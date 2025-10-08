@@ -8,7 +8,7 @@ import { Skeleton } from 'primeng/skeleton';
     Skeleton
   ],
   templateUrl: './skeleton.component.html',
-  styleUrl: './skeleton.component.scss'
+  styleUrl: './skeleton.component.css'
 })
 export class SkeletonComponent {
 //#region Propiedades

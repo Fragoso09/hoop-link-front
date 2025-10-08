@@ -17,7 +17,7 @@ import { SeverityMessageType } from '../../../../core/enums';
     DialogModule,
   ],
   templateUrl: './valida-correo.component.html',
-  styleUrl: './valida-correo.component.scss'
+  styleUrl: './valida-correo.component.css'
 })
 export class ValidaCorreoComponent implements OnInit, AfterViewInit {
 

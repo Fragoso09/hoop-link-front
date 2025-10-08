@@ -36,7 +36,7 @@ import { SeverityMessageType } from '../../../../core/enums';
     ModalRecuperaContrasenaComponent
   ],
   templateUrl: './login-page.component.html',
-  styleUrl: './login-page.component.scss'
+  styleUrl: './login-page.component.css'
 })
 export class LoginPageComponent {
 //#region Variables publicas

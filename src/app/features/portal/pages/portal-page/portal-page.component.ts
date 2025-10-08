@@ -35,7 +35,7 @@ import { ModalRegistroComponent } from '../../components/modal-registro/modal-re
     ModalRegistroComponent
   ],
   templateUrl: './portal-page.component.html',
-  styleUrl: './portal-page.component.scss'
+  styleUrl: './portal-page.component.css'
 })
 export class PortalPageComponent {
 //#region Variables publicas

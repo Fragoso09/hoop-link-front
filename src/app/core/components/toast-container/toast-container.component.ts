@@ -9,7 +9,7 @@ import { Toast } from 'primeng/toast';
     Toast
   ],
   templateUrl: './toast-container.component.html',
-  styleUrl: './toast-container.component.scss'
+  styleUrl: './toast-container.component.css'
 })
 export class ToastContainerComponent {
 

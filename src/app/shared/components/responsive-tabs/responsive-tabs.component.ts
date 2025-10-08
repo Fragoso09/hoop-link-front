@@ -24,7 +24,7 @@ import { ITab } from './interfaces/responsive-tabs.interface';
   standalone: true,
   imports: [FormsModule, CommonModule],
   templateUrl: './responsive-tabs.component.html',
-  styleUrl: './responsive-tabs.component.scss',
+  styleUrl: './responsive-tabs.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ResponsiveTabsComponent implements AfterContentInit {

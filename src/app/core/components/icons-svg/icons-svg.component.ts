@@ -6,7 +6,7 @@ import { TipoSvg } from '../../enums';
   standalone: true,
   imports: [],
   templateUrl: './icons-svg.component.html',
-  styleUrl: './icons-svg.component.scss'
+  styleUrl: './icons-svg.component.css'
 })
 export class IconsSvgComponent implements OnInit {
 //#region  Variables de entrada

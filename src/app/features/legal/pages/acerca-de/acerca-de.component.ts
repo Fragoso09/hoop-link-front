@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
   standalone: true,
   imports: [],
   templateUrl: './acerca-de.component.html',
-  styleUrl: './acerca-de.component.scss'
+  styleUrl: './acerca-de.component.css'
 })
 export class AcercaDeComponent {
 

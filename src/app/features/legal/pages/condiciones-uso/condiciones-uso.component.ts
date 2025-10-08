@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
   standalone: true,
   imports: [],
   templateUrl: './condiciones-uso.component.html',
-  styleUrl: './condiciones-uso.component.scss'
+  styleUrl: './condiciones-uso.component.css'
 })
 export class CondicionesUsoComponent {
   public sections = [

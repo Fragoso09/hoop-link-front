@@ -17,7 +17,7 @@ import { InfoCardsComponent } from "./components/info-cards/info-cards.component
     InfoCardsComponent
 ],
   templateUrl: './authenticated-layout.component.html',
-  styleUrl: './authenticated-layout.component.scss'
+  styleUrl: './authenticated-layout.component.css'
 })
 export class AuthenticatedLayoutComponent {
 

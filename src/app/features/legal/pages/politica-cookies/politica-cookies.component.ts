@@ -6,7 +6,7 @@ import { removeClass } from '../../../../shared/utils/ui/design.util';
   standalone: true,
   imports: [],
   templateUrl: './politica-cookies.component.html',
-  styleUrl: './politica-cookies.component.scss'
+  styleUrl: './politica-cookies.component.css'
 })
 export class PoliticaCookiesComponent {
   public sections = [

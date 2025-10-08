@@ -9,7 +9,7 @@ import { Dialog, DialogModule } from 'primeng/dialog';
     DialogModule,
   ],
   templateUrl: './modal-token-valido.component.html',
-  styleUrl: './modal-token-valido.component.scss'
+  styleUrl: './modal-token-valido.component.css'
 })
 export class ModalTokenValidoComponent {
   @Input() esVisibleDialog!: boolean;

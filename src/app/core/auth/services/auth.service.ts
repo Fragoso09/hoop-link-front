@@ -1,20 +1,17 @@
 import { Injectable, signal } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, combineLatest, Observable, of, throwError, timer } from 'rxjs';
-import { catchError, filter, map, switchMap, take, tap } from 'rxjs/operators';
-import { environment } from '../../../../environments/environment';
-import { WebApiConstants } from '../../constants/web-api/web-api.constants';
-import { ILogin } from '../interfaces/login.interface';
-import { WebApiService } from '../../services/web-api/web-api.service';
-import { IAuthUser } from '../interfaces/auth-user.interface';
-import { AuthApiService } from './auth-api.service';
-import { IResponse } from '../../interfaces/response/response.interface';
-import { toObservable } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
+import { toObservable } from '@angular/core/rxjs-interop';
+import { Observable, of, throwError, combineLatest } from 'rxjs';
+import { catchError, filter, map, switchMap, take, tap } from 'rxjs/operators';
+import { ILogin } from '../interfaces/login.interface';
+import { IAuthUser } from '../interfaces/auth-user.interface';
+import { IResponse } from '../../interfaces/response/response.interface';
+import { ITokens } from '../interfaces';
+import { AuthApiService } from './auth-api.service';
+import { WebApiService } from '../../services/web-api/web-api.service';
+import { WebApiConstants } from '../../constants/web-api/web-api.constants';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class AuthService {
 
   // 👇 Signals en lugar de BehaviorSubjects
@@ -29,13 +26,22 @@ export class AuthService {
   readonly user$ = toObservable(this.user);
   readonly authChecked$ = toObservable(this.authChecked);
 
-  constructor(private readonly authApi: AuthApiService, private readonly webApiService:WebApiService, private readonly router:Router) {
+  constructor(
+    private readonly authApi: AuthApiService,
+    private readonly webApiService: WebApiService,
+    private readonly router: Router
+  ) {}
 
-  }
-
+  /** 🔐 LOGIN */
   login(credenciales: ILogin): Observable<IAuthUser | null> {
     return this.authApi.login(credenciales).pipe(
-      switchMap(() => timer(100).pipe(switchMap(() => this.checkAuth()))),
+      map(res => res.data), // ⬅️ Extrae los tokens desde la respuesta
+      tap(tokens => {
+        if (!tokens) throw new Error('Respuesta sin tokens');
+        localStorage.setItem('accessToken', tokens.token);
+        localStorage.setItem('refreshToken', tokens.refreshToken);
+      }),
+      switchMap(() => this.checkAuth()),
       switchMap(() =>
         combineLatest([this.user$, this.authChecked$]).pipe(
           filter(([user, checked]) => !!user && checked),
@@ -48,6 +54,7 @@ export class AuthService {
         this._authChecked.set(true);
       }),
       catchError(err => {
+        this.clearTokens();
         this._user.set(null);
         this._authChecked.set(true);
         return throwError(() => err);
@@ -55,80 +62,97 @@ export class AuthService {
     );
   }
 
- logout(): Observable<any> {
-    return this.authApi.logout().pipe(
-      catchError(() => of(null)),
+  /** 🚪 LOGOUT */
+  logout(): Observable<any> {
+    const refreshToken = localStorage.getItem('refreshToken');
+    return this.authApi.logout(refreshToken ?? '').pipe(
+      catchError(() => of(null)), // incluso si el backend falla
       tap(() => {
+        this.clearTokens();
         this._user.set(null);
-        this._authChecked.set(true);  // importante dejar true aquí
+        this._authChecked.set(true);
         this.router.navigate(['/login']);
-      }),
+      })
     );
   }
 
+  /** 👁️ Verificar usuario autenticado */
   checkAuth(): Observable<IAuthUser | null> {
-    console.log('[checkAuth] INICIANDO');
+    const token = localStorage.getItem('accessToken');
+    if (!token) {
+      this._user.set(null);
+      this._authChecked.set(true);
+      return of(null);
+    }
+
     return this.webApiService.get<IResponse<IAuthUser>>(WebApiConstants.auth.yopli, true).pipe(
-      // tap(checked => console.log('Auth checked:', checked)),
-      map(response => response.data ?? null), // Extrae solo el usuario
+      map(response => response.data ?? null),
       tap(user => {
         console.log('[checkAuth] USUARIO CARGADO:', user);
         this._user.set(user);
-        this._authChecked.set(true);  // <- Esto es crucial
+        this._authChecked.set(true);
       }),
-      catchError((err) => {
-        console.warn('[checkAuth] ERROR:', err);
+      catchError(err => {
+        console.warn('[checkAuth] Token inválido o expirado:', err);
+        this.clearTokens();
         this._user.set(null);
-        this._authChecked.set(true);  // <- Esto también
-        this.logout().subscribe();
+        this._authChecked.set(true);
         return of(null);
       })
     );
   }
 
-  refreshToken(): Observable<any> {
-    return this.authApi.refreshToken().pipe(
-      switchMap(() => this.checkAuth()), // así sí espera a que checkAuth termine
+  /** 🔄 REFRESH TOKEN */
+  refreshToken(): Observable<IAuthUser | null> {
+    const refreshToken = localStorage.getItem('refreshToken');
+    if (!refreshToken) return of(null);
+
+    return this.authApi.refreshToken(refreshToken).pipe(
+      map(res => res.data), // ⬅️ extrae los tokens del IResponse
+      tap(tokens => {
+        if (!tokens) throw new Error('No se recibieron nuevos tokens');
+        localStorage.setItem('accessToken', tokens.token);
+        localStorage.setItem('refreshToken', tokens.refreshToken);
+      }),
+      switchMap(() => this.checkAuth()),
       catchError(err => {
+        console.error('[refreshToken] Error:', err);
+        this.clearTokens();
         this._user.set(null);
-        this._authChecked.set(true);  // importante marcar que terminó la comprobación
-        return throwError(() => err);
+        this._authChecked.set(true);
+        return of(null);
       })
     );
   }
 
+  /** 🧹 Helpers */
+  clearTokens() {
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
+  }
+
   isAuthenticated(): boolean {
-    return !! this._user();
+    return !!this._user();
   }
 
   getUser(): IAuthUser | null {
-    return this.user();
+    return this._user();
   }
 
   setUser(user: IAuthUser) {
     this._user.set(user);
   }
 
-  clearUser() {
-    this._user.set(null);
-  }
-
-  setChecked(checked:boolean) {
+  setChecked(checked: boolean) {
     this._authChecked.set(checked);
   }
 
-
-  public yopli(): Observable<any> {
-    const url:string = WebApiConstants.auth.yopli;
-    return this.webApiService.get<IResponse<IAuthUser>>(url, true).pipe(
-      map(response => response.data ?? null), // extrae solo el usuario
-      tap(user => {
-        this._user.set(user)
-      }),
-      catchError(error => {
-        return throwError(() => error);
-      })
+  /** Debug o endpoint manual */
+  yopli(): Observable<IAuthUser | null> {
+    return this.webApiService.get<IResponse<IAuthUser>>(WebApiConstants.auth.yopli, true).pipe(
+      map(response => response.data ?? null),
+      tap(user => this._user.set(user)),
+      catchError(error => throwError(() => error))
     );
   }
 }
-
