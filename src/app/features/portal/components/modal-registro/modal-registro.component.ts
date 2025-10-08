@@ -9,7 +9,7 @@ import { Dialog, DialogModule } from 'primeng/dialog';
     DialogModule,
   ],
   templateUrl: './modal-registro.component.html',
-  styleUrl: './modal-registro.component.scss'
+  styleUrl: './modal-registro.component.css'
 })
 export class ModalRegistroComponent {
   @Input() esVisibleDialog!: boolean;

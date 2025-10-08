@@ -6,7 +6,7 @@ import { CintaHorizontalComponent } from "../../../../shared/components/cinta-ho
   selector: 'app-jugador-dashboard',
   imports: [CintaHorizontalComponent],
   templateUrl: './jugador-dashboard.component.html',
-  styleUrl: './jugador-dashboard.component.scss'
+  styleUrl: './jugador-dashboard.component.css'
 })
 export class JugadorDashboardComponent {
 //#region  Propiedades

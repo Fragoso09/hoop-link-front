@@ -10,7 +10,7 @@ import { CommunicationService } from '../../../core/services/ui/communication.se
   standalone: true,
   imports: [ImageModule, RouterModule, DividerModule],
   templateUrl: './footer.component.html',
-  styleUrl: './footer.component.scss'
+  styleUrl: './footer.component.css'
 })
 export class FooterComponent {
   public anio:number = new Date().getFullYear();

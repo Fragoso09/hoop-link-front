@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
     CommonModule
   ],
   templateUrl: './desktop.component.html',
-  styleUrl: './desktop.component.scss'
+  styleUrl: './desktop.component.css'
 })
 export class DesktopComponent {
 

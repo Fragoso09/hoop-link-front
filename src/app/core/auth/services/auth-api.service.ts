@@ -2,23 +2,24 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { environment } from "../../../../environments/environment";
-import { ILogin } from "../interfaces/login.interface";
+import { ILogin, ITokens } from "../interfaces";
 import { WebApiConstants } from "../../constants/web-api/web-api.constants";
+import { IResponse } from "../../interfaces/response/response.interface";
 
 // auth-api.service.ts
 @Injectable({ providedIn: 'root' })
 export class AuthApiService {
   constructor(private http: HttpClient) {}
 
-  login(credenciales: ILogin): Observable<any> {
-    return this.http.post(`${environment.apiUrl}/${WebApiConstants.auth.login}`, credenciales, { withCredentials: true });
+  login(credenciales: ILogin): Observable<IResponse<ITokens>> {
+    return this.http.post<IResponse<ITokens>>(`${environment.apiUrl}/${WebApiConstants.auth.login}`, credenciales,);
   }
 
-  refreshToken(): Observable<any> {
-    return this.http.post(`${environment.apiUrl}/${WebApiConstants.auth.refresh}`, {}, { withCredentials: true });
+  refreshToken(refreshToken: string): Observable<IResponse<ITokens>> {
+    return this.http.post<IResponse<ITokens>>(`${environment.apiUrl}/${WebApiConstants.auth.refresh}`, { refreshToken });
   }
 
-  logout(): Observable<any> {
-    return this.http.post(`${environment.apiUrl}/${WebApiConstants.auth.logout}`, {}, { withCredentials: true });
+  logout(refreshToken: string): Observable<IResponse<any>> {
+    return this.http.post<IResponse<any>>(`${environment.apiUrl}/${WebApiConstants.auth.logout}`, { refreshToken });
   }
 }

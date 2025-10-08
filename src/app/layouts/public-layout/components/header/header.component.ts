@@ -17,7 +17,7 @@ import { Router, RouterModule } from '@angular/router';
   standalone: true,
   imports: [ImageModule, ButtonModule, Menubar, BadgeModule, AvatarModule, InputTextModule, CommonModule, RouterModule],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.scss'
+  styleUrl: './header.component.css'
 })
 export class HeaderComponent implements OnInit {
   public items: MenuItem[] | undefined;

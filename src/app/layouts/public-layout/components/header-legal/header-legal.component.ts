@@ -10,7 +10,7 @@ import { redibujaImg } from '../../../../shared/utils/ui/responsive.util';
   standalone: true,
   imports: [RouterModule, ImageModule],
   templateUrl: './header-legal.component.html',
-  styleUrl: './header-legal.component.scss'
+  styleUrl: './header-legal.component.css'
 })
 export class HeaderLegalComponent implements OnInit {
   public title:string = '';

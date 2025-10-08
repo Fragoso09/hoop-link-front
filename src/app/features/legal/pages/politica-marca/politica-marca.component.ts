@@ -9,7 +9,7 @@ import { ColorPicker } from 'primeng/colorpicker';
   standalone: true,
   imports: [ColorPicker, FormsModule],
   templateUrl: './politica-marca.component.html',
-  styleUrl: './politica-marca.component.scss'
+  styleUrl: './politica-marca.component.css'
 })
 export class PoliticaMarcaComponent {
   public sections = [

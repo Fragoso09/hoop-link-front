@@ -10,7 +10,7 @@ import { ButtonModule } from 'primeng/button';
     ButtonModule,
   ],
   templateUrl: './boton-volver.component.html',
-  styleUrl: './boton-volver.component.scss'
+  styleUrl: './boton-volver.component.css'
 })
 export class BotonVolverComponent {
 

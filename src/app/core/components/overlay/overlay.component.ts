@@ -7,7 +7,7 @@ import { BlockUI, BlockUIModule } from 'primeng/blockui';
   standalone: true,
   imports: [BlockUI, BlockUIModule],
   templateUrl: './overlay.component.html',
-  styleUrl: './overlay.component.scss'
+  styleUrl: './overlay.component.css'
 })
 export class OverlayComponent {
   blockedDocument: boolean = false;

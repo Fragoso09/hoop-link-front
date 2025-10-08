@@ -8,7 +8,7 @@ import { HeaderLegalComponent } from "../components/header-legal/header-legal.co
   standalone: true,
   imports: [FooterComponent, RouterModule, HeaderLegalComponent],
   templateUrl: './legal.component.html',
-  styleUrl: './legal.component.scss'
+  styleUrl: './legal.component.css'
 })
 export class LegalComponent {
 

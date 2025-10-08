@@ -6,7 +6,7 @@ import { removeClass } from '../../../../shared/utils/ui/design.util';
   standalone: true,
   imports: [],
   templateUrl: './politica-privacidad.component.html',
-  styleUrl: './politica-privacidad.component.scss'
+  styleUrl: './politica-privacidad.component.css'
 })
 export class PoliticaPrivacidadComponent {
 

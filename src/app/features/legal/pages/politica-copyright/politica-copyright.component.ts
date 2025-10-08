@@ -6,7 +6,7 @@ import { removeClass } from '../../../../shared/utils/ui/design.util';
   standalone: true,
   imports: [],
   templateUrl: './politica-copyright.component.html',
-  styleUrl: './politica-copyright.component.scss'
+  styleUrl: './politica-copyright.component.css'
 })
 export class PoliticaCopyrightComponent {
   public sections = [

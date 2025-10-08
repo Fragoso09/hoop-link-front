@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
   selector: 'app-jugador-test',
   imports: [],
   templateUrl: './jugador-test.component.html',
-  styleUrl: './jugador-test.component.scss'
+  styleUrl: './jugador-test.component.css'
 })
 export class JugadorTestComponent {
 

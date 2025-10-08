@@ -720,6 +720,10 @@ export const appConfig: ApplicationConfig = {
         theme: {
             preset: MyPreset,
             options: {
+              cssLayer: {
+                name: 'primeng',
+                order: 'theme, base, primeng'
+              },
               darkModeSelector: false
             }
         },

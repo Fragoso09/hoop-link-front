@@ -36,7 +36,7 @@ import { SkeletonComponent } from "../../../../../shared/components/skeleton/ske
     SkeletonComponent
 ],
   templateUrl: './jugador-perfil.component.html',
-  styleUrl: './jugador-perfil.component.scss'
+  styleUrl: './jugador-perfil.component.css'
 })
 export class JugadorPerfilComponent implements OnInit {
 

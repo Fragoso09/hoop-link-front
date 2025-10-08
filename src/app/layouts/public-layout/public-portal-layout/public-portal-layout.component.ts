@@ -12,7 +12,7 @@ import { FooterComponent } from "../../components/footer/footer.component";
     FooterComponent
   ],
   templateUrl: './public-portal-layout.component.html',
-  styleUrl: './public-portal-layout.component.scss'
+  styleUrl: './public-portal-layout.component.css'
 })
 export class PublicPortalLayoutComponent {
 

@@ -9,7 +9,7 @@ import { ImageModule } from 'primeng/image';
     ImageModule
   ],
   templateUrl: './profile-image.component.html',
-  styleUrl: './profile-image.component.scss'
+  styleUrl: './profile-image.component.css'
 })
 export class ProfileImageComponent {
 //#region Propiedades
