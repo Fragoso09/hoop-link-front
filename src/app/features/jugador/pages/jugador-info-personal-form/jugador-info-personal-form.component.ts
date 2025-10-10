@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
-import { finalize } from 'rxjs';
+import { finalize, Subject, takeUntil } from 'rxjs';
 
 import { ToastService } from '../../../../core/services/messages/toast.service';
 import { BlockUserIService } from '../../../../core/services/blockUI/block-user-i.service';
@@ -19,7 +19,7 @@ import { JugadorFuerzaResistenciaComponent } from "./jugador-fuerza-resistencia/
 import { JugadorBasketballComponent } from './jugador-basketball/jugador-basketball.component';
 import { JugadorExperienciaComponent } from "./jugador-experiencia/jugador-experiencia.component";
 
-import { SeverityMessageType } from '../../../../core/enums';
+import { CommonMessages, SeverityMessageType } from '../../../../core/enums';
 
 import { JugadorConstants } from '../../constants/general/general.constants';
 import { InfoPersonalDetail, InfoPersonalSummary } from '../../constants';
@@ -33,6 +33,10 @@ import { JugadorVideosComponent } from "./jugador-videos/jugador-videos.componen
 import { JugadorRedesSocialesComponent } from "./jugador-redes-sociales/jugador-redes-sociales.component";
 import { IVideosInformacionPersonal } from '../../../../shared/interfaces/informacion-personal/videos-informacion-personal.interface';
 import { SkeletonComponent } from "../../../../shared/components/skeleton/skeleton.component";
+
+import { LoggerService } from '../../../../core/services/logger/logger.service';
+import { LogLevel } from '../../../../core/enums';
+
 
 @Component({
   selector: 'app-jugador-info-personal-form',
@@ -56,7 +60,8 @@ import { SkeletonComponent } from "../../../../shared/components/skeleton/skelet
   templateUrl: './jugador-info-personal-form.component.html',
   styleUrl: './jugador-info-personal-form.component.css'
 })
-export class JugadorInfoPersonalFormComponent implements OnInit {
+export class JugadorInfoPersonalFormComponent implements OnInit, OnDestroy {
+
 //#region Propiedades
   public formularioPrincipal!: FormGroup;
   public tabs:ITab[] = [
@@ -94,6 +99,9 @@ export class JugadorInfoPersonalFormComponent implements OnInit {
     },
   ];
   public cargandoData = true;
+
+  private readonly _contextLog = 'JugadorInfoPersonalFormComponent';
+  private readonly _destroy$ = new Subject<void>();
 //#endregion
 
 //#region Constructor
@@ -101,19 +109,26 @@ export class JugadorInfoPersonalFormComponent implements OnInit {
     private readonly _fb: FormBuilder, private readonly _toastService: ToastService,
     private readonly _blockUserIService:BlockUserIService, private readonly _formularioService:FormularioUtilsService,
     private readonly _informacionPersonalService:InformacionPersonalService, private readonly _authService:AuthService,
-
+    private readonly _logger: LoggerService
   ) { }
 //#endregion
 
 //#region Ng
   ngOnInit(): void {
+    this._logger.log(LogLevel.Debug, `${this._contextLog} >> ngOnInit`, 'Componente inicializado.');
     this.inicializa();
+  }
+
+  ngOnDestroy(): void {
+    this._logger.log(LogLevel.Debug, `${this._contextLog} >> ngOnDestroy`, 'Componente destruido.');
+    this._destroy$.next();
+    this._destroy$.complete();
   }
 //#endregion
 
 //#region Generales
   private inicializa(): void {
-    console.log(this.cargandoData);
+    this._logger.log(LogLevel.Debug, `${this._contextLog} >> inicializa`, 'Preparando formulario y cargando datos...');
     this.prepareFormularios();
     this.cargaDatos();
   }
@@ -186,14 +201,21 @@ export class JugadorInfoPersonalFormComponent implements OnInit {
         youtube: new FormControl(null),
       }),
     });
+
+    this._logger.log(LogLevel.Debug, `${this._contextLog} >> prepareFormularios`, 'Formulario principal preparado.');
+
   }
 
   private cargaDatos() {
+    this._logger.log(LogLevel.Debug, `${this._contextLog} >> cargaDatos`, 'Obteniendo información personal...');
+
     this._informacionPersonalService.getInformacionPersonal()
       .pipe(
+        takeUntil(this._destroy$),
         finalize(() => this.cargandoData = false) // desactiva cuando termina
       ).subscribe({
         next: (response: IResponse<IInformacinPersonal>) => {
+          this._logger.log(LogLevel.Info, `${this._contextLog} >> cargaDatos`, 'Datos recibidos', response.data);
           const { data } = response;
           console.log(data);
 
@@ -209,7 +231,10 @@ export class JugadorInfoPersonalFormComponent implements OnInit {
           this.setVideosEnFormulario(videos);
           this.setRedesEnFormulario(redes);
         },
-        error: (error) => { }
+        error: (error) => {
+          this._logger.log(LogLevel.Error, `${this._contextLog} >> cargaDatos`, 'Error al obtener información personal', error);
+          this._toastService.showMessage(SeverityMessageType.Error, CommonMessages.Error, 'No se pudo cargar la información personal.');
+        }
     });
   }
 
@@ -295,6 +320,8 @@ export class JugadorInfoPersonalFormComponent implements OnInit {
       redes,
     }
 
+    this._logger.log(LogLevel.Debug, `${this._contextLog} >> preparaSeccionesToSetEnFormulario`, 'Formulario preparado con datos del servidor.');
+
     return infoPersonalPreparada;
   }
 
@@ -305,6 +332,8 @@ export class JugadorInfoPersonalFormComponent implements OnInit {
       tiktok: redes?.tiktok,
       youtube: redes?.youtube,
     });
+
+    this._logger.log(LogLevel.Debug, `${this._contextLog} >> setRedesEnFormulario`, 'Formulario actualizado con datos del servidor.');
   }
 
   private setVideosEnFormulario(videos: IVideosInformacionPersonal) {
@@ -315,6 +344,8 @@ export class JugadorInfoPersonalFormComponent implements OnInit {
       videoEntrenando: videos.videoEntrenando,
       videoJugando: videos.videoJugando,
     });
+
+    this._logger.log(LogLevel.Debug, `${this._contextLog} >> setVideosEnFormulario`, 'Formulario actualizado con datos del servidor.');
   }
 
   private setVisionEnFormulario(vision: IVisionInformacionPersonal) {
@@ -322,10 +353,11 @@ export class JugadorInfoPersonalFormComponent implements OnInit {
       objetivos: vision?.objetivos,
       valores: vision?.valores,
     });
+
+    this._logger.log(LogLevel.Debug, `${this._contextLog} >> setVisionEnFormulario`, 'Formulario actualizado con datos del servidor.');
   }
 
   private setExperienciaEnFormulario(experiencia: IExperienciaInformacionPersonal) {
-    console.log('entro al set experiencia');
     this.experiencia.patchValue({
       desdeCuandoJuegas: experiencia?.desdeCuandoJuegas !== undefined ? new Date(experiencia?.desdeCuandoJuegas) : undefined,
       horasEntrenamientoSemana: experiencia?.horasEntrenamientoSemana,
@@ -336,9 +368,6 @@ export class JugadorInfoPersonalFormComponent implements OnInit {
 
     // patcheo los que pueden tener mas de uno
     const { historialEntrenadores, historialEquipos, logrosClave } = experiencia;
-    console.log('Entrenadores:', historialEntrenadores);
-    console.log('Eventos:', historialEquipos);
-    console.log('Logros:', logrosClave);
 
     if (Array.isArray(historialEquipos)) {
       // --- Historial de eventos ---
@@ -375,6 +404,8 @@ export class JugadorInfoPersonalFormComponent implements OnInit {
         }));
       });
     }
+
+    this._logger.log(LogLevel.Debug, `${this._contextLog} >> setExperienciaEnFormulario`, 'Formulario actualizado con datos del servidor.');
   }
 
   private setBasketballEnFormulario(basketball: IBasketballInformacionPersonal) {
@@ -391,6 +422,8 @@ export class JugadorInfoPersonalFormComponent implements OnInit {
       porcentajeTirosTres: basketball?.porcentajeTirosTres,
       porcentajeTirosLibres: basketball?.porcentajeTirosLibres,
     });
+
+    this._logger.log(LogLevel.Debug, `${this._contextLog} >> setBasketballEnFormulario`, 'Formulario actualizado con datos del servidor.');
   }
 
   private setFuerzaResistenciaEnFormulario(fuerzaResistencia: IFuerzaResistenciaInformacionPersonal) {
@@ -408,10 +441,11 @@ export class JugadorInfoPersonalFormComponent implements OnInit {
       tiempoDistanciaTresKm: fuerzaResistencia.tiempoDistanciaTresKm,
       tiempoDistanciaCincoKm: fuerzaResistencia.tiempoDistanciaCincoKm,
     });
+
+    this._logger.log(LogLevel.Debug, `${this._contextLog} >> setFuerzaResistenciaEnFormulario`, 'Formulario actualizado con datos del servidor.');
   }
 
   private setPerfilEnFormulario(perfil: IPerfilInformacionPersonal) {
-    console.log('aqui el perfil en set perfil', perfil);
     this.perfil.patchValue({
       informacionPersonalId: perfil.informacionPersonalId,
       fotoPerfil: perfil.fotoPerfil,
@@ -422,6 +456,8 @@ export class JugadorInfoPersonalFormComponent implements OnInit {
       largoBrazo: perfil.largoBrazo,
       quienEres: perfil.quienEres,
     });
+
+    this._logger.log(LogLevel.Debug, `${this._contextLog} >> setFuerzaResistenciaEnFormulario`, 'Formulario actualizado con datos del servidor.');
   }
 
   get perfil(): FormGroup {
@@ -455,40 +491,47 @@ export class JugadorInfoPersonalFormComponent implements OnInit {
   private validaPerfil() {
     if (this._formularioService.tieneErroresEnControlEspecifico(this.formularioPrincipal, 'perfil')) {
       this._toastService.showMessage(SeverityMessageType.Warn, InfoPersonalSummary.SECCION_FALTANTE, InfoPersonalDetail.PERFIL_INCOMPLETO, undefined, 5000);
+      this._logger.log(LogLevel.Warn, `${this._contextLog} >> validaErrores`, `Errores en sección: Perfil`);
     }
   }
 
   private validaFuerzaResistencia() {
     if (this._formularioService.tieneErroresEnControlEspecifico(this.formularioPrincipal, 'fuerzaResistencia')) {
       this._toastService.showMessage(SeverityMessageType.Warn, InfoPersonalSummary.SECCION_FALTANTE, InfoPersonalDetail.FUERZA_RESISTENCIA_INCOMPLETO, undefined, 5000);
+      this._logger.log(LogLevel.Warn, `${this._contextLog} >> validaErrores`, `Errores en sección: Fuerza y Resistencia`);
     }
   }
 
   private validaBasketball() {
     if (this._formularioService.tieneErroresEnControlEspecifico(this.formularioPrincipal, 'basketball')) {
       this._toastService.showMessage(SeverityMessageType.Warn, InfoPersonalSummary.SECCION_FALTANTE, InfoPersonalDetail.BASKETBALL, undefined, 5000);
+      this._logger.log(LogLevel.Warn, `${this._contextLog} >> validaErrores`, `Errores en sección: Basketball`);
     }
   }
 
   private validaExperiencia() {
     if (this._formularioService.tieneErroresEnControlEspecifico(this.formularioPrincipal, 'experiencia')) {
       this._toastService.showMessage(SeverityMessageType.Warn, InfoPersonalSummary.SECCION_FALTANTE, InfoPersonalDetail.EXPERIENCIA, undefined, 5000);
+      this._logger.log(LogLevel.Warn, `${this._contextLog} >> validaErrores`, `Errores en sección: Experiencia`);
     }
   }
 
   private validaVision() {
     if (this._formularioService.tieneErroresEnControlEspecifico(this.formularioPrincipal, 'vision')) {
       this._toastService.showMessage(SeverityMessageType.Warn, InfoPersonalSummary.SECCION_FALTANTE, InfoPersonalDetail.VISION, undefined, 5000);
+      this._logger.log(LogLevel.Warn, `${this._contextLog} >> validaErrores`, `Errores en sección: Vision`);
     }
   }
 
    private validaRedes() {
     if (this._formularioService.tieneErroresEnControlEspecifico(this.formularioPrincipal, 'redes')) {
       this._toastService.showMessage(SeverityMessageType.Warn, InfoPersonalSummary.SECCION_FALTANTE, InfoPersonalDetail.REDES, undefined, 5000);
+      this._logger.log(LogLevel.Warn, `${this._contextLog} >> validaErrores`, `Errores en sección: Redes`);
     }
   }
 
   private validaErrores() {
+    this._logger.log(LogLevel.Warn, `${this._contextLog} >> validaErrores`, `Validando formularios...`);
     this.validaPerfil();
     this.validaFuerzaResistencia();
     this.validaBasketball();
@@ -523,9 +566,12 @@ export class JugadorInfoPersonalFormComponent implements OnInit {
     if (this.formularioPrincipal.invalid) {
       this.formularioPrincipal.markAllAsTouched();
       this.validaErrores();
-      console.log(this.perfil);
+      this._logger.log(LogLevel.Warn, `${this._contextLog} >> onSubmit`, 'Formulario inválido al intentar guardar.');
     } else {
+
       this._blockUserIService.show(JugadorConstants.APLICANDO_CAMBIOS);
+      this._logger.log(LogLevel.Debug, `${this._contextLog} >> onSubmit`, 'Enviando datos al servidor.');
+
       const raw = this.formularioPrincipal.getRawValue();
 
       let formCompleto: IRegistraInformacionPersonal;
@@ -541,16 +587,17 @@ export class JugadorInfoPersonalFormComponent implements OnInit {
       const formData = dtoToFormData(formCompleto, this.formularioPrincipal);
 
       this._informacionPersonalService.save(formData).pipe(
+        takeUntil(this._destroy$),
         finalize(() => this._blockUserIService.hide())
       ).subscribe({
         next: (response: any) => {
-          console.log('Respuesta exitosa:', response);
+          this._logger.log(LogLevel.Info, `${this._contextLog} >> onSubmit`, 'Información guardada correctamente', response);
           this._toastService.showMessage(SeverityMessageType.Success, 'Genial', response.mensaje, undefined, 5000);
           this.cargaDatos();
         },
         error: (error: any) => {
-          console.error('Ocurrió un error:', error);
           // Aquí puedes mostrar un toast, modal o mensaje en pantalla
+          this._logger.log(LogLevel.Error, `${this._contextLog} >> onSubmit`, 'Error guardando información', error);
           this._toastService.showMessage(SeverityMessageType.Error, 'Error al guardar', error.error.message || 'Algo salió mal');
           this._blockUserIService.hide();
         }

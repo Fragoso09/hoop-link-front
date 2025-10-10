@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { removeClass } from '../../../../shared/utils/ui/design.util';
 
+import { LoggerService } from '../../../../core/services/logger/logger.service';
+import { LogLevel } from '../../../../core/enums';
+
 @Component({
   selector: 'app-politica-cookies',
   standalone: true,
@@ -9,6 +12,8 @@ import { removeClass } from '../../../../shared/utils/ui/design.util';
   styleUrl: './politica-cookies.component.css'
 })
 export class PoliticaCookiesComponent {
+
+//#region Propiedades
   public sections = [
     { id: 'pol1', title: '¿Qué son las cookies?' },
     { id: 'pol2', title: 'Tipos de cookies que utilizamos' },
@@ -18,6 +23,24 @@ export class PoliticaCookiesComponent {
     { id: 'pol6', title: 'Contacto' }
   ];
 
+  private readonly _contextLog = 'PoliticaCookiesComponent';
+//#endregion
+
+//#region Constructor
+  constructor(private readonly _logger: LoggerService) { }
+//#endregion
+
+//#region Ng
+  ngOnInit(): void {
+    this._logger.log(LogLevel.Debug, `${this._contextLog} >> ngOnInit`, 'Componente inicializado.');
+  }
+
+  ngOnDestroy(): void {
+    this._logger.log(LogLevel.Debug, `${this._contextLog} >> ngOnDestroy`, 'Componente destruido.');
+  }
+//#endregion
+
+//#region Generales
   public moveToSection(id:string, event: Event) {
     event.preventDefault();
     removeClass('sectionLegalClick');
@@ -27,4 +50,5 @@ export class PoliticaCookiesComponent {
       element?.classList.add('sectionLegalClick');
     }
   }
+//#endregion
 }

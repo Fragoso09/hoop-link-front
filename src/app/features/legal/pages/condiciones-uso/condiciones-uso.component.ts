@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 
+import { LoggerService } from '../../../../core/services/logger/logger.service';
+import { LogLevel } from '../../../../core/enums';
+
 @Component({
   selector: 'app-condiciones-uso',
   standalone: true,
@@ -8,6 +11,8 @@ import { Component } from '@angular/core';
   styleUrl: './condiciones-uso.component.css'
 })
 export class CondicionesUsoComponent {
+
+//#region Propiedades
   public sections = [
     { id: 'pol1', title: 'Aceptación de los Términos' },
     { id: 'pol2', title: 'Registro y Cuenta de Usuario' },
@@ -22,6 +27,24 @@ export class CondicionesUsoComponent {
     { id: 'pol11', title: 'Ley Aplicable y Jurisdicción' },
   ];
 
+  private readonly _contextLog = 'CondicionesUsoComponent';
+//#endregion
+
+//#region Constructor
+  constructor(private readonly _logger: LoggerService) { }
+//#endregion
+
+//#region Ng
+  ngOnInit(): void {
+    this._logger.log(LogLevel.Debug, `${this._contextLog} >> ngOnInit`, 'Componente inicializado.');
+  }
+
+  ngOnDestroy(): void {
+    this._logger.log(LogLevel.Debug, `${this._contextLog} >> ngOnDestroy`, 'Componente destruido.');
+  }
+//#endregion
+
+//#region Generales
   public moveToSection(id:string, event: Event) {
     event.preventDefault();
     this.removeClass();
@@ -40,4 +63,5 @@ export class CondicionesUsoComponent {
       }
     }
   }
+//#endregion
 }

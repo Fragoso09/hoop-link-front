@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 import { BlockUserIService } from '../../../../../core/services/blockUI/block-user-i.service';
@@ -18,6 +18,10 @@ import { Select } from 'primeng/select';
 import { ToggleButton } from 'primeng/togglebutton';
 import { SkeletonComponent } from "../../../../../shared/components/skeleton/skeleton.component";
 
+import { LoggerService } from '../../../../../core/services/logger/logger.service';
+import { CommonMessages, LogLevel, SeverityMessageType } from '../../../../../core/enums';
+import { Subject, takeUntil } from 'rxjs';
+
 @Component({
   selector: 'app-jugador-basketball',
   imports: [
@@ -34,7 +38,7 @@ import { SkeletonComponent } from "../../../../../shared/components/skeleton/ske
   templateUrl: './jugador-basketball.component.html',
   styleUrl: './jugador-basketball.component.css'
 })
-export class JugadorBasketballComponent implements OnInit {
+export class JugadorBasketballComponent implements OnInit, OnDestroy {
 
 //#region Propiedades
   @Input({required: true}) form!: FormGroup;
@@ -45,36 +49,59 @@ export class JugadorBasketballComponent implements OnInit {
   private catalogosCargados: number = 0;
   public iconoSi: string = "fa-solid fa-hand-point-left";
   public iconoSi2: string = "pi pi-check";
+
+  private readonly _contextLog = 'JugadorBasketballComponent';
+  private _destroy$ = new Subject<void>();
 //#endregion
 
 //#region Constructor
   constructor(
     private readonly _formularioUtils: FormularioUtilsService, private readonly _catalagoService: CatalogoService,
     private readonly _blockUserIService:BlockUserIService, private readonly _toastService: ToastService,
+    private readonly _logger: LoggerService,
   ) { }
 //#endregion
 
 //#region Ng
-  async ngOnInit() {
+  ngOnInit() {
+    this._logger.log(LogLevel.Debug, `${this._contextLog} >> ngOnInit`, 'Componente inicializado.');
+
     this.inicializa();
+  }
+
+  ngOnDestroy() {
+    this._logger.log(LogLevel.Debug, `${this._contextLog} >> ngOnDestroy`, 'Componente destruido.');
+    this._destroy$.next();
+    this._destroy$.complete();
   }
 //#endregion
 
 //#region Generales
 
-  private async inicializa() {
+  private inicializa() {
       try {
       this._blockUserIService.show(this.mensaje);
-      await this.cargaCatalogoPosicionJugador();
+      this._logger.log(LogLevel.Debug, `${this._contextLog} >> inicializa`, 'Inicialización: cargando catálogo de posiciones de jugador');
+      this.cargaCatalogoPosicionJugador();
+      this._logger.log(LogLevel.Info, `${this._contextLog} >> inicializa`, 'Catálogo de posiciones cargado correctamente', { cantidad: this.allPosicionJugador?.length });
     } finally {
       this._blockUserIService.hide();
     }
   }
 
-  private async cargaCatalogoPosicionJugador() {
+  private cargaCatalogoPosicionJugador() {
     this.mensaje = CatalogoConstants.CARGANDO_CATALOGO_MULTIPLE('Posición Jugador', this.catalogosCargados + 1, this.totalCatalogos);
-    this._catalagoService.getAllPosicionJugador().subscribe( (posicion) => {
-      this.allPosicionJugador = posicion;
+    this._catalagoService.getAllPosicionJugador()
+    .pipe(takeUntil(this._destroy$))
+    .subscribe({
+      next: (posicion) => {
+        this.allPosicionJugador = posicion;
+        this._logger.log(LogLevel.Debug, `${this._contextLog} >> cargaCatalogoPosicionJugador`, 'getAllPosicionJugador >> datos recibidos', posicion);
+      },
+      error: (error) => {
+        this._logger.log(LogLevel.Error, `${this._contextLog} >> cargaCatalogoPosicionJugador`, 'Error cargando getAllPosicionJugador', error);
+        this._toastService.showMessage(SeverityMessageType.Error, CommonMessages.Error, 'No se pudo cargar el catálogo de posiciones.');
+      }
     });
   }
 

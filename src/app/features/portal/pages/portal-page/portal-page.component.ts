@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit  } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit  } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 
 import { IconsSvgComponent } from "../../../../core/components/icons-svg/icons-svg.component";
@@ -17,6 +17,9 @@ import { redibujaImg } from '../../../../shared/utils/ui/responsive.util';
 import { TipoSvg } from '../../../../../app/core/enums/index';
 import { UsuarioService } from '../../../../core/services/usuario/usuario.service';
 import { ModalRegistroComponent } from '../../components/modal-registro/modal-registro.component';
+
+import { LoggerService } from '../../../../core/services/logger/logger.service';
+import { LogLevel } from '../../../../core/enums';
 
 @Component({
   selector: 'app-portal-page',
@@ -37,34 +40,39 @@ import { ModalRegistroComponent } from '../../components/modal-registro/modal-re
   templateUrl: './portal-page.component.html',
   styleUrl: './portal-page.component.css'
 })
-export class PortalPageComponent {
-//#region Variables publicas
+export class PortalPageComponent implements OnInit, OnDestroy {
+//#region Propiedades
   public widthImg:string = "600";
   public tipoSvg = TipoSvg;
   public items!: MenuItem[];
   public widthImageUnirse:string = '300';
   public esVisibleDialog:boolean = false;
-//#endregion
 
-//#region Variables privadas
   private _imgWidht:IResizeImg = {
       limSuperior:600,
       limInferior:550,
       valSuperior:600,
       valInferior:480,
   };
+
+  private readonly _contextLog = 'PortalPageComponent';
 //#endregion
 
 //#region Constructor
   constructor(
-    private router: Router,
-    private usuarioService: UsuarioService
+    private router: Router, private usuarioService: UsuarioService,
+    private readonly _logger: LoggerService
   ) { }
 //#endregion
 
-//#region Metodos Ng
+//#region Ng
   ngOnInit(): void {
    this.inicializa();
+    this._logger.log(LogLevel.Debug, `${this._contextLog} >> ngOnInit`, 'Componente inicializado.');
+  }
+
+  ngOnDestroy(): void {
+    this._logger.log(LogLevel.Debug, `${this._contextLog} >> ngOnDestroy`, 'Componente destruido.');
   }
 //#endregion
 
@@ -75,7 +83,7 @@ export class PortalPageComponent {
   }
 //#endregion
 
-//#region Metodos
+//#region Generales
   onClickUnirse() {
     this.router.navigateByUrl('/registro')
   }
