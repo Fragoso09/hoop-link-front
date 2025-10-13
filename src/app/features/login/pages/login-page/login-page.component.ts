@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
@@ -22,8 +22,12 @@ import { ToastService } from '../../../../core/services/messages/toast.service';
 import { ILogin } from '../../../../core/auth/interfaces/login.interface';
 import { AuthService } from '../../../../core/auth/services/auth.service';
 import { IAuthUser } from '../../../../core/auth/interfaces/auth-user.interface';
-import { firstValueFrom, filter, take, switchMap } from 'rxjs';
-import { SeverityMessageType } from '../../../../core/enums';
+import { firstValueFrom, filter, take, switchMap, Subject, takeUntil } from 'rxjs';
+import { CommonMessages, SeverityMessageType } from '../../../../core/enums';
+
+import { LoggerService } from '../../../../core/services/logger/logger.service';
+import { LogLevel } from '../../../../core/enums';
+
 
 @Component({
   selector: 'app-login-page',
@@ -38,18 +42,23 @@ import { SeverityMessageType } from '../../../../core/enums';
   templateUrl: './login-page.component.html',
   styleUrl: './login-page.component.css'
 })
-export class LoginPageComponent {
-//#region Variables publicas
+export class LoginPageComponent implements OnInit, OnDestroy {
+//#region Propiedades
   public esVisibleDialog:boolean = false;
   public formulario: FormGroup;
   public esVisibleRecuperaContrasenaDialog:boolean = false;
-//#endregion Variables publicas
+
+  private readonly _contextLog = 'LoginPageComponent';
+  private _destroy$ = new Subject<void>();
+//#endregion
+
 
 //#region Constructor
   constructor(
-    private readonly usuarioService:UsuarioService, private fb: FormBuilder, private readonly _formularioUtils:FormularioUtilsService,
-    private readonly router:Router, private readonly toastService: ToastService, private readonly blockUserIService:BlockUserIService,
-    private readonly authService: AuthService
+    private readonly usuarioService:UsuarioService, private fb: FormBuilder,
+    private readonly _formularioUtils:FormularioUtilsService, private readonly router:Router,
+    private readonly toastService: ToastService, private readonly blockUserIService:BlockUserIService,
+    private readonly authService: AuthService, private readonly _logger: LoggerService,
   ) {
     this.formulario = this.fb.group({
       correo: new FormControl('', {
@@ -63,13 +72,20 @@ export class LoginPageComponent {
   }
 //#endregion Constructor
 
-//#region Metodos Ng
+//#region Ng
   ngOnInit(): void {
+    this._logger.log(LogLevel.Debug, `${this._contextLog} >> ngOnInit`, 'Componente inicializado.');
     this.inicializa();
+  }
+
+  ngOnDestroy(): void {
+    this._destroy$.next();
+    this._destroy$.complete();
+    this._logger.log(LogLevel.Debug, `${this._contextLog} >> ngOnDestroy`, 'Componente destruido.');
   }
 //#endregion
 
-//#region Metodos
+//#region Generales
   private inicializa() {
     this.muestraEsTokenValido();
   }
@@ -81,21 +97,25 @@ export class LoginPageComponent {
   public async enviar(): Promise<void>  {
     if(this.formulario.invalid) {
       this.formulario.markAllAsTouched();
+      this._logger.log(LogLevel.Warn, `${this._contextLog} >> enviar`, 'Formulario inválido.', this.formulario.value);
       return;
     } else if (this.formulario.valid) {
       this._formularioUtils.aplicaTrim(this.formulario);
       const credenciales = this.formulario.value as ILogin;
       this.blockUserIService.show();
-      this.authService.login(credenciales).subscribe({
+      this.authService.login(credenciales)
+      .pipe(takeUntil(this._destroy$))
+      .subscribe({
        next: () => {
-          // console.log('Login success:', response);
+          this._logger.log(LogLevel.Info, `${this._contextLog} >> enviar`, 'Login exitoso.');
           this.formulario.reset();
-          this.blockUserIService.hide();
           this.router.navigateByUrl('/desktop');
         },
         error: (error) => {
-          console.log(error);
-          this.toastService.showMessage(SeverityMessageType.Error, 'Error', error.error.message);
+          this._logger.log(LogLevel.Error, `${this._contextLog} >> enviar`, 'Error en login.', error);
+          this.toastService.showMessage(SeverityMessageType.Error, CommonMessages.Error, error.error.message);
+        },
+        complete: () => {
           this.blockUserIService.hide();
         }
       });

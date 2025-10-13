@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormsModule, FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormControl } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
@@ -25,7 +25,11 @@ import { PasswordModule } from 'primeng/password';
 import { ToastService } from '../../../../core/services/messages/toast.service';
 import { IResponse } from '../../../../core/interfaces/response/response.interface';
 import { BlockUserIService } from '../../../../core/services/blockUI/block-user-i.service';
-import { SeverityMessageType } from '../../../../core/enums';
+import { CommonMessages, SeverityMessageType } from '../../../../core/enums';
+
+import { LoggerService } from '../../../../core/services/logger/logger.service';
+import { LogLevel } from '../../../../core/enums';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-formulario-registro',
@@ -37,7 +41,7 @@ import { SeverityMessageType } from '../../../../core/enums';
   templateUrl: './formulario-registro.component.html',
   styleUrl: './formulario-registro.component.css'
 })
-export class FormularioRegistroComponent implements OnInit {
+export class FormularioRegistroComponent implements OnInit, OnDestroy {
 
 //#region Propiedades
   public allTipoUsuario: ICatalogo[] = [];
@@ -47,14 +51,17 @@ export class FormularioRegistroComponent implements OnInit {
   public formulario: FormGroup;
   public hoy:Date = new Date();
   public estadoSeleccionado: boolean = false;
+
+  private readonly _contextLog = 'FormularioRegistroComponent';
+  private _destroy$ = new Subject<void>();
 //#endregion Propiedades
 
 //#endregion Constructor
   constructor(
     private readonly catalagoService: CatalogoService, private readonly usuarioService:UsuarioService,
     private readonly _formularioUtiuls:FormularioUtilsService, private fb: FormBuilder,
-    private readonly toastService: ToastService, private readonly blockUserIService:BlockUserIService,
-    private readonly router:Router
+    private readonly _toastService: ToastService, private readonly blockUserIService:BlockUserIService,
+    private readonly router:Router, private readonly _logger: LoggerService,
   ) {
     this.formulario = this.fb.group({
       nombre: new FormControl('', Validators.required),
@@ -84,25 +91,59 @@ export class FormularioRegistroComponent implements OnInit {
 
 //#region Ng
   ngOnInit(): void {
+    this._logger.log(LogLevel.Debug, `${this._contextLog} >> ngOnInit`, 'Componente inicializado.');
     this.inicializa();
+  }
+
+  ngOnDestroy(): void {
+    this._destroy$.next();
+    this._destroy$.complete();
+    this._logger.log(LogLevel.Debug, `${this._contextLog} >> ngOnDestroy`, 'Componente destruido.');
   }
 //#endregion Ng
 
 //#region Generales
   private inicializa(): void {
-    this.catalagoService.getAllTipoUsuario().subscribe( (tipoUsuario) => {
-      this.allTipoUsuario = tipoUsuario;
+    this.catalagoService.getAllTipoUsuario()
+    .pipe(takeUntil(this._destroy$))
+    .subscribe({
+      next: (tipoUsuario) => {
+        this.allTipoUsuario = tipoUsuario;
+        this._logger.log(LogLevel.Debug, `${this._contextLog} >> inicializa`, 'getAllTipoUsuario >> datos recibidos', tipoUsuario);
+      },
+      error: (error) => {
+        this._logger.log(LogLevel.Error, `${this._contextLog} >> inicializa`, 'Error cargando getAllTipoUsuario', error);
+        this._toastService.showMessage(SeverityMessageType.Error, CommonMessages.Error, 'No se pudo cargar el catálogo de Tipo Usuario.');
+      }
     });
 
-    this.catalagoService.getAllEstado().subscribe( (estado) => {
-      this.allEstados = estado;
+    this.catalagoService.getAllEstado()
+    .pipe(takeUntil(this._destroy$))
+    .subscribe({
+      next: (estado) => {
+        this.allEstados = estado;
+        this._logger.log(LogLevel.Debug, `${this._contextLog} >> inicializa`, 'getAllEstado >> datos recibidos', estado);
+      },
+      error: (error) => {
+        this._logger.log(LogLevel.Error, `${this._contextLog} >> inicializa`, 'Error cargando getAllEstado', error);
+        this._toastService.showMessage(SeverityMessageType.Error, CommonMessages.Error, 'No se pudo cargar el catálogo de Estados.');
+      }
     });
   }
 
   public onCambiaEstado(event: SelectChangeEvent) {
-    this.catalagoService.getAllMunicipioByEstado(event.value.id).subscribe( (municipio) => {
-      this.allMunicipios = municipio;
-      this.formulario.controls['municipio'].enable();
+    this.catalagoService.getAllMunicipioByEstado(event.value.id)
+    .pipe(takeUntil(this._destroy$))
+    .subscribe({
+      next: (municipio) => {
+        this.allMunicipios = municipio;
+        this.formulario.controls['municipio'].enable();
+        this._logger.log(LogLevel.Debug, `${this._contextLog} >> onCambiaEstado`, 'getAllMunicipioByEstado >> datos recibidos', municipio);
+      },
+      error: (error) => {
+        this._logger.log(LogLevel.Error, `${this._contextLog} >> onCambiaEstado`, 'Error cargando getAllEstado', error);
+        this._toastService.showMessage(SeverityMessageType.Error, CommonMessages.Error, 'No se pudo cargar el catálogo de Municipios.');
+      }
     });
   }
 
@@ -114,16 +155,20 @@ export class FormularioRegistroComponent implements OnInit {
       this._formularioUtiuls.aplicaTrim(this.formulario);
       const registro = this.formulario.value as IRegistro;
       this.blockUserIService.show('Registrando Información...');
-      this.usuarioService.save(registro).subscribe({
+      this.usuarioService.save(registro)
+      .pipe(takeUntil(this._destroy$))
+      .subscribe({
         next: (response:IResponse<any>) => {
-          this.toastService.showMessage(SeverityMessageType.Success, 'Genial', response.mensaje, undefined, 5000);
+          this._logger.log(LogLevel.Debug, `${this._contextLog} >> guardar`, 'Registro almacenado.', response);
+          this._toastService.showMessage(SeverityMessageType.Success, 'Genial', response.mensaje, undefined, 5000);
           this.formulario.reset();
           this.blockUserIService.hide();
           this.usuarioService.esRegistro = true;
           this.router.navigateByUrl('/portal');
         },
         error: (error) => {
-          this.toastService.showMessage(SeverityMessageType.Error, 'Error', error.error.message);
+          this._logger.log(LogLevel.Error, `${this._contextLog} >> guardar`, 'Error al guardar', error);
+          this._toastService.showMessage(SeverityMessageType.Error, 'Error', error.error.message);
           this.blockUserIService.hide();
         }
       });
