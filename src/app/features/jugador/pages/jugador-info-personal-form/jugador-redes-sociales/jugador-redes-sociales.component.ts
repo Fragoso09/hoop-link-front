@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { FormularioUtilsService } from '../../../../../shared/utils/form/formulario-utils.service';
 import { CommonModule } from '@angular/common';
@@ -6,6 +6,9 @@ import { CommonModule } from '@angular/common';
 import { FloatLabel } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
 import { SkeletonComponent } from "../../../../../shared/components/skeleton/skeleton.component";
+
+import { LoggerService } from '../../../../../core/services/logger/logger.service';
+import { LogLevel } from '../../../../../core/enums';
 
 @Component({
   selector: 'app-jugador-redes-sociales',
@@ -19,20 +22,32 @@ import { SkeletonComponent } from "../../../../../shared/components/skeleton/ske
   templateUrl: './jugador-redes-sociales.component.html',
   styleUrl: './jugador-redes-sociales.component.css'
 })
-export class JugadorRedesSocialesComponent implements OnInit {
+export class JugadorRedesSocialesComponent implements OnInit, OnDestroy {
+
 //#region Propiedades
   @Input({required: true}) form!: FormGroup;
   @Input({required: true}) cargandoData: boolean = true;
-//#endregion
 
-ngOnInit(): void {
-  console.log(this.form);
-}
+  private readonly _contextLog = 'JugadorRedesSocialesComponent';
+//#endregion
 
 //#region Constructor
   constructor(
     private readonly _formularioUtils: FormularioUtilsService,
+    private readonly _logger: LoggerService,
   ) { }
+//#endregion
+
+//#region Ng
+  ngOnInit(): void {
+    this._logger.log(LogLevel.Info, `${this._contextLog} >> ngOnInit`, 'Inicializando componente.');
+    console.log(this.form);
+  }
+
+  ngOnDestroy(): void {
+    this._logger.log(LogLevel.Info, `${this._contextLog} >> ngOnDestroy`, 'Destruyendo componente.');
+  }
+
 //#endregion
 
 //#region Generales

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 import { DatePicker } from 'primeng/datepicker';
@@ -15,6 +15,9 @@ import { ButtonModule } from 'primeng/button';
 
 import { v4 as uuidv4 } from 'uuid';
 import { SkeletonComponent } from "../../../../../shared/components/skeleton/skeleton.component"; // Asegúrate de instalar: npm install uuid
+
+import { LoggerService } from '../../../../../core/services/logger/logger.service';
+import { LogLevel, SeverityMessageType } from '../../../../../core/enums';
 
 @Component({
   selector: 'app-jugador-experiencia',
@@ -32,20 +35,35 @@ import { SkeletonComponent } from "../../../../../shared/components/skeleton/ske
   templateUrl: './jugador-experiencia.component.html',
   styleUrl: './jugador-experiencia.component.css'
 })
-export class JugadorExperienciaComponent {
+export class JugadorExperienciaComponent implements OnInit, OnDestroy {
 
 //#region Propiedades
   @Input({required: true}) form!: FormGroup;
   @Input({required: true}) cargandoData: boolean = true;
   public iconoSi: string = "pi pi-check";
+
+  private readonly _contextLog = 'JugadorExperienciaComponent';
 //#endregion
 
 //#region Constructor
   constructor(
     private readonly _formularioUtils: FormularioUtilsService, private readonly _blockUserIService:BlockUserIService,
     private readonly _toastService: ToastService, private readonly _fb: FormBuilder,
+    private readonly _logger: LoggerService,
   ) { }
 //#endregion
+
+//#region Ng
+  ngOnInit(): void {
+    this._logger.log(LogLevel.Info, `${this._contextLog} >> ngOnInit`, 'Componente inicializado.');
+  }
+
+  ngOnDestroy(): void {
+    this._logger.log(LogLevel.Debug, `${this._contextLog} >> ngOnDestroy`, 'Componente destruido.');
+  }
+//#endregion
+
+//#region Generales
 
   public esValido(campo: string):boolean| null {
     return this._formularioUtils.esCampoValido(this.form, campo);
@@ -152,5 +170,7 @@ export class JugadorExperienciaComponent {
   public onEliminaLogros(index: number): void {
     this.Logros.removeAt(index);
   }
+
+//#endregion
 
 }

@@ -1,6 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+
+import { LoggerService } from '../../../../core/services/logger/logger.service';
+import { LogLevel } from '../../../../core/enums';
 
 @Component({
   selector: 'app-terminos-condiciones',
@@ -9,7 +12,7 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
   templateUrl: './terminos-condiciones.component.html',
   styleUrl: './terminos-condiciones.component.css'
 })
-export class TerminosCondicionesComponent {
+export class TerminosCondicionesComponent implements OnInit, OnDestroy {
 
   //#region Propiedades
   public sections = [
@@ -20,12 +23,25 @@ export class TerminosCondicionesComponent {
     { route: '/legal/politica-copyright', title: 'Política de copyright' },
     { route: '/legal/politica-marca', title: 'Política de marca' },
   ];
-  //#endregion Propiedades
+
+  private readonly _contextLog = 'TerminosCondicionesComponent';
+//#endregion Propiedades
 
   //#region Constructor
   constructor(
-    private activatedRoute: ActivatedRoute, private router: Router
+    private activatedRoute: ActivatedRoute, private router: Router,
+    private readonly _logger: LoggerService
   ) { }
   //#endregion Constructor
+
+//#region Ng
+  ngOnInit(): void {
+    this._logger.log(LogLevel.Debug, `${this._contextLog} >> ngOnInit`, 'Componente inicializado.');
+  }
+
+  ngOnDestroy(): void {
+    this._logger.log(LogLevel.Debug, `${this._contextLog} >> ngOnDestroy`, 'Componente destruido.');
+  }
+//#endregion
 
 }

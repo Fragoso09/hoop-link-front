@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { removeClass } from '../../../../shared/utils/ui/design.util';
 
+import { LoggerService } from '../../../../core/services/logger/logger.service';
+import { LogLevel } from '../../../../core/enums';
+
 @Component({
   selector: 'app-politica-copyright',
   standalone: true,
@@ -9,6 +12,8 @@ import { removeClass } from '../../../../shared/utils/ui/design.util';
   styleUrl: './politica-copyright.component.css'
 })
 export class PoliticaCopyrightComponent {
+
+//#region Propiedades
   public sections = [
     { id: 'pol1', title: 'Propiedad Intelectual' },
     { id: 'pol2', title: 'Contenido Generado por Usuarios' },
@@ -19,6 +24,25 @@ export class PoliticaCopyrightComponent {
     { id: 'pol7', title: 'Contacto' },
   ];
 
+  private readonly _contextLog = 'PoliticaCopyrightComponent';
+//#endregion
+
+//#region Constructor
+  constructor(private readonly _logger: LoggerService) { }
+//#endregion
+
+//#region Ng
+  ngOnInit(): void {
+    this._logger.log(LogLevel.Debug, `${this._contextLog} >> ngOnInit`, 'Componente inicializado.');
+  }
+
+  ngOnDestroy(): void {
+    this._logger.log(LogLevel.Debug, `${this._contextLog} >> ngOnDestroy`, 'Componente destruido.');
+  }
+//#endregion
+
+//#region Generales
+
   public moveToSection(id:string, event: Event) {
     event.preventDefault();
     removeClass('sectionLegalClick');
@@ -28,4 +52,6 @@ export class PoliticaCopyrightComponent {
       element?.classList.add('sectionLegalClick');
     }
   }
+
+//#endregion
 }

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
@@ -15,7 +15,11 @@ import { IRecuperaContrasena } from '../../../../shared/interfaces/usuario/regis
 import { IResponse } from '../../../../core/interfaces/response/response.interface';
 import { BlockUserIService } from '../../../../core/services/blockUI/block-user-i.service';
 import { ToastService } from '../../../../core/services/messages/toast.service';
-import { SeverityMessageType } from '../../../../core/enums';
+import { CommonMessages, SeverityMessageType } from '../../../../core/enums';
+
+import { LoggerService } from '../../../../core/services/logger/logger.service';
+import { LogLevel } from '../../../../core/enums';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-modal-recupera-contrasena',
@@ -29,18 +33,23 @@ import { SeverityMessageType } from '../../../../core/enums';
   templateUrl: './modal-recupera-contrasena.component.html',
   styleUrl: './modal-recupera-contrasena.component.css'
 })
-export class ModalRecuperaContrasenaComponent implements OnDestroy {
+export class ModalRecuperaContrasenaComponent implements OnInit, OnDestroy {
 
-//#region Variables publicas
+//#region Propiedades
   @Input() esVisibleRecuperaContrasenaDialog!: boolean;
   @Output() esVisibleRecuperaContrasenaDialogChange = new EventEmitter<boolean>();
   public formulario: FormGroup;
-//#endregion Variables publicas
+
+  private readonly _contextLog = 'ModalRecuperaContrasenaComponent';
+  private _destroy$ = new Subject<void>();
+//#endregion
 
 //#region Constructor
   constructor(
-    private readonly usuarioService:UsuarioService, private fb: FormBuilder, private readonly _formularioUtils:FormularioUtilsService,
-    private readonly router:Router, private readonly toastService: ToastService, private readonly blockUserIService:BlockUserIService,
+    private readonly usuarioService:UsuarioService, private fb: FormBuilder,
+    private readonly _formularioUtils:FormularioUtilsService, private readonly router:Router,
+    private readonly toastService: ToastService, private readonly blockUserIService:BlockUserIService,
+    private readonly _logger: LoggerService
   ) {
     this.formulario = this.fb.group({
       correo: new FormControl('', {
@@ -49,27 +58,38 @@ export class ModalRecuperaContrasenaComponent implements OnDestroy {
     });
 
   }
-  //#endregion Constructor
+//#endregion
 
-  //#region Metodos Ng
+//#region Ng
+  ngOnInit(): void {
+    this._logger.log(LogLevel.Debug, `${this._contextLog} >> ngOnInit`, 'Componente inicializado.');
+  }
+
   ngOnDestroy(): void {
-    this.esVisibleRecuperaContrasenaDialogChange.emit(false);
+    this._destroy$.next();
+    this._destroy$.complete();
     this.resetForm();
+    this.esVisibleRecuperaContrasenaDialogChange.emit(false);
+    this._logger.log(LogLevel.Debug, `${this._contextLog} >> ngOnDestroy`, 'Componente destruido.');
   }
 
 //#endregion
 
-//#region Metodos
+//#region Generales
   public enviar():void {
     if(this.formulario.invalid) {
       this.formulario.markAllAsTouched();
+      this._logger.log(LogLevel.Warn, `${this._contextLog} >> enviar`, 'Formulario inválido.', this.formulario.value);
       return;
     } else if (this.formulario.valid) {
       this._formularioUtils.aplicaTrim(this.formulario);
       const registro = this.formulario.value as IRecuperaContrasena;
       this.blockUserIService.show();
-      this.usuarioService.recuperaContrasena(registro).subscribe({
+      this.usuarioService.recuperaContrasena(registro)
+      .pipe(takeUntil(this._destroy$))
+      .subscribe({
         next: (response:IResponse<any>) => {
+          this._logger.log(LogLevel.Info, `${this._contextLog} >> enviar`, 'Correo de recuperación enviado.', response);
           this.toastService.showMessage(SeverityMessageType.Success, 'Genial 📩', 'Correo enviado.', undefined, 5000);
           this.toastService.showMessage(SeverityMessageType.Info, 'Revisa tu correo 📩', response.mensaje, undefined, 10000);
           this.formulario.reset();
@@ -77,7 +97,8 @@ export class ModalRecuperaContrasenaComponent implements OnDestroy {
           this.esVisibleRecuperaContrasenaDialogChange.emit(false);
         },
         error: (error) => {
-          this.toastService.showMessage(SeverityMessageType.Error, 'Error', error.error.message);
+          this._logger.log(LogLevel.Error, `${this._contextLog} >> enviar`, 'Error al enviar correo.', error);
+          this.toastService.showMessage(SeverityMessageType.Error, CommonMessages.Error, error.error.message);
           this.blockUserIService.hide();
         }
       });
@@ -100,8 +121,9 @@ export class ModalRecuperaContrasenaComponent implements OnDestroy {
   onHide() {
     this.esVisibleRecuperaContrasenaDialogChange.emit(false);
     this.resetForm();
+    this._logger.log(LogLevel.Debug, `${this._contextLog} >> onHide`, 'Dialog cerrado y formulario reseteado.');
   }
 
-//#endregion Metodos
+//#endregion
 
 }
